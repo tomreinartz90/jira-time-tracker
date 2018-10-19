@@ -1,0 +1,21 @@
+:host {
+  display: block;
+  //padding: 1rem;
+  //margin-bottom: 3rem;
+}
+
+.mat-card {
+  box-shadow: 0 0 0 0;
+}
+.example-container {
+  display: flex;
+  flex-direction: column;
+}
+
+.example-container > * {
+  width: 100%;
+}
+
+.full-width {
+  width: 100%;
+}

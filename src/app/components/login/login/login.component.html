@@ -1,0 +1,26 @@
+<mat-card>
+  <mat-card-header>Login</mat-card-header>
+  <form>
+    <mat-card-content>
+      <div class="form-container">
+
+        <mat-form-field class="example-full-width">
+          <input matInput type="url" placeholder="domain" name="domain" [(ngModel)]="domain">
+        </mat-form-field>
+
+        <mat-form-field class="example-full-width">
+          <input matInput type="email" placeholder="email" name="email" [(ngModel)]="email">
+        </mat-form-field>
+
+        <mat-form-field class="example-full-width">
+          <input matInput type="password" placeholder="password" name="password" [(ngModel)]="password">
+        </mat-form-field>
+      </div>
+      <mat-error *ngIf="error">{{error}}</mat-error>
+
+    </mat-card-content>
+    <mat-card-actions>
+      <button mat-button [disabled]="!isValid" (click)="handleLogin()" type="submit">Login</button>
+    </mat-card-actions>
+  </form>
+</mat-card>

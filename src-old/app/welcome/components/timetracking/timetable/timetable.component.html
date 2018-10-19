@@ -1,0 +1,16 @@
+<div class="row">
+
+    <div class="day" *ngFor="let day of days">
+        {{day | date }},
+
+
+        <div class="cell" *ngFor="let hour of groupedHours[day]">
+            {{hour.start_date | date }},
+            {{hour.project.name}},
+            {{hour.projectservice.name}},
+            {{hour.type.label}},
+            {{hour.hours}},
+        </div>
+        <div class="cell">placeholder/div>
+    </div>
+</div>

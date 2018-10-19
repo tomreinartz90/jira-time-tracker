@@ -1,0 +1,11 @@
+:host {
+  border-bottom: thin solid grey;
+  display: block;
+  cursor: pointer;
+  margin: 0 -1rem;
+  padding: 1rem;
+  transition: .2s;
+  &:hover {
+    background-color: #dbdbdb;
+  }
+}

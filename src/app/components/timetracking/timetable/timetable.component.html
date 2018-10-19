@@ -1,0 +1,16 @@
+<div class="row">
+  <mat-card *ngFor="let day of days">
+    <h3 class="heading">{{day | date }} - <small>{{getTotalHours(groupedHours[day]) | number:'1.0-1'}}h</small></h3>
+    <mat-card-content>
+      <app-timetableitem class="cell" [item]="hour" *ngFor="let hour of groupedHours[day]" (click)="showTimeDetails(hour)">
+      </app-timetableitem>
+    </mat-card-content>
+
+    <mat-card-actions>
+      <button (click)="addItemToList(day)" mat-button>ADD</button>
+    </mat-card-actions>
+
+  </mat-card>
+
+
+</div>
