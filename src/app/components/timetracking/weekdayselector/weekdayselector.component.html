@@ -1,10 +1,7 @@
 <mat-toolbar>
-    <span><</span>
-    <span>mon</span>
-    <span>tue</span>
-    <span>wed</span>
-    <span>thu</span>
-    <span>fri</span>
-    <span>sat</span>
-    <span>></span>
+  <h3>{{activeDate | date:'EEEE MMM d, y'}}</h3>
+
+  <input [ngModel]="activeDate" (ngModelChange)="activeDateChange.emit($event)" [matDatepicker]="picker">
+  <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+  <mat-datepicker touchUi #picker></mat-datepicker>
 </mat-toolbar>

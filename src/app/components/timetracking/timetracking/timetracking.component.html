@@ -1,2 +1,2 @@
-<app-weekdayselector [groupedHours]="groupedHours" [days]="days"></app-weekdayselector>
+<app-weekdayselector [activeDate]="activeDate" (activeDateChange)="setActiveDate($event)"></app-weekdayselector>
 <app-timetable [groupedHours]="groupedHours" [days]="days"></app-timetable>

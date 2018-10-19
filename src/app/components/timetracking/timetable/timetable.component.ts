@@ -19,13 +19,6 @@ export class TimetableComponent {
   constructor( private bottomSheet: MatBottomSheet ) {
   }
 
-  ngOnChanges() {
-    const day = Object.keys( this.groupedHours )[0];
-    if ( day ) {
-      this.addItemToList( day );
-    }
-  }
-
   showTimeDetails( item ) {
     this.bottomSheet.open( TimeDetailsSheetComponent, { data: item } );
   }

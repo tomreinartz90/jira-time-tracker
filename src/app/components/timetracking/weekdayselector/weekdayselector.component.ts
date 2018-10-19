@@ -1,22 +1,22 @@
-import {Component, Input, OnInit} from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 
-@Component({
-    selector: 'app-weekdayselector',
-    templateUrl: './weekdayselector.component.html',
-    styleUrls: ['./weekdayselector.component.scss']
-})
+@Component( {
+  selector: 'app-weekdayselector',
+  templateUrl: './weekdayselector.component.html',
+  styleUrls: ['./weekdayselector.component.scss']
+} )
 export class WeekdayselectorComponent implements OnInit {
 
-    @Input()
-    groupedHours: Array<any> = [];
+  @Input()
+  activeDate: Date;
 
-    @Input()
-    days: Array<any> = [];
+  @Output()
+  activeDateChange = new EventEmitter<Date>();
 
-    constructor() {
-    }
+  constructor() {
+  }
 
-    ngOnInit() {
-    }
+  ngOnInit() {
+  }
 
 }
