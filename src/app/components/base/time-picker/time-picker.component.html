@@ -3,11 +3,6 @@
          matInput
          [placeholder]="placeholder"
          [formControl]="formControl"
-         [matAutocomplete]="auto">
-  <mat-autocomplete #auto="matAutocomplete">
-    <mat-option *ngFor="let option of filteredTimes | async" [value]="option.value" >
-      <span [innerHTML]="option.value"></span>
-
-    </mat-option>
-  </mat-autocomplete>
+         (blur)="handleBlur()"
+  >
 </mat-form-field>

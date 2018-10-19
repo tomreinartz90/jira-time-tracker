@@ -1,13 +1,13 @@
-import {Component, Input} from '@angular/core';
-import {MatBottomSheet} from '@angular/material';
-import {TimeDetailsSheetComponent} from '../time-details-sheet/time-details-sheet.component';
-import {HourModel} from '../../../domain/hour.model';
+import { Component, Input } from '@angular/core';
+import { MatBottomSheet } from '@angular/material';
+import { TimeDetailsSheetComponent } from '../time-details-sheet/time-details-sheet.component';
+import { HourModel } from '../../../domain/hour.model';
 
-@Component({
+@Component( {
   selector: 'app-timetable',
   templateUrl: './timetable.component.html',
   styleUrls: ['./timetable.component.scss']
-})
+} )
 export class TimetableComponent {
 
   @Input()
@@ -16,16 +16,23 @@ export class TimetableComponent {
   @Input()
   days: Array<any> = [];
 
-  constructor(private bottomSheet: MatBottomSheet) {
+  constructor( private bottomSheet: MatBottomSheet ) {
   }
 
-  showTimeDetails(item) {
-    this.bottomSheet.open(TimeDetailsSheetComponent, {data: item});
+  ngOnChanges() {
+    const day = Object.keys( this.groupedHours )[0];
+    if ( day ) {
+      this.addItemToList( day );
+    }
   }
 
-  addItemToList(day: string) {
+  showTimeDetails( item ) {
+    this.bottomSheet.open( TimeDetailsSheetComponent, { data: item } );
+  }
+
+  addItemToList( day: string ) {
     const lastItem = this.groupedHours[day][this.groupedHours[day].length - 1] || {};
-    const newItem: HourModel = HourModel.fromJSON(lastItem);
+    const newItem: HourModel = HourModel.fromJSON( lastItem );
     newItem.id = null;
     newItem.start_date = null;
     newItem.end_date = null;
@@ -33,11 +40,11 @@ export class TimetableComponent {
     newItem.note = null;
     newItem.approvalstatus = null;
     newItem.is_time_defined = true;
-    this.showTimeDetails(newItem);
+    this.showTimeDetails( newItem );
   }
 
-  getTotalHours(hours: Array<HourModel>): number {
-    return hours.map(hour => hour.hours).reduce((previousValue, currentValue) => previousValue + currentValue, 0);
+  getTotalHours( hours: Array<HourModel> ): number {
+    return hours.map( hour => hour.hours ).reduce( ( previousValue, currentValue ) => previousValue + currentValue, 0 );
   }
 
 }
