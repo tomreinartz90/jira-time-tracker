@@ -10,6 +10,9 @@ export class WeekdayselectorComponent implements OnInit {
   @Input()
   activeDate: Date;
 
+  @Input()
+  initials: string;
+
   @Output()
   activeDateChange = new EventEmitter<Date>();
 

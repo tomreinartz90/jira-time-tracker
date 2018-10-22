@@ -1,6 +1,6 @@
-import {Component, OnInit} from '@angular/core';
-import {SimplicateService} from '../../../providers/simplicate.service';
-import {DateUtil} from '../../../utils/date.util';
+import { Component, HostBinding, OnInit } from '@angular/core';
+import { SimplicateService } from '../../../providers/simplicate.service';
+import { DateUtil } from '../../../utils/date.util';
 
 @Component( {
   selector: 'app-timetracking',
@@ -14,12 +14,26 @@ export class TimetrackingComponent implements OnInit {
 
   activeDate = new Date();
 
+  @HostBinding( 'class.active' )
+  active: boolean;
+
+  employee: any;
+
   constructor( private simplicate: SimplicateService ) {
   }
 
   ngOnInit() {
+    this.active = true;
     this.getEmployeeHours();
+    this.getEmployee();
     this.simplicate.onUpdateHour.subscribe( () => this.getEmployeeHours() );
+  }
+
+  getEmployee() {
+    this.simplicate.getEmployeeInfo().subscribe( employee => {
+      this.employee = employee;
+      console.log( employee );
+    } );
   }
 
   getEmployeeHours() {
