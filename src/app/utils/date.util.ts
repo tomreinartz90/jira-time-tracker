@@ -36,10 +36,10 @@ export class DateUtil {
   static timeStringToDate( timeString: string, date = new Date() ): Date {
     const timeDate = new Date( date );
     if ( timeString && typeof timeString === 'string' ) {
-      const hour = parseInt( (timeString.match( /[12]?[0-9]/ ) || ['0'])[0], 10 );
+      const hour =  (timeString.match( /[012]?[0-9]/ ) || ['0'])[0];
       const rest = timeString.replace( `${hour}`, '' );
-      const minutes = parseInt( (rest.match( /[0-9]?[0-9]/ ) || ['0'])[0], 10 );
-      timeDate.setUTCHours( hour, minutes, 0 );
+      const minutes = (rest.match( /[0-9]?[0-9]/ ) || ['0'])[0];
+      timeDate.setUTCHours( parseInt(hour, 10), parseInt(minutes, 10), 0 );
       return timeDate;
     }
     return null;
