@@ -99,3 +99,17 @@ h1, h2, h3, h4, h5, h6 {
 .mat-datepicker-toggle, .mat-datepicker-content .mat-calendar-next-button, .mat-datepicker-content .mat-calendar-previous-button {
   color: #fefefe;
 }
+
+::-webkit-scrollbar {
+  width: .5rem;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #aaa;
+  border-radius: 1rem;
+}
+
+::-webkit-scrollbar-track {
+  background: #eee;
+  border-radius: 0;
+}
