@@ -1,18 +1,20 @@
 {
-  "name": "angular-electron",
-  "version": "4.2.2",
+  "name": "track-hours-for-simplicate",
+  "version": "0.0.1",
   "description": "Angular 6 with Electron (Typescript + SASS + Hot Reload)",
-  "homepage": "https://github.com/maximegris/angular-electron",
+  "homepage": "https://github.com/tomreinartz90/simplicate-app",
   "author": {
-    "name": "Maxime GRIS",
-    "email": "maxime.gris@gmail.com"
+    "name": "Tom Reinartz",
+    "email": "tom.reinartz@gmail.com"
   },
   "keywords": [
     "angular",
     "angular 6",
     "electron",
     "typescript",
-    "sass"
+    "sass",
+    "simplicate",
+    "timemanagement"
   ],
   "main": "main.js",
   "private": true,
