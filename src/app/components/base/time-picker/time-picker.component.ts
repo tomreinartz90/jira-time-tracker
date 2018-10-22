@@ -1,9 +1,7 @@
-import { Component, forwardRef, Input, OnChanges } from '@angular/core';
-import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
-import { Observable } from 'rxjs';
-import { map, startWith, tap } from 'rxjs/operators';
-import { DateUtil } from '../../../utils/date.util';
-import { BaseInput } from '../base-input/base-input';
+import {Component, forwardRef, Input, OnChanges} from '@angular/core';
+import {ControlValueAccessor, NG_VALUE_ACCESSOR} from '@angular/forms';
+import {DateUtil} from '../../../utils/date.util';
+import {BaseInput} from '../base-input/base-input';
 
 @Component( {
   selector: 'app-time-picker',
@@ -22,19 +20,15 @@ export class TimePickerComponent extends BaseInput implements OnChanges, Control
   placeholder: string;
 
   @Input()
-  timeDate: Date = new Date();
+  public timeDate: Date = new Date();
 
   options: Array<{ value: string, date: Date }> = [];
 
   @Input()
-  minDate: Date;
+  public minDate: Date;
 
   @Input()
-  maxDate: Date;
-
-  constructor() {
-    super();
-  }
+  public maxDate: Date;
 
   writeValue( obj: Date ): void {
     this.timeDate = obj;
@@ -55,8 +49,8 @@ export class TimePickerComponent extends BaseInput implements OnChanges, Control
 
   handleBlur() {
     const timeDate = DateUtil.timeStringToDate( this.formControl.value, this.timeDate ) || this.timeDate;
-    this.onChange( timeDate );
     super.writeValue( DateUtil.getTimeForInput( timeDate ) );
+    this.onChange( timeDate );
   }
 
 

@@ -1,10 +1,10 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 
-@Component( {
+@Component({
   selector: 'app-weekdayselector',
   templateUrl: './weekdayselector.component.html',
   styleUrls: ['./weekdayselector.component.scss']
-} )
+})
 export class WeekdayselectorComponent implements OnInit {
 
   @Input()
@@ -17,6 +17,10 @@ export class WeekdayselectorComponent implements OnInit {
   }
 
   ngOnInit() {
+  }
+
+  updateDate(event: Date) {
+    this.activeDateChange.emit(new Date(event.getTime() - (event.getTimezoneOffset() * 60000)));
   }
 
 }

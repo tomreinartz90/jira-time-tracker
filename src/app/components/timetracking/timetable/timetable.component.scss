@@ -3,6 +3,14 @@
 }
 .heading{
   margin-bottom: 0;
+  text-align: right;
+  small {
+    border-radius: 1rem;
+    background-color: rgba(0, 0, 0, 0.15);
+    padding: 0.7rem;
+    font-size: 0.8rem;
+    line-height: 2;
+  }
 }
 
 .mat-fab {

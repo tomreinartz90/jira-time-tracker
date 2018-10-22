@@ -1,8 +1,8 @@
-import { groupBy } from 'lodash';
+import {groupBy, sortBy} from 'lodash';
 
 export class DateUtil {
   static groupByDateDay( collection: Array<any>, dateSelector: Function ) {
-    return groupBy( collection, ( item ) => {
+    return groupBy( sortBy(collection, dateSelector), ( item ) => {
       return new Date( dateSelector( item ) ).toISOString().slice( 0, 10 );
     } );
   }

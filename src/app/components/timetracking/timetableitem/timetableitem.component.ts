@@ -23,7 +23,6 @@ export class TimetableitemComponent implements OnInit {
 
   handleInputBlur(event) {
     const value = event.currentTarget.value;
-    console.log(value);
   }
 
   updateHours(hours) {

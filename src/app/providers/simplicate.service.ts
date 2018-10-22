@@ -23,7 +23,7 @@ export class SimplicateService {
               private router: Router) {
   }
 
-  private get employee(): { id: string } {
+  get employee(): { id: string } {
     return {
       id: this.authInfo.employeeId
     };

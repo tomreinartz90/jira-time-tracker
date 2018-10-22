@@ -9,9 +9,9 @@
 
       <app-service-type-select [serviceId]="projectserviceId" formControlName="type"></app-service-type-select>
 
-      <app-time-picker formControlName="startTime" placeholder="Start Time"></app-time-picker>
+      <app-time-picker formControlName="startTime" [timeDate]="data.start_date" placeholder="Start Time"></app-time-picker>
 
-      <app-time-picker formControlName="endTime" placeholder="End Time"></app-time-picker>
+      <app-time-picker formControlName="endTime" [timeDate]="data.end_date" placeholder="End Time"></app-time-picker>
       <!--<h6>Notes</h6>-->
       <mat-form-field class="full-width">
         <textarea matInput placeholder="Notes" formControlName="note"></textarea>

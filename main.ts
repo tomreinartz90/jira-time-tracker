@@ -18,7 +18,7 @@ function createWindow() {
     width: 400,
     height: 700,
     resizable: false,
-    skipTaskbar: true,
+    skipTaskbar: false,
     title: 'Track hours'
   });
 

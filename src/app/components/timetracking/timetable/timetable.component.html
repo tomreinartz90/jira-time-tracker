@@ -1,16 +1,20 @@
 <div class="row">
   <mat-card *ngFor="let day of days">
-    <h3 class="heading">{{day | date }} - <small>{{getTotalHours(groupedHours[day]) | number:'1.0-1'}}h</small></h3>
     <mat-card-content>
       <app-timetableitem class="cell" [item]="hour" *ngFor="let hour of groupedHours[day]" (click)="showTimeDetails(hour)">
       </app-timetableitem>
     </mat-card-content>
+    <h3 class="heading"><small><strong>{{getTotalHours(groupedHours[day]) | number:'1.0-1'}}</strong> hours</small></h3>
 
     <button (click)="addItemToList(day)"mat-fab color="primary">
       <mat-icon aria-label="Example icon-button with a heart icon">add</mat-icon>
     </button>
 
   </mat-card>
+
+  <button *ngIf="!days || days.length === 0" (click)="addNewItemToList()"mat-fab color="primary">
+    <mat-icon aria-label="Example icon-button with a heart icon">add</mat-icon>
+  </button>
 
 
 </div>
