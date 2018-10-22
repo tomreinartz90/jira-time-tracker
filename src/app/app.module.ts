@@ -31,6 +31,7 @@ import {
   MatButtonModule,
   MatCardModule,
   MatDatepickerModule,
+  MatIconModule,
   MatInputModule,
   MatListModule,
   MatNativeDateModule,
@@ -57,7 +58,8 @@ const matModules = [
   MatInputModule,
   MatDatepickerModule,
   MatNativeDateModule,
-  MatAutocompleteModule
+  MatAutocompleteModule,
+  MatIconModule,
 ];
 
 @NgModule({

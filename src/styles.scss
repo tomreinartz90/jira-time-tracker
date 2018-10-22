@@ -20,8 +20,8 @@ html, body {
 
   height: 100%;
   font-family: 'Montserrat', sans-serif;
-  background-color: #263238;
-  color: white;
+  background-color: #fefefe;
+  color: #000000;
 
 }
 
@@ -36,4 +36,18 @@ h1, h2, h3, h4, h5, h6 {
 
 .mat-card {
   margin-bottom: 1rem;
+}
+
+.mat-calendar-body-selected {
+  background-color: #FF2351;
+
+}
+
+.mat-toolbar {
+  background-color: #FF2351;
+  color: #fefefe;
+}
+
+.mat-datepicker-toggle, .mat-datepicker-content .mat-calendar-next-button, .mat-datepicker-content .mat-calendar-previous-button {
+  color: #fefefe;
 }

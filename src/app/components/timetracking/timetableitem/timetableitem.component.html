@@ -1,5 +1,17 @@
-<h3 mat-line>{{item.project.name}}</h3>
-<div mat-line>{{item.projectservice.name}} / {{item.type.label}}</div>
-<div mat-line>{{getTime(item.start_date) }} - {{getTime(item.end_date)}} <strong>{{item.hours | number:'1.0-1'}}h</strong></div>
-<div mat-line>{{item.note}}</div>
-<!--<input type="text" [ngModel]="formatTime(item.hours)" (blur)="handleInputBlur($event)">-->
+<div class="container">
+  <div class="time">
+    <div class="start">{{getTime(item.start_date) }}</div>
+    <div class="end">{{getTime(item.end_date)}}</div>
+  </div>
+  <div class="content">
+    <h3 mat-line>{{item.project.name}}</h3>
+    <div mat-line>{{item.projectservice.name}} / {{item.type.label}}</div>
+    <div class="note">{{item.note}}</div>
+
+  </div>
+  <div class="totalTime">
+    <div class="duration">
+      <strong>{{item.hours | number:'1.0-1'}}</strong> h
+    </div>
+  </div>
+</div>

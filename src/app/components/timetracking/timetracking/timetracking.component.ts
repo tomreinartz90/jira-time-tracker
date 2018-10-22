@@ -1,7 +1,6 @@
-import { Component, OnInit } from '@angular/core';
-import { SimplicateService } from '../../../providers/simplicate.service';
-import { DateUtil } from '../../../utils/date.util';
-import { mergeMap, startWith } from 'rxjs/operators';
+import {Component, OnInit} from '@angular/core';
+import {SimplicateService} from '../../../providers/simplicate.service';
+import {DateUtil} from '../../../utils/date.util';
 
 @Component( {
   selector: 'app-timetracking',
@@ -20,7 +19,7 @@ export class TimetrackingComponent implements OnInit {
 
   ngOnInit() {
     this.getEmployeeHours();
-    this.simplicate.onUpdateHour.subscribe( this.getEmployeeHours );
+    this.simplicate.onUpdateHour.subscribe( () => this.getEmployeeHours() );
   }
 
   getEmployeeHours() {

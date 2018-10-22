@@ -70,17 +70,17 @@ export class TimeDetailsSheetComponent implements OnInit, OnDestroy {
     const {projectservice, project, type, startTime, endTime, note} = this.timeForm.value;
     const payload = HourModel.fromJSON(this.data);
     let action;
-    console.log(startTime, endTime);
+
     payload.start_date = startTime;
     payload.end_date = endTime;
     payload.note = note;
+    payload.project.id = project;
+    payload.projectservice.id = projectservice;
+    payload.type.id = type;
 
     if (this.data.id) {
       action = this.simplicateService.updateEmployeeHours(payload);
     } else {
-      payload.project.id = project;
-      payload.projectservice.id = projectservice;
-      payload.type.id = type;
       action = this.simplicateService.addNewEmployeeHours(payload);
     }
 
