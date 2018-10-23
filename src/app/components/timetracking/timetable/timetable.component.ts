@@ -52,7 +52,6 @@ export class TimetableComponent {
     item.approvalstatus = null;
     item.is_time_defined = true;
     this.showTimeDetails(item);
-
   }
 
   getTotalHours(hours: Array<HourModel>): number {

@@ -11,7 +11,7 @@
   </div>
   <div class="totalTime">
     <div class="duration">
-      <strong>{{item.hours | number:'1.0-1'}}</strong> h
+      <strong>{{(item.hours | hoursToMs) | msToTime}}</strong>
     </div>
   </div>
 </div>

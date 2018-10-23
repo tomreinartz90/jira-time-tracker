@@ -43,6 +43,8 @@ import {LoginComponent} from './components/login/login/login.component';
 import {ProjectSelectComponent} from './components/base/project-select/project-select.component';
 import {ProjectServiceSelectComponent} from './components/base/project-service-select/project-service-select.component';
 import {ServiceTypeSelectComponent} from './components/base/service-type-select/service-type-select.component';
+import { MsToTimePipe } from './components/base/ms-to-time.pipe';
+import { HoursToMsPipe } from './components/base/hours-to-ms.pipe';
 
 // AoT requires an exported function for factories
 export function HttpLoaderFactory(http: HttpClient) {
@@ -78,6 +80,8 @@ const matModules = [
     ProjectSelectComponent,
     ProjectServiceSelectComponent,
     ServiceTypeSelectComponent,
+    MsToTimePipe,
+    HoursToMsPipe,
   ],
   imports: [
     BrowserModule,
