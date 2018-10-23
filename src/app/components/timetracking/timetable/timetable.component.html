@@ -7,7 +7,7 @@
 
     <div class="bottom-bar">
       <div class="total-time"><strong>{{ (getTotalHours(groupedHours[days[0]]) | hoursToMs) | msToTime:true }}</strong></div>
-      <button (click)="addItemToList(days[0])" mat-stroked-button color="accent">
+      <button (click)="addItemToList(days[0])" mat-flat-button color="accent">
         add
       </button>
     </div>
@@ -16,7 +16,7 @@
 
   <div class="bottom-bar" *ngIf="!days || days.length === 0">
     <div class="total-time"></div>
-    <button (click)="addNewItemToList()" mat-stroked-button color="accent">
+    <button (click)="addNewItemToList()" mat-flat-button color="accent">
       add
     </button>
   </div>
