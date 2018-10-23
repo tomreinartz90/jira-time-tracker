@@ -46,6 +46,7 @@ export class TimetableComponent {
     item.start_date = new Date(this.activeDate.getTime());
     item.start_date.setUTCHours(8, 30, 0);
     item.end_date = new Date(item.start_date.getTime() + (30 * 60 * 1000));
+    // item.end_date = null;
     item.hours = 0;
     item.note = null;
     item.approvalstatus = null;

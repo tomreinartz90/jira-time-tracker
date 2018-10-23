@@ -1,8 +1,14 @@
 <mat-toolbar>
   <div *ngIf="initials" class="user">{{initials}}</div>
-  <h3>{{activeDate | date:'EEEE MMM d, y'}}</h3>
+  <h3>{{activeDate | date:'EE MMM d'}}</h3>
 
   <input [ngModel]="activeDate" (ngModelChange)="updateDate($event)" [matDatepicker]="picker">
+  <button mat-icon-button (click)="prev()">
+    <mat-icon>chevron_left</mat-icon>
+  </button>
+  <button mat-icon-button (click)="next()">
+    <mat-icon>chevron_right</mat-icon>
+  </button>
   <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
   <mat-datepicker touchUi #picker></mat-datepicker>
 

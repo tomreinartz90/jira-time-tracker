@@ -20,11 +20,15 @@ export class TimeDetailsSheetComponent implements OnInit, OnDestroy {
   subs: Array<Subscription> = [];
 
   constructor(private bottomSheetRef: MatBottomSheetRef<TimeDetailsSheetComponent>,
-              @Inject(MAT_BOTTOM_SHEET_DATA) public data: any,
-              fb: FormBuilder,
+              @Inject(MAT_BOTTOM_SHEET_DATA) public data: HourModel,
+              public fb: FormBuilder,
               private simplicateService: SimplicateService) {
+      this.initForm(data);
 
-    this.timeForm = fb.group({
+  }
+
+  initForm(data:HourModel){
+    this.timeForm = this.fb.group({
       projectservice: [data.projectservice.id],
       project: [data.project.id, Validators.required],
       type: [data.type.id, Validators.required],
@@ -66,7 +70,7 @@ export class TimeDetailsSheetComponent implements OnInit, OnDestroy {
     event.preventDefault();
   }
 
-  onSubmit() {
+  onSubmit(reInit = false) {
     const {projectservice, project, type, startTime, endTime, note} = this.timeForm.value;
     const payload = HourModel.fromJSON(this.data);
     let action;
@@ -85,7 +89,14 @@ export class TimeDetailsSheetComponent implements OnInit, OnDestroy {
     }
 
     action.subscribe(() => {
-      this.bottomSheetRef.dismiss();
+      if (reInit) {
+        const data = HourModel.fromJSON(payload);
+        data.start_date = payload.end_date;
+        data.end_date = new Date(data.start_date.getTime() + (30 * 60 * 1000));;
+        this.initForm(data);
+      } else {
+        this.bottomSheetRef.dismiss();
+      }
     });
   }
 

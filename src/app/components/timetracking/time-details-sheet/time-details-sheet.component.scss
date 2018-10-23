@@ -1,12 +1,13 @@
 :host {
   display: block;
-  //padding: 1rem;
-  //margin-bottom: 3rem;
+  padding: 1rem;
+  margin-bottom: 2rem;
 }
 
 .mat-card {
   box-shadow: 0 0 0 0;
 }
+
 .example-container {
   display: flex;
   flex-direction: column;
@@ -19,3 +20,20 @@
 .full-width {
   width: 100%;
 }
+
+.time {
+  margin-top: 1rem;
+}
+
+.mat-card-actions {
+  display: flex;
+  .spacer {
+    flex: 1;
+  }
+
+  button {
+margin-left: .5rem;
+  }
+}
+
+

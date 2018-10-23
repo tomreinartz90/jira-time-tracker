@@ -2,7 +2,10 @@
 
 }
 .heading{
-  margin-bottom: 0;
+  margin-bottom: 1rem;
+  margin-top: -1rem!important;
+
+  text-align: right;
   small {
     border-radius: 1rem;
     background-color: rgba(0, 0, 0, 0.15);

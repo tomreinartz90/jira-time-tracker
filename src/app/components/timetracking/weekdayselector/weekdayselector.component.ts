@@ -22,6 +22,14 @@ export class WeekdayselectorComponent implements OnInit {
   ngOnInit() {
   }
 
+  next(){
+    this.activeDateChange.emit(new Date(this.activeDate.getTime() + (60 * 60 * 24 * 1000) ));
+  }
+
+  prev(){
+    this.activeDateChange.emit(new Date(this.activeDate.getTime() - (60 * 60 * 24 * 1000) ));
+  }
+
   updateDate(event: Date) {
     this.activeDateChange.emit(new Date(event.getTime() - (event.getTimezoneOffset() * 60000)));
   }

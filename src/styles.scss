@@ -34,17 +34,20 @@ $primary-color: #FF2351;
   }
 }
 
+
+
 html, body {
   margin: 0;
   padding: 0;
 
   height: 100%;
-  font-family: 'Montserrat', sans-serif;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
   background-color: #fefefe;
   color: $primary-color;
   animation-delay: 4s;
   animation-duration: 1s;
 }
+
 
 app-root {
   display: block;
@@ -101,7 +104,7 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 ::-webkit-scrollbar {
-  width: .5rem;
+  width: .2rem;
 }
 
 ::-webkit-scrollbar-thumb {
@@ -112,4 +115,12 @@ h1, h2, h3, h4, h5, h6 {
 ::-webkit-scrollbar-track {
   background: #eee;
   border-radius: 0;
+}
+
+.flex {
+  display: flex;
+}
+
+.mat-form-field-infix {
+  width: 100%!important;
 }
