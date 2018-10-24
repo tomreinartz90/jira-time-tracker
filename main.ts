@@ -16,7 +16,7 @@ function createWindow() {
     x: 0,
     y: 0,
     width: 400,
-    height: 700,
+    height: 600,
     resizable: false,
     skipTaskbar: false,
     title: 'Simplicate Time Tracker'
