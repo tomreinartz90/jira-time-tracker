@@ -27,9 +27,9 @@ export class WeekdayselectorComponent implements OnInit {
     if ((<any>event.target).nodeName === 'BODY') {
       const {code} = event;
       if (code === 'ArrowRight') {
-        this.prev();
-      } else if (code === 'ArrowLeft') {
         this.next();
+      } else if (code === 'ArrowLeft') {
+        this.prev();
       }
     }
   }
