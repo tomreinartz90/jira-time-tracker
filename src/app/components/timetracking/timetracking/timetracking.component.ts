@@ -34,7 +34,6 @@ export class TimetrackingComponent implements OnInit {
   getEmployee() {
     this.simplicate.getEmployeeInfo().subscribe(employee => {
       this.employee = employee;
-      console.log(employee);
     });
   }
 
@@ -43,7 +42,6 @@ export class TimetrackingComponent implements OnInit {
     this.groupedHours = [];
     this.days = [];
     this.simplicate.getCurrentEmployeeHours(this.activeDate).subscribe(resp => {
-        this.loading = false;
         this.hours = resp;
         this.groupedHours = DateUtil.groupByDateDay(resp, (item) => item.start_date);
         this.days = Object.keys(this.groupedHours).sort();
