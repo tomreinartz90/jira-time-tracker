@@ -19,8 +19,9 @@
     </mat-card-content>
 
     <mat-card-actions>
+      <button type="submit" *ngIf="data && data.id" (click)="delete()" mat-stroked-button color="warn">delete</button>
       <div class="spacer"></div>
-      <button type="submit" [disabled]="!timeForm.valid" (click)="onSubmit(true)" mat-stroked-button color="accent">Save and next</button>
+      <!--<button type="submit" [disabled]="!timeForm.valid" (click)="onSubmit(true)" mat-stroked-button color="accent">Save and next</button>-->
       <button type="submit" [disabled]="!timeForm.valid" (click)="onSubmit()" mat-raised-button color="accent">Save</button>
     </mat-card-actions>
 

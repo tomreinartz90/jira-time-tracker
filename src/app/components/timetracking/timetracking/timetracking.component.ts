@@ -1,12 +1,12 @@
-import { Component, HostBinding, OnInit } from '@angular/core';
-import { SimplicateService } from '../../../providers/simplicate.service';
-import { DateUtil } from '../../../utils/date.util';
+import {Component, HostBinding, OnInit} from '@angular/core';
+import {SimplicateService} from '../../../providers/simplicate.service';
+import {DateUtil} from '../../../utils/date.util';
 
-@Component( {
+@Component({
   selector: 'app-timetracking',
   templateUrl: './timetracking.component.html',
   styleUrls: ['./timetracking.component.scss']
-} )
+})
 export class TimetrackingComponent implements OnInit {
   groupedHours: any;
   hours: any;
@@ -14,38 +14,44 @@ export class TimetrackingComponent implements OnInit {
 
   activeDate = new Date();
 
-  @HostBinding( 'class.active' )
+  @HostBinding('class.active')
   active: boolean;
 
   employee: any;
 
-  constructor( private simplicate: SimplicateService ) {
+  constructor(private simplicate: SimplicateService) {
   }
 
   ngOnInit() {
     this.active = true;
     this.getEmployeeHours();
     this.getEmployee();
-    this.simplicate.onUpdateHour.subscribe( () => this.getEmployeeHours() );
+    this.simplicate.onUpdateHour.subscribe(() => {
+      this.getEmployeeHours();
+    });
   }
 
   getEmployee() {
-    this.simplicate.getEmployeeInfo().subscribe( employee => {
+    this.simplicate.getEmployeeInfo().subscribe(employee => {
       this.employee = employee;
-      console.log( employee );
-    } );
+      console.log(employee);
+    });
   }
 
   getEmployeeHours() {
-    this.simplicate.getCurrentEmployeeHours( this.activeDate ).subscribe( resp => {
+    this.hours = [];
+    this.groupedHours = [];
+    this.days = [];
+    this.simplicate.getCurrentEmployeeHours(this.activeDate).subscribe(resp => {
+        this.loading = false;
         this.hours = resp;
-        this.groupedHours = DateUtil.groupByDateDay( resp, ( item ) => item.start_date );
-        this.days = Object.keys( this.groupedHours ).sort();
+        this.groupedHours = DateUtil.groupByDateDay(resp, (item) => item.start_date);
+        this.days = Object.keys(this.groupedHours).sort();
       }
     );
   }
 
-  setActiveDate( date: Date ) {
+  setActiveDate(date: Date) {
     this.activeDate = date;
     this.getEmployeeHours();
   }

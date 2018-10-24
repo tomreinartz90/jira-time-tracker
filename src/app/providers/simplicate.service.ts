@@ -71,6 +71,16 @@ export class SimplicateService {
     return this.http.put(`https://${domain}.simplicate.nl/${path}`, body, options);
   }
 
+  private delete(path) {
+    const {domain} = this.authInfo;
+
+    const options = {
+      headers: this.authHeaders
+    };
+
+    return this.http.delete(`https://${domain}.simplicate.nl/${path}`, options);
+  }
+
   private post(path, body) {
     const {domain} = this.authInfo;
 
@@ -154,10 +164,14 @@ export class SimplicateService {
   }
 
   updateEmployeeHours(item: HourModel) {
-    console.log(item);
     const update = item.toUpdateJSON();
-    console.log(update);
     return this.put(`api/v2/hours/hours/${item.id}`, update).pipe(
+      tap(() => this.onUpdateHour.next(true))
+    );
+  }
+
+  deleteEmployeeHours(id: string) {
+    return this.delete(`api/v2/hours/hours/${id}`).pipe(
       tap(() => this.onUpdateHour.next(true))
     );
   }

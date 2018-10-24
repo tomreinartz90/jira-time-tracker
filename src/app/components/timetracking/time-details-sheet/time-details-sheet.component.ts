@@ -70,6 +70,12 @@ export class TimeDetailsSheetComponent implements OnInit, OnDestroy {
     event.preventDefault();
   }
 
+  delete(){
+    this.simplicateService.deleteEmployeeHours(this.data.id).subscribe(() => {
+      this.bottomSheetRef.dismiss();
+    });
+  }
+
   onSubmit(reInit = false) {
     const {projectservice, project, type, startTime, endTime, note} = this.timeForm.value;
     const payload = HourModel.fromJSON(this.data);

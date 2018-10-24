@@ -1,5 +1,5 @@
 import {Component, Input} from '@angular/core';
-import {MatBottomSheet} from '@angular/material';
+import {fadeInContent, MatBottomSheet} from '@angular/material';
 import {TimeDetailsSheetComponent} from '../time-details-sheet/time-details-sheet.component';
 import {HourModel} from '../../../domain/hour.model';
 import {SimplicateService} from '../../../providers/simplicate.service';
@@ -7,7 +7,8 @@ import {SimplicateService} from '../../../providers/simplicate.service';
 @Component({
   selector: 'app-timetable',
   templateUrl: './timetable.component.html',
-  styleUrls: ['./timetable.component.scss']
+  styleUrls: ['./timetable.component.scss'],
+  animations: [fadeInContent]
 })
 export class TimetableComponent {
 

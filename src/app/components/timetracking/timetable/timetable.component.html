@@ -1,24 +1,39 @@
 <div class="row">
   <mat-card *ngIf="days && days.length">
     <mat-card-content>
-      <app-timetableitem class="cell" [item]="hour" *ngFor="let hour of groupedHours[days[0]]" (click)="showTimeDetails(hour)">
+      <app-timetableitem class="cell" [@fadeInContent]="'showing'" [item]="hour" *ngFor="let hour of groupedHours[days[0]]" (click)="showTimeDetails(hour)">
       </app-timetableitem>
     </mat-card-content>
 
     <div class="bottom-bar">
       <div class="total-time"><strong>{{ (getTotalHours(groupedHours[days[0]]) | hoursToMs) | msToTime:true }}</strong></div>
       <button (click)="addItemToList(days[0])" mat-flat-button color="accent">
-        add
+        <mat-icon>add</mat-icon>
       </button>
     </div>
   </mat-card>
 
+  <mat-card *ngIf="!days || days.length === 0" [@fadeInContent]="'showing'">
+    <mat-card-content>
+      <div class="empty-message">
 
-  <div class="bottom-bar" *ngIf="!days || days.length === 0">
-    <div class="total-time"></div>
-    <button (click)="addNewItemToList()" mat-flat-button color="accent">
-      add
-    </button>
-  </div>
+        You have no hours tracked for this day yet,
+        start tracking your time.
+        <div>
+          <button mat-fab (click)="addNewItemToList()">
+            <mat-icon>add</mat-icon>
+          </button>
+        </div>
+      </div>
+    </mat-card-content>
+    <div class="bottom-bar">
+      <div class="total-time"><strong>0 Hours</strong></div>
+
+      <button (click)="addNewItemToList()" mat-flat-button color="accent">
+        <mat-icon>add</mat-icon>
+      </button>
+    </div>
+  </mat-card>
+
 
 </div>
