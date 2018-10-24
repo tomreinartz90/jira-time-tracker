@@ -1,4 +1,4 @@
-import {Component, Input} from '@angular/core';
+import {Component, HostListener, Input} from '@angular/core';
 import {fadeInContent, MatBottomSheet} from '@angular/material';
 import {TimeDetailsSheetComponent} from '../time-details-sheet/time-details-sheet.component';
 import {HourModel} from '../../../domain/hour.model';
@@ -21,11 +21,26 @@ export class TimetableComponent {
   @Input()
   activeDate: Date;
 
-  constructor(private bottomSheet: MatBottomSheet, public simplicateService:SimplicateService) {
+  constructor(private bottomSheet: MatBottomSheet, public simplicateService: SimplicateService) {
   }
 
   showTimeDetails(item) {
     this.bottomSheet.open(TimeDetailsSheetComponent, {data: item});
+  }
+
+
+  @HostListener('window:keydown', ['$event'])
+  onKeyDown(event: KeyboardEvent) {
+    if ((<any>event.target).nodeName === 'BODY') {
+      const {code} = event;
+      if (code === 'KeyN') {
+        if (this.days && this.days.length > 0) {
+          this.addItemToList(this.days[this.days.length - 1]);
+        } else {
+          this.addNewItemToList();
+        }
+      }
+    }
   }
 
   addItemToList(day: string) {

@@ -19,7 +19,7 @@ function createWindow() {
     height: 700,
     resizable: false,
     skipTaskbar: false,
-    title: 'Track hours'
+    title: 'Simplicate Time Tracker'
   });
 
   if (serve) {

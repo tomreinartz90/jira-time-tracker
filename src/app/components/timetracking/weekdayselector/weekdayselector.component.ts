@@ -22,9 +22,16 @@ export class WeekdayselectorComponent implements OnInit {
   ngOnInit() {
   }
 
-  @HostListener('window:keypress', ['$event'])
+  @HostListener('window:keydown', ['$event'])
   onKeyDown(event: KeyboardEvent) {
-    console.log(event);
+    if ((<any>event.target).nodeName === 'BODY') {
+      const {code} = event;
+      if (code === 'ArrowRight') {
+        this.prev();
+      } else if (code === 'ArrowLeft') {
+        this.next();
+      }
+    }
   }
 
   next() {
