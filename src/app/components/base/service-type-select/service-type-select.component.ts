@@ -4,6 +4,7 @@ import { SimplicateService } from '../../../providers/simplicate.service';
 import { map, startWith } from 'rxjs/operators';
 import { NG_VALUE_ACCESSOR } from '@angular/forms';
 import { BaseSelect } from '../base-input/base-select';
+import { sortBy } from 'lodash';
 
 @Component( {
   selector: 'app-service-type-select',
@@ -32,16 +33,18 @@ export class ServiceTypeSelectComponent extends BaseSelect implements OnChanges 
     this.filteredServices = this.formControl.valueChanges
       .pipe(
         startWith( '' ),
-        map( state => state ? this._filterOptions( state ) : this.types.slice() )
+        map( state => this._filterOptions( this.valueChangedSinceFocus ? state : null ) )
       );
   }
 
   ngOnChanges() {
-    this.simplicateService.getServiceDetails( this.serviceId ).subscribe( services => {
-      const types = services ? services.hour_types : [];
-      this.types = types.map( type => type.hourstype );
-      this.writeValue( this.selectedId );
-    } );
+    this.subs.push(
+      this.simplicateService.getServiceDetails( this.serviceId ).subscribe( services => {
+        const types = services ? services.hour_types : [];
+        this.types = sortBy( types.map( type => type.hourstype ), ser => ser.label );
+        this.writeValue( this.selectedId );
+      } )
+    );
   }
 
   protected _filterOptions( value: string ): Array<any> {
@@ -53,7 +56,6 @@ export class ServiceTypeSelectComponent extends BaseSelect implements OnChanges 
 
 
   writeValue( obj: any ): void {
-    console.log( obj );
     if ( this.types.length ) {
       const service = this.types.find( type => type.id === obj );
       super.writeValue( service && service.label );

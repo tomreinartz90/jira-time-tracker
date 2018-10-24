@@ -9,6 +9,6 @@ export class ServiceTypeModel extends BaseModel<ServiceTypeModel> {
   tariff: string;
 
   get cleanLabel() {
-    return this.label.replace( /<b.*b>/, '' );
+    return this.label.replace( /<?.b>/g, '' ).trim();
   }
 }

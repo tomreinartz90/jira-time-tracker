@@ -1,7 +1,7 @@
-import {Component, forwardRef, Input, OnChanges} from '@angular/core';
-import {ControlValueAccessor, NG_VALUE_ACCESSOR} from '@angular/forms';
-import {DateUtil} from '../../../utils/date.util';
-import {BaseInput} from '../base-input/base-input';
+import { Component, forwardRef, Input, OnChanges } from '@angular/core';
+import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
+import { DateUtil } from '../../../utils/date.util';
+import { BaseInput } from '../base-input/base-input';
 
 @Component( {
   selector: 'app-time-picker',
@@ -39,12 +39,19 @@ export class TimePickerComponent extends BaseInput implements OnChanges, Control
     //todo: handle change
   }
 
-  protected getId( option: any ): string {
-    return '';
-  }
-
-  protected getName( option: any ): string {
-    return '';
+  handleKeyDown( event: KeyboardEvent ) {
+    console.log( event );
+    const quantify = event.metaKey || event.ctrlKey || event.altKey;
+    switch ( event.code ) {
+      case 'ArrowUp':
+        event.preventDefault();
+        return this.writeValue( new Date( this.timeDate.getTime() + 1000 * 60 * (quantify ? 10 : 1) ) );
+      case 'ArrowDown':
+        event.preventDefault();
+        return this.writeValue( new Date( this.timeDate.getTime() - 1000 * 60 * (quantify ? 10 : 1) ) );
+      default:
+        return;
+    }
   }
 
   handleBlur() {

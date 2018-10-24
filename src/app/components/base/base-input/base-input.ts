@@ -4,9 +4,9 @@ export abstract class BaseInput implements ControlValueAccessor {
 
   formControl = new FormControl();
 
-  onChange;
+  onChange: Function;
 
-  registerOnChange( fn: any ): void {
+  registerOnChange( fn: Function ): void {
     this.onChange = fn;
   }
 

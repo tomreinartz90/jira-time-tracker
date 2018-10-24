@@ -5,6 +5,7 @@ import { SimplicateService } from '../../../providers/simplicate.service';
 import { NG_VALUE_ACCESSOR } from '@angular/forms';
 import { ProjectServiceModel } from '../../../domain/project-service.model';
 import { BaseSelect } from '../base-input/base-select';
+import { sortBy } from 'lodash';
 
 @Component( {
   selector: 'app-project-service-select',
@@ -33,20 +34,22 @@ export class ProjectServiceSelectComponent extends BaseSelect implements OnChang
     this.filteredServices = this.formControl.valueChanges
       .pipe(
         startWith( '' ),
-        map( state => state ? this._filterOptions( state ) : this.services.slice() )
+        map( state => this._filterOptions( this.valueChangedSinceFocus ? state : null ) )
       );
   }
 
   ngOnChanges() {
-    this.simplicateService.getProjectSerices( this.projectId ).subscribe( services => {
-      this.services = services;
-      this.writeValue( this.selectedServiceId );
-    } );
+    this.subs.push(
+      this.simplicateService.getProjectSerices( this.projectId ).subscribe( services => {
+        this.services = sortBy( services, ( proj ) => proj.cleanName );
+        this.writeValue( this.selectedServiceId );
+      } )
+    );
   }
 
   protected _filterOptions( value: string ): Array<ProjectServiceModel> {
     if ( value ) {
-      return this.services.filter( options => options.name.toLowerCase().includes( value.toLowerCase() ) );
+      return this.services.filter( options => options.cleanName.toLowerCase().includes( value.toLowerCase() ) );
     }
     return this.services;
   }

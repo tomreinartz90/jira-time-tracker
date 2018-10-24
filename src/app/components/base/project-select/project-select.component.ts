@@ -5,6 +5,7 @@ import { map, startWith } from 'rxjs/operators';
 import { SimplicateService } from '../../../providers/simplicate.service';
 import { NG_VALUE_ACCESSOR } from '@angular/forms';
 import { BaseSelect } from '../base-input/base-select';
+import { sortBy } from 'lodash';
 
 @Component( {
   selector: 'app-project-select',
@@ -29,15 +30,17 @@ export class ProjectSelectComponent extends BaseSelect implements OnInit {
     this.filteredProjects = this.formControl.valueChanges
       .pipe(
         startWith( '' ),
-        map( state => state ? this._filterOptions( state ) : this.projects.slice() )
+        map( state => this._filterOptions( this.valueChangedSinceFocus ? state : null ) )
       );
   }
 
   ngOnInit() {
-    this.simplicateService.getEmployeeProjects().subscribe( projects => {
-      this.projects = projects;
-      this.writeValue( this.selectedProjectId );
-    } );
+    this.subs.push(
+      this.simplicateService.getEmployeeProjects().subscribe( projects => {
+        this.projects = sortBy( projects, ( proj ) => proj.cleanName );
+        this.writeValue( this.selectedProjectId );
+      } )
+    );
   }
 
   protected getId( option: ProjectModel ): string {
@@ -45,11 +48,14 @@ export class ProjectSelectComponent extends BaseSelect implements OnInit {
   }
 
   protected getName( option: ProjectModel ): string {
-    return option.cleanName;
+    return option.project_name;
   }
 
   protected _filterOptions( value: string ): Array<ProjectModel> {
-    return this.projects.filter( options => options.name.toLowerCase().includes( value.toLowerCase() ) );
+    if ( value ) {
+      return this.projects.filter( options => options.cleanName.toLowerCase().includes( value.toLowerCase() ) );
+    }
+    return this.projects;
   }
 
 

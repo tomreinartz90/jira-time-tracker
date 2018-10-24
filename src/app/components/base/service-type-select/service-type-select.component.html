@@ -5,6 +5,7 @@
          placeholder="Type"
          [formControl]="formControl"
          (blur)="handleBlur()"
+         appSelectOnFocus
          [matAutocomplete]="auto">
   <mat-autocomplete #auto="matAutocomplete">
     <mat-option *ngFor="let option of filteredServices | async" [value]="option.label">
