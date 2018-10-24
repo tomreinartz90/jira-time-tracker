@@ -154,3 +154,13 @@ h1, h2, h3, h4, h5, h6 {
 .mat-form-field-infix {
   width: 100% !important;
 }
+
+.mat-datepicker-dialog {
+  max-width: none!important;
+  width: 100%;
+  align-self: flex-start;
+
+  .mat-calendar {
+    margin: 0 auto;
+  }
+}
