@@ -16,8 +16,10 @@ function createWindow() {
     x: 0,
     y: 0,
     width: 400,
-    height: 600,
-    resizable: false,
+    minWidth: 300,
+    maxWidth: 450,
+    minHeight: 600,
+    resizable: true,
     skipTaskbar: false,
     title: 'Simplicate Time Tracker'
   });
