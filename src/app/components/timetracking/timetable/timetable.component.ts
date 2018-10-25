@@ -14,10 +14,10 @@ import { DateUtil } from '../../../utils/date.util';
 export class TimetableComponent {
 
   @Input()
-  groupedHours: { [key: string]: Array<any> } = {};
+  groupedHours: { [key: string]: Array<HourModel> } = {};
 
   @Input()
-  days: Array<any> = [];
+  days: Array<string> = [];
 
   @Input()
   activeDate: Date;
@@ -30,7 +30,7 @@ export class TimetableComponent {
 
   showTimeDetails( item: HourModel, newTimer: boolean = false ) {
     const activeTimer = this.simplicateService.getActiveTimer();
-    console.log(activeTimer);
+    console.log( activeTimer );
     this.bottomSheet.open( TimeDetailsSheetComponent, {
       data: {
         hour: item,
@@ -110,5 +110,14 @@ export class TimetableComponent {
       return this.groupedHours[this.days[0]].map( hour => hour.hours ).reduce( ( previousValue, currentValue ) => previousValue + currentValue, 0 );
     }
     return 0;
+  }
+
+  hasGap( i: number ) {
+    if ( i > 0 && this.groupedHours && this.days.length && this.groupedHours[this.days[0]][i - 1] ) {
+      const curr = this.groupedHours[this.days[0]][i].start_date;
+      const prev = this.groupedHours[this.days[0]][i - 1].end_date;
+      // max 10 sec between two items
+      return (curr.getTime() - prev.getTime() > 1000 * 10);
+    }
   }
 }
