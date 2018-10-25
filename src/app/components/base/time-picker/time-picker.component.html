@@ -3,6 +3,8 @@
          matInput
          [placeholder]="placeholder"
          [formControl]="formControl"
+         appSelectOnFocus
+         (keydown)="handleKeyDown($event)"
          (blur)="handleBlur()"
   >
 </mat-form-field>

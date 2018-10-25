@@ -45,6 +45,7 @@ import {ProjectServiceSelectComponent} from './components/base/project-service-s
 import {ServiceTypeSelectComponent} from './components/base/service-type-select/service-type-select.component';
 import { MsToTimePipe } from './components/base/ms-to-time.pipe';
 import { HoursToMsPipe } from './components/base/hours-to-ms.pipe';
+import { SelectOnFocusDirective } from './components/base/select-on-focus.directive';
 
 // AoT requires an exported function for factories
 export function HttpLoaderFactory(http: HttpClient) {
@@ -82,6 +83,7 @@ const matModules = [
     ServiceTypeSelectComponent,
     MsToTimePipe,
     HoursToMsPipe,
+    SelectOnFocusDirective,
   ],
   imports: [
     BrowserModule,

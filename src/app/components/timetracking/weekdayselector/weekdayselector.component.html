@@ -1,6 +1,9 @@
 <mat-toolbar>
   <div *ngIf="initials" class="user">{{initials}}</div>
-  <h3>{{activeDate | date:'EE MMM d'}}</h3>
+  <h3>
+    <span *ngIf="isActiveDateToday">Today</span>
+    <span *ngIf="!isActiveDateToday">{{activeDate | date:'EE MMM d'}}</span>
+  </h3>
 
   <input [ngModel]="activeDate" (ngModelChange)="updateDate($event)" [matDatepicker]="picker">
   <button mat-icon-button (click)="prev()">
