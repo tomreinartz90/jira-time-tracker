@@ -35,7 +35,7 @@ import {
   MatInputModule,
   MatListModule,
   MatNativeDateModule,
-  MatToolbarModule
+  MatToolbarModule, MatTooltipModule
 } from '@angular/material';
 import {TimeDetailsSheetComponent} from './components/timetracking/time-details-sheet/time-details-sheet.component';
 import {TimePickerComponent} from './components/base/time-picker/time-picker.component';
@@ -65,6 +65,7 @@ const matModules = [
   MatNativeDateModule,
   MatAutocompleteModule,
   MatIconModule,
+  MatTooltipModule
 ];
 
 @NgModule({

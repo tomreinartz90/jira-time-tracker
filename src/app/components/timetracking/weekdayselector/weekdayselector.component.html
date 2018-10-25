@@ -3,7 +3,7 @@
     <div *ngIf="initials" class="user">{{initials}}</div>
     <div class="name">Timesheet</div>
     <input [ngModel]="activeDate" (ngModelChange)="updateDate($event)" [matDatepicker]="picker">
-    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+    <mat-datepicker-toggle matSuffix [for]="picker" matTooltip="Select date"></mat-datepicker-toggle>
     <mat-datepicker touchUi #picker></mat-datepicker>
   </mat-toolbar-row>
   <mat-toolbar-row>
@@ -12,10 +12,10 @@
       <span *ngIf="!isActiveDateToday">{{activeDate | date:'EE MMM d'}}</span>
     </h3>
 
-    <button mat-icon-button (click)="prev()">
+    <button mat-icon-button (click)="prev()" matTooltip="Previous day">
       <mat-icon>chevron_left</mat-icon>
     </button>
-    <button mat-icon-button (click)="next()">
+    <button mat-icon-button (click)="next()" matTooltip="Next day">
       <mat-icon>chevron_right</mat-icon>
     </button>
 
