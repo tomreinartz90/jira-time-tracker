@@ -10,6 +10,7 @@ import {DateUtil} from '../../../utils/date.util';
 export class TimetrackingComponent implements OnInit {
   groupedHours: any;
   hours: any;
+  timer: string;
   days: string[];
 
   activeDate = new Date();
@@ -26,6 +27,7 @@ export class TimetrackingComponent implements OnInit {
     this.active = true;
     this.getEmployeeHours();
     this.getEmployee();
+    this.getTimer();
     this.simplicate.onUpdateHour.subscribe(() => {
       this.getEmployeeHours();
     });
@@ -49,9 +51,16 @@ export class TimetrackingComponent implements OnInit {
     );
   }
 
+  getTimer() {
+    this.timer = this.simplicate.getActiveTimer();
+
+    this.simplicate.onUpdateTimer.subscribe( resp => {
+      this.timer = resp;
+    })
+  }
+
   setActiveDate(date: Date) {
     this.activeDate = date;
     this.getEmployeeHours();
   }
-
 }

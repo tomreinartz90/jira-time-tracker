@@ -8,9 +8,9 @@
 
       <app-service-type-select [serviceId]="projectserviceId" formControlName="type"></app-service-type-select>
       <div class="flex time">
-        <app-time-picker formControlName="startTime" [timeDate]="data.start_date" placeholder="Start Time"></app-time-picker>
+        <app-time-picker formControlName="startTime" [timeDate]="data.hour.start_date" placeholder="Start Time"></app-time-picker>
 
-        <app-time-picker formControlName="endTime" [timeDate]="data.end_date" placeholder="End Time"></app-time-picker>
+        <app-time-picker *ngIf="!data.isTimer" formControlName="endTime" [timeDate]="data.hour.end_date" placeholder="End Time"></app-time-picker>
       </div>
 
       <mat-form-field class="full-width">
@@ -19,10 +19,19 @@
     </mat-card-content>
 
     <mat-card-actions>
-      <button type="submit" *ngIf="data && data.id" (click)="delete()" mat-stroked-button color="warn">delete</button>
-      <div class="spacer"></div>
-      <!--<button type="submit" [disabled]="!timeForm.valid" (click)="onSubmit(true)" mat-stroked-button color="accent">Save and next</button>-->
-      <button type="submit" [disabled]="!timeForm.valid" (click)="onSubmit()" mat-raised-button color="accent">Save</button>
+
+      <ng-container *ngIf="!data.isTimer">
+          <button type="submit" *ngIf="data && data.hour.id" (click)="delete()" mat-stroked-button color="warn">delete</button>
+          <div class="spacer"></div>
+          <!--<button type="submit" [disabled]="!timeForm.valid" (click)="onSubmit(true)" mat-stroked-button color="accent">Save and next</button>-->
+          <button type="submit" [disabled]="!timeForm.valid" (click)="onSubmit()" mat-raised-button color="accent">Save</button>
+      </ng-container>
+
+      <ng-container *ngIf="data.isTimer">
+        <button *ngIf="!isActiveTimer" type="submit" [disabled]="!timeForm.valid" (click)="onSubmit()" mat-raised-button color="accent">Start timer</button>
+        <button *ngIf="isActiveTimer" type="button" [disabled]="!timeForm.valid" (click)="onTimerStop()" mat-raised-button color="accent">Stop timer</button>
+      </ng-container>
+
     </mat-card-actions>
 
   </form>

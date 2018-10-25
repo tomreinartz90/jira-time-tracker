@@ -12,6 +12,8 @@ export class TimetableitemComponent implements OnInit {
   @Input()
   item: any = {};
 
+  @Input()
+  timer: string;
 
   constructor(private simplicate: SimplicateService) {
   }
@@ -19,7 +21,9 @@ export class TimetableitemComponent implements OnInit {
   ngOnInit() {
   }
 
-
+  get isTimer() {
+    return this.timer === this.item.id;
+  }
 
   handleInputBlur(event) {
     const value = event.currentTarget.value;

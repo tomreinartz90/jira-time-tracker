@@ -3,6 +3,7 @@ import {fadeInContent, MatBottomSheet} from '@angular/material';
 import {TimeDetailsSheetComponent} from '../time-details-sheet/time-details-sheet.component';
 import {HourModel} from '../../../domain/hour.model';
 import {SimplicateService} from '../../../providers/simplicate.service';
+import {DateUtil} from '../../../utils/date.util';
 
 @Component({
   selector: 'app-timetable',
@@ -21,11 +22,21 @@ export class TimetableComponent {
   @Input()
   activeDate: Date;
 
+  @Input()
+  timer: string;
+
   constructor(private bottomSheet: MatBottomSheet, public simplicateService: SimplicateService) {
   }
 
-  showTimeDetails(item) {
-    this.bottomSheet.open(TimeDetailsSheetComponent, {data: item});
+  showTimeDetails(item: HourModel, newTimer: boolean = false) {
+    const activeTimer = this.simplicateService.getActiveTimer();
+
+    this.bottomSheet.open(TimeDetailsSheetComponent, {
+      data: {
+        hour: item,
+        isTimer: newTimer || item.id === activeTimer
+      }
+    });
   }
 
 
@@ -43,35 +54,48 @@ export class TimetableComponent {
     }
   }
 
-  addItemToList(day: string) {
+  addItemToList(day: string, isTimer: boolean = false) {
     const lastItem = this.groupedHours[day][this.groupedHours[day].length - 1] || {};
     const newItem: HourModel = HourModel.fromJSON(lastItem);
     newItem.id = null;
     newItem.start_date = lastItem.end_date;
-    newItem.end_date = new Date(newItem.start_date.getTime() + (30 * 60 * 1000));
+
+    if (isTimer) {
+      newItem.end_date = DateUtil.UTCDateFromLocalDate(new Date());
+    } else {
+      newItem.end_date = DateUtil.addTimeInMilliseconds(newItem.start_date, 30 * 60 * 1000);
+    }
+
     newItem.hours = 0;
     newItem.note = null;
     newItem.approvalstatus = null;
     newItem.is_time_defined = true;
-    this.showTimeDetails(newItem);
+
+    this.showTimeDetails(newItem, isTimer);
   }
 
-  addNewItemToList() {
+  addNewItemToList(isTimer: boolean = false) {
     const item = new HourModel();
     item.employee.id = this.simplicateService.employee.id;
     item.start_date = new Date(this.activeDate.getTime());
     item.start_date.setUTCHours(8, 30, 0);
-    item.end_date = new Date(item.start_date.getTime() + (30 * 60 * 1000));
+
+    if (isTimer) {
+      item.end_date = DateUtil.UTCDateFromLocalDate(new Date());
+    } else {
+      item.end_date = DateUtil.addTimeInMilliseconds(item.start_date, 30 * 60 * 1000);
+    }
+
     // item.end_date = null;
     item.hours = 0;
     item.note = null;
     item.approvalstatus = null;
     item.is_time_defined = true;
-    this.showTimeDetails(item);
+
+    this.showTimeDetails(item, isTimer);
   }
 
   getTotalHours(hours: Array<HourModel>): number {
     return hours.map(hour => hour.hours).reduce((previousValue, currentValue) => previousValue + currentValue, 0);
   }
-
 }

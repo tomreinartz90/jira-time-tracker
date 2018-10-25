@@ -1,8 +1,8 @@
 import {HttpClient, HttpHeaders, HttpParams} from '@angular/common/http';
 import {Injectable} from '@angular/core';
-import {map, tap} from 'rxjs/operators';
+import {map, tap, filter, mergeMap} from 'rxjs/operators';
 import {HourModel} from '../domain/hour.model';
-import {NEVER, Observable, of, Subject} from 'rxjs';
+import {NEVER, Observable, of, Subject, interval} from 'rxjs';
 import {Router} from '@angular/router';
 import {ProjectModel} from '../domain/project.model';
 import {ProjectServiceModel} from '../domain/project-service.model';
@@ -18,9 +18,13 @@ interface AuthData {
 export class SimplicateService {
 
   onUpdateHour: Subject<boolean> = new Subject();
+  onUpdateTimer: Subject<string> = new Subject();
 
-  constructor(private http: HttpClient,
-              private router: Router) {
+  constructor(
+    private http: HttpClient,
+    private router: Router
+  ) {
+    this.runTimer();
   }
 
   get employee(): { id: string } {
@@ -112,6 +116,20 @@ export class SimplicateService {
     );
   }
 
+  private runTimer() {
+    interval(1000 * 30).pipe(
+      map(() => this.getActiveTimer()),
+      filter((timer) => !!timer),
+      mergeMap((timer) => this.getHourById(timer)),
+      map((hour) => {
+        const now = new Date();
+        hour.end_date.setUTCHours(now.getHours(), now.getMinutes(), now.getSeconds());
+        return hour;
+      }),
+      mergeMap((hour) => this.updateEmployeeHours(hour)),
+      tap((resp: any) => this.updateActiveTimer(resp.data.id))
+    ).subscribe();
+  }
 
   getCurrentEmployeeStats() {
     let params = new HttpParams();
@@ -153,6 +171,14 @@ export class SimplicateService {
         map((resp: Array<any>) => resp.map(
           item => HourModel.fromJSON(item)
         ))
+      );
+  }
+
+  getHourById(id: string) {
+    return this.get<HourModel>(`api/v2/hours/hours/${id}`)
+      .pipe(
+        map((resp: any) => resp.data),
+        map((resp: any) => HourModel.fromJSON(resp))
       );
   }
 
@@ -208,5 +234,25 @@ export class SimplicateService {
     );
   }
 
+  getActiveTimer() {
+    return localStorage.getItem('timer');
+  }
 
+  setActiveTimer(timer: HourModel) {
+    return this.addNewEmployeeHours(timer).pipe(
+      tap((resp: any) => {
+        this.updateActiveTimer(resp.data.id);
+      })
+    );
+  }
+
+  updateActiveTimer(timerId: string) {
+    localStorage.setItem('timer', timerId);
+
+    this.onUpdateTimer.next(timerId);
+  }
+
+  clearTimer() {
+    this.updateActiveTimer(null);
+  }
 }

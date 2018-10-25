@@ -36,6 +36,7 @@
   .time {
     font-size: 0.8rem;
     color: #676767;
+
     .start {
       position: relative;
       &:after {
@@ -45,6 +46,17 @@
         border-left: thin solid #b8b8b8;
         margin: 0.2rem 49%;
       }
+    }
+
+    .end.is-timing {
+      color: #FF2351;
+    }
+
+    .timer {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-top: 1rem;
     }
   }
 
