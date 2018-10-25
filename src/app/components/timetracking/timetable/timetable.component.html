@@ -1,3 +1,9 @@
+<div class="row progress-container">
+  <div class="progress">
+    <span [style.width.%]="getTotalHours() / 8 * 100"></span>
+  </div>
+  <div class="total-time"><strong>{{ (getTotalHours(groupedHours[days[0]]) | hoursToMs) | msToTime:true }} / {{ 8 | hoursToMs | msToTime}}</strong></div>
+</div>
 <div class="row">
   <mat-card *ngIf="days && days.length">
     <mat-card-content>
@@ -6,13 +12,13 @@
     </mat-card-content>
 
     <div class="bottom-bar">
-      <div class="total-time"><strong>{{ (getTotalHours(groupedHours[days[0]]) | hoursToMs) | msToTime:true }}</strong></div>
-      <button (click)="addItemToList(days[0], true)" mat-flat-button color="accent">
-          <mat-icon>timer</mat-icon>
+
+      <button (click)="addItemToList(days[0])" mat-flat-button color="accent">
+        <mat-icon>add</mat-icon><span>Add time</span>
       </button>
       <div class="spacer"></div>
-      <button (click)="addItemToList(days[0])" mat-flat-button color="accent">
-        <mat-icon>add</mat-icon>
+      <button (click)="startStopTimer(days[0])" mat-flat-button color="black">
+        <mat-icon>{{timer ? 'stop' : 'play_arrow'}}</mat-icon>
       </button>
     </div>
   </mat-card>
@@ -31,13 +37,15 @@
       </div>
     </mat-card-content>
     <div class="bottom-bar">
-      <div class="total-time"><strong>0 Hours</strong></div>
-      <button (click)="addNewItemToList(true)" mat-flat-button color="accent">
-          <mat-icon>timer</mat-icon>
-      </button>
       <button (click)="addNewItemToList()" mat-flat-button color="accent">
-        <mat-icon>add</mat-icon>
+        <mat-icon>add</mat-icon><span>Add time</span>
       </button>
+      <div class="spacer"></div>
+
+      <button (click)="startStopTimer()" mat-flat-button color="black">
+        <mat-icon>{{timer ? 'stop' : 'play_arrow'}}</mat-icon>
+      </button>
+
     </div>
   </mat-card>
 
