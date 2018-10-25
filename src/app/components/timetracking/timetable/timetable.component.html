@@ -1,12 +1,16 @@
 <div class="row">
   <mat-card *ngIf="days && days.length">
     <mat-card-content>
-      <app-timetableitem class="cell" [@fadeInContent]="'showing'" [item]="hour" *ngFor="let hour of groupedHours[days[0]]" (click)="showTimeDetails(hour)">
+      <app-timetableitem class="cell" [@fadeInContent]="'showing'" [item]="hour" [timer]="timer" *ngFor="let hour of groupedHours[days[0]]" (click)="showTimeDetails(hour)">
       </app-timetableitem>
     </mat-card-content>
 
     <div class="bottom-bar">
       <div class="total-time"><strong>{{ (getTotalHours(groupedHours[days[0]]) | hoursToMs) | msToTime:true }}</strong></div>
+      <button (click)="addItemToList(days[0], true)" mat-flat-button color="accent">
+          <mat-icon>timer</mat-icon>
+      </button>
+      <div class="spacer"></div>
       <button (click)="addItemToList(days[0])" mat-flat-button color="accent">
         <mat-icon>add</mat-icon>
       </button>
@@ -28,7 +32,9 @@
     </mat-card-content>
     <div class="bottom-bar">
       <div class="total-time"><strong>0 Hours</strong></div>
-
+      <button (click)="addNewItemToList(true)" mat-flat-button color="accent">
+          <mat-icon>timer</mat-icon>
+      </button>
       <button (click)="addNewItemToList()" mat-flat-button color="accent">
         <mat-icon>add</mat-icon>
       </button>

@@ -65,4 +65,26 @@ export class DateUtil {
       seconds: seconds
     };
   }
+
+  static UTCDateFromLocalDate(date: Date): Date {
+    const copy = new Date(date.getTime());
+
+    copy.setUTCFullYear(date.getFullYear());
+    copy.setUTCMonth(date.getMonth());
+    copy.setUTCDate(date.getDate());
+    copy.setUTCHours(date.getHours());
+    copy.setUTCMinutes(date.getMinutes());
+    copy.setUTCSeconds(date.getSeconds());
+    copy.setUTCMilliseconds(date.getMilliseconds());
+
+    return copy;
+  }
+
+  static addTimeInMilliseconds(date: Date, add: number): Date {
+    return new Date(date.getTime() + add);
+  }
+
+  static subtractTimeInMilliseconds(date: Date, subtract: number): Date {
+    return this.addTimeInMilliseconds(date, -Math.abs(subtract));
+  }
 }
