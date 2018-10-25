@@ -47,6 +47,7 @@ import { MsToTimePipe } from './components/base/ms-to-time.pipe';
 import { HoursToMsPipe } from './components/base/hours-to-ms.pipe';
 import { TimerComponent } from './components/base/timer/timer.component';
 import { SelectOnFocusDirective } from './components/base/select-on-focus.directive';
+import { StringToHexColorPipe } from './components/base/string-to-hex-color.pipe';
 
 // AoT requires an exported function for factories
 export function HttpLoaderFactory(http: HttpClient) {
@@ -86,6 +87,7 @@ const matModules = [
     HoursToMsPipe,
     TimerComponent,
     SelectOnFocusDirective,
+    StringToHexColorPipe,
   ],
   imports: [
     BrowserModule,

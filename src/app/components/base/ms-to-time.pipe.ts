@@ -6,9 +6,7 @@ import {DateUtil} from '../../utils/date.util';
 })
 export class MsToTimePipe implements PipeTransform {
   transform(value: number, fullName?: any): any {
-    const hourLabel = fullName ? ' Hours' : 'h';
-    const minuteLabel = fullName ? ' Minutes' : 'm';
     const time = DateUtil.milisToDHMS(value || 0);
-    return `${time.hour > 0 ? `${time.hour}${hourLabel}` : ''} ${time.minute > 0 ? `${time.minute}${minuteLabel}` : ''}`;
+    return `${time.hour > 9 ? time.hour : `0${time.hour}`}:${time.minute > 9 ? time.minute : `0${time.minute}`}h`;
   }
 }

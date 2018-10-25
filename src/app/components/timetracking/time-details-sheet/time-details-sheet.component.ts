@@ -31,7 +31,7 @@ export class TimeDetailsSheetComponent implements OnInit, OnDestroy {
   get isActiveTimer() {
     const activeTimer = this.simplicateService.getActiveTimer();
 
-    return this.data.isTimer && this.data.hour.id === activeTimer;
+    return this.data.isTimer && activeTimer && this.data.hour.id === activeTimer;
   }
 
   initForm( data: HourModel ) {

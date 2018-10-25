@@ -1,38 +1,39 @@
+<form class="example-container" [formGroup]="timeForm">
+  <div tabindex="0"></div>
+  <mat-card-content>
 
-  <form class="example-container" [formGroup]="timeForm">
-    <mat-card-content>
+    <app-project-select formControlName="project"></app-project-select>
 
-      <app-project-select formControlName="project"></app-project-select>
+    <app-project-service-select [projectId]="projectId" formControlName="projectservice"></app-project-service-select>
 
-      <app-project-service-select [projectId]="projectId" formControlName="projectservice"></app-project-service-select>
+    <app-service-type-select [serviceId]="projectserviceId" formControlName="type"></app-service-type-select>
+    <div class="flex time">
+      <app-time-picker formControlName="startTime" [timeDate]="data.hour.start_date" placeholder="Start Time"></app-time-picker>
 
-      <app-service-type-select [serviceId]="projectserviceId" formControlName="type"></app-service-type-select>
-      <div class="flex time">
-        <app-time-picker formControlName="startTime" [timeDate]="data.hour.start_date" placeholder="Start Time"></app-time-picker>
+      <app-time-picker *ngIf="!data.isTimer" formControlName="endTime" [timeDate]="data.hour.end_date" placeholder="End Time"></app-time-picker>
+    </div>
 
-        <app-time-picker *ngIf="!data.isTimer" formControlName="endTime" [timeDate]="data.hour.end_date" placeholder="End Time"></app-time-picker>
-      </div>
+    <mat-form-field class="full-width">
+      <textarea matInput placeholder="Notes" formControlName="note"></textarea>
+    </mat-form-field>
+  </mat-card-content>
 
-      <mat-form-field class="full-width">
-        <textarea matInput placeholder="Notes" formControlName="note"></textarea>
-      </mat-form-field>
-    </mat-card-content>
+  <mat-card-actions>
 
-    <mat-card-actions>
+    <ng-container *ngIf="!data.isTimer">
+      <button type="submit" *ngIf="data && data.hour.id" (click)="delete()" mat-stroked-button color="warn">delete</button>
+      <div class="spacer"></div>
+      <!--<button type="submit" [disabled]="!timeForm.valid" (click)="onSubmit(true)" mat-stroked-button color="accent">Save and next</button>-->
+      <button type="submit" [disabled]="!timeForm.valid" (click)="onSubmit()" mat-raised-button color="accent">Save</button>
+    </ng-container>
 
-      <ng-container *ngIf="!data.isTimer">
-          <button type="submit" *ngIf="data && data.hour.id" (click)="delete()" mat-stroked-button color="warn">delete</button>
-          <div class="spacer"></div>
-          <!--<button type="submit" [disabled]="!timeForm.valid" (click)="onSubmit(true)" mat-stroked-button color="accent">Save and next</button>-->
-          <button type="submit" [disabled]="!timeForm.valid" (click)="onSubmit()" mat-raised-button color="accent">Save</button>
-      </ng-container>
+    <ng-container *ngIf="data.isTimer">
+      <div class="spacer"></div>
+      <button *ngIf="!isActiveTimer" type="submit" [disabled]="!timeForm.valid" (click)="onSubmit()" mat-raised-button color="accent">Start timer</button>
+      <button *ngIf="isActiveTimer" type="button" [disabled]="!timeForm.valid" (click)="onTimerStop()" mat-raised-button color="accent">Stop timer</button>
+    </ng-container>
 
-      <ng-container *ngIf="data.isTimer">
-        <button *ngIf="!isActiveTimer" type="submit" [disabled]="!timeForm.valid" (click)="onSubmit()" mat-raised-button color="accent">Start timer</button>
-        <button *ngIf="isActiveTimer" type="button" [disabled]="!timeForm.valid" (click)="onTimerStop()" mat-raised-button color="accent">Stop timer</button>
-      </ng-container>
+  </mat-card-actions>
 
-    </mat-card-actions>
-
-  </form>
+</form>
 

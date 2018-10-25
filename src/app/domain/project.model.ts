@@ -8,6 +8,7 @@ export class ProjectModel extends BaseModel<ProjectModel> {
   project_name?: string;
   organization: OrganizationModel;
 
+
   get cleanName() {
     return this.project_name || this.name
       .replace( /<?.b>/g, '' )
