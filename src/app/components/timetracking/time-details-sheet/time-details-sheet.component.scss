@@ -22,7 +22,16 @@
 }
 
 .time {
-  margin-top: 1rem;
+  margin: 1rem 0;
+  app-time-picker {
+    width: 100%;
+    &:first-child {
+      margin-right: .5rem;
+    }
+    &:last-child {
+      margin-left: .5rem;
+    }
+  }
 }
 
 .mat-card-actions {
@@ -32,9 +41,8 @@
   }
 
   button {
-margin-left: .5rem;
+    margin-left: .5rem;
   }
-
 
 }
 
