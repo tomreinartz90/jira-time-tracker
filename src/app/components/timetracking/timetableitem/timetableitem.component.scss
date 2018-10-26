@@ -3,25 +3,11 @@
   cursor: pointer;
   margin: 0 -1rem;
   padding: 1rem;
-  transition: .2s;
+  transition: .5s;
   position: relative;
-  &:before {
-    content: '';
-    display: block;
-    position: absolute;
-    left: 0;
-    top: 0;
-    bottom: 0;
-    right: 100%;
-    background-color: rgba(white, 0);
-    transition: all .35s;
-  }
+  background-color: rgba(white, 0);
   &:hover {
-    &:before {
-      right: 0;
-      background-color: rgba(white, 0.05);
-
-    }
+    background-color: rgba(white, 0.1);
   }
 }
 

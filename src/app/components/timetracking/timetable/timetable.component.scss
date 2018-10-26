@@ -31,7 +31,7 @@
   }
 
   .mat-black {
-    background-color: black;
+    background-color: #1D1D1D;
     color: #fff;
     border-radius: 2rem;
     line-height: 1;
@@ -103,4 +103,14 @@
 
 .has-gap {
   margin-top: 2.5rem;
+  &:before {
+    height: 2.5rem;
+    content: '';
+    display: block;
+    position: absolute;
+    top: -2.5rem;
+    left: 0;
+    right: 0;
+    background-image: url(/assets/strokes.svg);
+  }
 }
