@@ -17,7 +17,7 @@ function createWindow() {
     y: 0,
     width: 400,
     minWidth: 300,
-    maxWidth: 450,
+    maxWidth: 600,
     minHeight: 600,
     resizable: true,
     skipTaskbar: false,
