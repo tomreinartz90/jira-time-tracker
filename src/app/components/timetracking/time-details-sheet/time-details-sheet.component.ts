@@ -19,12 +19,19 @@ export class TimeDetailsSheetComponent implements OnInit, OnDestroy {
   const;
   subs: Array<Subscription> = [];
 
-  constructor( private bottomSheetRef: MatBottomSheetRef<TimeDetailsSheetComponent>,
-               @Inject( MAT_BOTTOM_SHEET_DATA ) public data: HourModel,
-               public fb: FormBuilder,
-               private simplicateService: SimplicateService ) {
-    this.initForm( data );
+  constructor(
+    private bottomSheetRef: MatBottomSheetRef<TimeDetailsSheetComponent>,
+    @Inject(MAT_BOTTOM_SHEET_DATA) public data: { hour: HourModel, isTimer: boolean },
+    public fb: FormBuilder,
+    private simplicateService: SimplicateService
+  ) {
+      this.initForm(data.hour);
+  }
 
+  get isActiveTimer() {
+    const activeTimer = this.simplicateService.getActiveTimer();
+
+    return this.data.isTimer && activeTimer && this.data.hour.id === activeTimer;
   }
 
   initForm( data: HourModel ) {
@@ -65,14 +72,14 @@ export class TimeDetailsSheetComponent implements OnInit, OnDestroy {
   }
 
   delete() {
-    this.simplicateService.deleteEmployeeHours( this.data.id ).subscribe( () => {
+    this.simplicateService.deleteEmployeeHours( this.data.hour.id ).subscribe( () => {
       this.bottomSheetRef.dismiss();
     } );
   }
 
   onSubmit( reInit = false ) {
     const { projectservice, project, type, startTime, endTime, note } = this.timeForm.value;
-    const payload = HourModel.fromJSON( this.data );
+    const payload = HourModel.fromJSON(this.data.hour);
     let action;
 
     payload.start_date = startTime;
@@ -82,7 +89,9 @@ export class TimeDetailsSheetComponent implements OnInit, OnDestroy {
     payload.projectservice.id = projectservice;
     payload.type.id = type;
 
-    if ( this.data.id ) {
+    if (this.data.isTimer) {
+      action = this.simplicateService.setActiveTimer(payload);
+    } else if (this.data.hour.id) {
       action = this.simplicateService.updateEmployeeHours( payload );
     } else {
       action = this.simplicateService.addNewEmployeeHours( payload );
@@ -101,4 +110,8 @@ export class TimeDetailsSheetComponent implements OnInit, OnDestroy {
     } );
   }
 
+  onTimerStop() {
+    this.simplicateService.clearTimer();
+    this.bottomSheetRef.dismiss();
+  }
 }

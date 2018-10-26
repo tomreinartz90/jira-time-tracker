@@ -35,7 +35,7 @@ import {
   MatInputModule,
   MatListModule,
   MatNativeDateModule,
-  MatToolbarModule
+  MatToolbarModule, MatTooltipModule
 } from '@angular/material';
 import {TimeDetailsSheetComponent} from './components/timetracking/time-details-sheet/time-details-sheet.component';
 import {TimePickerComponent} from './components/base/time-picker/time-picker.component';
@@ -45,7 +45,9 @@ import {ProjectServiceSelectComponent} from './components/base/project-service-s
 import {ServiceTypeSelectComponent} from './components/base/service-type-select/service-type-select.component';
 import { MsToTimePipe } from './components/base/ms-to-time.pipe';
 import { HoursToMsPipe } from './components/base/hours-to-ms.pipe';
+import { TimerComponent } from './components/base/timer/timer.component';
 import { SelectOnFocusDirective } from './components/base/select-on-focus.directive';
+import { StringToHexColorPipe } from './components/base/string-to-hex-color.pipe';
 
 // AoT requires an exported function for factories
 export function HttpLoaderFactory(http: HttpClient) {
@@ -63,6 +65,7 @@ const matModules = [
   MatNativeDateModule,
   MatAutocompleteModule,
   MatIconModule,
+  MatTooltipModule
 ];
 
 @NgModule({
@@ -83,7 +86,9 @@ const matModules = [
     ServiceTypeSelectComponent,
     MsToTimePipe,
     HoursToMsPipe,
+    TimerComponent,
     SelectOnFocusDirective,
+    StringToHexColorPipe,
   ],
   imports: [
     BrowserModule,

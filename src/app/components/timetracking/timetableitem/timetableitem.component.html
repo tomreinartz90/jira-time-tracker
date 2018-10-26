@@ -1,13 +1,16 @@
+<div class="overlay" [style.background]="item.project.name | stringToHexColor"></div>
 <div class="container">
   <div class="time">
-    <div class="start">{{getTime(item.start_date) }}</div>
-    <div class="end">{{getTime(item.end_date)}}</div>
+    <div class="start">{{getTime(item.start_date) }}h</div>
+    <div [ngClass]="{'end': true, 'is-timing': isTimer}">{{getTime(item.end_date)}}h</div>
+    <div *ngIf="isTimer" class="timer">
+      <app-timer></app-timer>
+    </div>
   </div>
   <div class="content">
-    <h3 mat-line>{{item.project.name}}</h3>
-    <div mat-line>{{item.projectservice.name}} / {{item.type.label}}</div>
-    <div class="note"><i>{{item.note}}</i></div>
-
+    <h3 [style.color]="item.project.name | stringToHexColor">{{item.project.name}}</h3>
+    <div class="service">{{item.projectservice.name}} / {{item.type.label}}</div>
+    <div class="note">{{item.note}}</div>
   </div>
   <div class="totalTime">
     <div class="duration">

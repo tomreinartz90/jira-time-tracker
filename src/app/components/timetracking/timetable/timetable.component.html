@@ -1,14 +1,34 @@
+<div class="row progress-container">
+  <div class="progress">
+    <span [style.width.%]="getTotalHours() / 8 * 100"></span>
+  </div>
+  <div class="total-time"><strong>{{ (getTotalHours() | hoursToMs) | msToTime:true }} / {{ 8 | hoursToMs | msToTime}}</strong></div>
+</div>
 <div class="row">
   <mat-card *ngIf="days && days.length">
     <mat-card-content>
-      <app-timetableitem class="cell" [@fadeInContent]="'showing'" [item]="hour" *ngFor="let hour of groupedHours[days[0]]" (click)="showTimeDetails(hour)">
+      <app-timetableitem
+        *ngFor="let hour of groupedHours[days[0]]; let i = index"
+        class="cell"
+        [class.has-gap]="hasGap(i)"
+        [@fadeInContent]="'showing'"
+        [item]="hour"
+        [timer]="timer"
+        (click)="showTimeDetails(hour)">
       </app-timetableitem>
     </mat-card-content>
 
     <div class="bottom-bar">
-      <div class="total-time"><strong>{{ (getTotalHours(groupedHours[days[0]]) | hoursToMs) | msToTime:true }}</strong></div>
+
       <button (click)="addItemToList(days[0])" mat-flat-button color="accent">
         <mat-icon>add</mat-icon>
+        <span>Add time</span>
+      </button>
+      <div class="spacer"></div>
+      <button (click)="startStopTimer(days[0])" mat-flat-button color="black"
+              [matTooltip]="timer ? 'stop timer' : 'start timer'"
+      >
+        <mat-icon>{{timer ? 'stop' : 'play_arrow'}}</mat-icon>
       </button>
     </div>
   </mat-card>
@@ -27,11 +47,19 @@
       </div>
     </mat-card-content>
     <div class="bottom-bar">
-      <div class="total-time"><strong>0 Hours</strong></div>
-
       <button (click)="addNewItemToList()" mat-flat-button color="accent">
         <mat-icon>add</mat-icon>
+        <span>Add time</span>
       </button>
+      <div class="spacer"></div>
+
+      <button (click)="startStopTimer()" mat-flat-button color="black"
+              [matTooltip]="timer ? 'stop timer' : 'start timer'"
+
+      >
+        <mat-icon>{{timer ? 'stop' : 'play_arrow'}}</mat-icon>
+      </button>
+
     </div>
   </mat-card>
 

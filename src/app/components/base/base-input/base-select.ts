@@ -43,12 +43,12 @@ export abstract class BaseSelect extends BaseInput implements OnDestroy {
   handleBlur() {
     this.valueChangedSinceFocus = false;
     const state = this.formControl.value;
-    this.formControl.markAsPristine();
     if ( state ) {
       const selectedOption = this._filterOptions( state )[0];
       this.updateSelectedOption( selectedOption );
     } else {
       this.updateSelectedOption( this._filterOptions( null )[0] );
     }
+    this.formControl.markAsPristine();
   }
 }

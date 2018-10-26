@@ -2,7 +2,7 @@
 @import '~@angular/material/theming';
 
 @include mat-core();
-$primary-color: #FF2351;
+$primary-color: #FF2345;
 
 $mat-dc: (
   50: #fce4ec,
@@ -73,8 +73,8 @@ html, body {
 
   height: 100%;
   font-family: Roboto, "Helvetica Neue", sans-serif;
-  background: linear-gradient(-45deg, #000 40%, darken($primary-color, 40%) 100%);
-  color: $primary-color;
+  background-color: black;
+  color: $white-87-opacity;
   animation-delay: 4s;
   animation-duration: 1s;
 }
@@ -82,6 +82,8 @@ html, body {
 app-root {
   display: block;
   transition: .5s;
+  max-width: 100%;
+  overflow-x: hidden;
 
   app-weekdayselector {
     margin: -5rem 0 5rem;
@@ -117,16 +119,17 @@ h1, h2, h3, h4, h5, h6 {
 
 .mat-card {
   margin-bottom: 1rem;
-  background: none;
+  background-color: black;
+  color: $white-87-opacity;
 }
 
 .mat-calendar-body-selected {
-  background-color: #FF2351;
+  background-color: #FF2345;
 
 }
 
 .mat-toolbar {
-  background-color: #FF2351;
+  background-color: black;
   color: #fefefe;
 }
 
@@ -198,3 +201,7 @@ h1, h2, h3, h4, h5, h6 {
   }
 }
 
+.mat-tooltip {
+  margin: .5rem!important;
+  background-color: rgba(black, .8);
+}
