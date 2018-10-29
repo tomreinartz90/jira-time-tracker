@@ -19,6 +19,7 @@ export class SimplicateService {
 
   onUpdateHour: Subject<boolean> = new Subject();
   onUpdateTimer: Subject<string> = new Subject();
+  onUpdateApprovalStatus: Subject<boolean> = new Subject();
 
   constructor(
     private http: HttpClient,
@@ -131,12 +132,6 @@ export class SimplicateService {
     ).subscribe();
   }
 
-  getCurrentEmployeeStats() {
-    let params = new HttpParams();
-    params = params.set( 'date', new Date().toISOString() );
-    params = params.set( 'mode', 'day' );
-    return this.get( 'hours/hours/GetCurrentEmployeeStat', params );
-  }
 
   getEmployeeInfo( employeeId = this.employee.id ) {
     let params = new HttpParams();
@@ -172,6 +167,31 @@ export class SimplicateService {
           item => HourModel.fromJSON( item )
         ) )
       );
+  }
+
+  getCurrentEmployeeApprovalStatussus( startDate: Date, endDate: Date = new Date( startDate.getTime() + 86400000 ) ) {
+    const { id } = this.employee;
+    let params = new HttpParams();
+    params = params.set( 'q[employee.id]', `${id}` );
+    if ( startDate ) {
+      params = params.set( 'q[date][ge]', `${startDate.toISOString().slice( 0, 10 )}` );
+      params = params.set( 'q[date][le]', `${endDate.toISOString().slice( 0, 10 )}` );
+    }
+    params = params.set( 'mode', 'day' );
+    return this.get<any>( `api/v2/hours/approval`, params ).pipe(
+      map( ( resp: any ) => resp.data )
+    );
+  }
+
+  submitCurrentEmployeeHours( startDate: Date, endDate: Date = new Date( startDate.getTime() ) ) {
+    const postBody = {
+      employee_id: this.employee.id,
+      start_date: startDate.toISOString().slice( 0, 10 ),
+      end_date: endDate.toISOString().slice( 0, 10 )
+    };
+    return this.post( 'hours/submit', postBody ).pipe(
+      tap( ( resp: any ) => this.onUpdateApprovalStatus.next( true ) )
+    );
   }
 
   getHourById( id: string ) {

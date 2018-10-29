@@ -48,6 +48,7 @@ import { HoursToMsPipe } from './components/base/hours-to-ms.pipe';
 import { TimerComponent } from './components/base/timer/timer.component';
 import { SelectOnFocusDirective } from './components/base/select-on-focus.directive';
 import { StringToHexColorPipe } from './components/base/string-to-hex-color.pipe';
+import { ApprovalStatusComponent } from './components/timetracking/approval-status/approval-status.component';
 
 // AoT requires an exported function for factories
 export function HttpLoaderFactory(http: HttpClient) {
@@ -89,6 +90,7 @@ const matModules = [
     TimerComponent,
     SelectOnFocusDirective,
     StringToHexColorPipe,
+    ApprovalStatusComponent,
   ],
   imports: [
     BrowserModule,

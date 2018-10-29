@@ -18,6 +18,14 @@
   }
 }
 
+.mat-input-element {
+  color: black;
+}
+
+.domain {
+  color: lighten(black, 70%);
+}
+
 :host {
   .mat-card {
     background-color: #fefefe;
