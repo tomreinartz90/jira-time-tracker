@@ -12,7 +12,6 @@ export class ApprovalStatusComponent implements OnChanges {
 
   status: any = null;
 
-
   loading = true;
 
   constructor( private simplicateService: SimplicateService ) { }
@@ -23,7 +22,6 @@ export class ApprovalStatusComponent implements OnChanges {
       .subscribe( ( status ) => {
           this.status = status ? status[0] : null;
           this.loading = false;
-          console.log( this );
         }
       );
   }
