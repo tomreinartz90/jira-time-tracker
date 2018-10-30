@@ -1,11 +1,11 @@
-import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
-import { Injectable } from '@angular/core';
-import { map, tap, filter, mergeMap } from 'rxjs/operators';
-import { HourModel } from '../domain/hour.model';
-import { NEVER, Observable, of, Subject, interval } from 'rxjs';
-import { Router } from '@angular/router';
-import { ProjectModel } from '../domain/project.model';
-import { ProjectServiceModel } from '../domain/project-service.model';
+import {HttpClient, HttpHeaders, HttpParams} from '@angular/common/http';
+import {Injectable} from '@angular/core';
+import {filter, map, mergeMap, tap} from 'rxjs/operators';
+import {HourModel} from '../domain/hour.model';
+import {interval, NEVER, Observable, of, Subject} from 'rxjs';
+import {Router} from '@angular/router';
+import {ProjectModel} from '../domain/project.model';
+import {ProjectServiceModel} from '../domain/project-service.model';
 
 interface AuthData {
   authentication_key: string;
@@ -189,7 +189,7 @@ export class SimplicateService {
       start_date: startDate.toISOString().slice( 0, 10 ),
       end_date: endDate.toISOString().slice( 0, 10 )
     };
-    return this.post( 'hours/submit', postBody ).pipe(
+    return this.post( 'api/v2/hours/submit', postBody ).pipe(
       tap( ( resp: any ) => this.onUpdateApprovalStatus.next( true ) )
     );
   }

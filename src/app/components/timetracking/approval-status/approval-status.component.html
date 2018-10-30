@@ -1,3 +1,3 @@
 <span *ngIf="loading">loading</span>
 <span *ngIf="!loading && status">{{status?.approvalstatus ? status.approvalstatus.description : 'waiting for approval'}}</span>
-<button  (click)="approve()" mat-stroked-button>send for approval</button>
+<button *ngIf="!loading && !status" (click)="approve()" mat-stroked-button>send for approval</button>
