@@ -1,4 +1,4 @@
-import { Pipe, PipeTransform } from '@angular/core';
+import {Pipe, PipeTransform} from '@angular/core';
 
 @Pipe( {
   name: 'stringToHexColor'
@@ -6,10 +6,8 @@ import { Pipe, PipeTransform } from '@angular/core';
 export class StringToHexColorPipe implements PipeTransform {
 
   transform( value: any, args?: any ): any {
-    console.log(value);
     const firstLetterMatch = /[a-zA-z]/.exec( value );
     const firstLetter = firstLetterMatch ? firstLetterMatch[0].toLowerCase() : null;
-    console.log(firstLetter);
     switch ( firstLetter ) {
       case 'a':
       case 'b':
@@ -25,19 +23,19 @@ export class StringToHexColorPipe implements PipeTransform {
       case 'j':
       case 'k':
       case 'l':
-        return '#2FBA31';
+        return '#29ba4b';
       case 'm':
       case 'n':
       case 'o':
       case 'p':
       case 'q':
-        return '#2F69BA';
+        return '#2f86ba';
       case 'r':
       case 's':
       case 't':
       case 'u':
       case 'v':
-        return '#682FBA';
+        return '#9931ba';
       case 'w':
       case 'x':
       case 'y':
