@@ -4,6 +4,7 @@ import {TimeDetailsSheetComponent} from '../time-details-sheet/time-details-shee
 import {HourModel} from '../../../domain/hour.model';
 import {SimplicateService} from '../../../providers/simplicate.service';
 import {DateUtil} from '../../../utils/date.util';
+import {TrackingServiceService} from '../../../providers/tracking-service.service';
 
 @Component({
   selector: 'app-timetable',
@@ -25,12 +26,13 @@ export class TimetableComponent {
   @Input()
   timer: string;
 
-  constructor(private bottomSheet: MatBottomSheet, public simplicateService: SimplicateService) {
+  constructor(private bottomSheet: MatBottomSheet, public simplicateService: SimplicateService, private track: TrackingServiceService) {
   }
 
   showTimeDetails(item: HourModel, newTimer: boolean = false) {
     const activeTimer = this.simplicateService.getActiveTimer();
     console.log(activeTimer);
+    this.track.trackEvent('timetable', 'show-details');
     this.bottomSheet.open(TimeDetailsSheetComponent, {
       data: {
         hour: item,
@@ -56,13 +58,16 @@ export class TimetableComponent {
 
   startStopTimer(day?: string) {
     if (this.timer) {
+      this.track.trackEvent('timetable', 'stop-timer');
       this.simplicateService.clearTimer();
     } else {
       day ? this.addItemToList(day, true) : this.addNewItemToList(true);
+      this.track.trackEvent('timetable', 'start-timer');
     }
   }
 
   addItemToList(day: string, isTimer: boolean = false) {
+      this.track.trackEvent('timetable', 'add-item');
     const lastItem: HourModel = this.groupedHours[day][this.groupedHours[day].length - 1] || ({} as HourModel);
     const newItem: HourModel = HourModel.fromJSON(lastItem);
     newItem.id = null;
@@ -84,6 +89,7 @@ export class TimetableComponent {
   }
 
   addNewItemToList(isTimer: boolean = false) {
+      this.track.trackEvent('timetable', 'add-new-item');
     const item = new HourModel();
     item.employee.id = this.simplicateService.employee.id;
     item.start_date = new Date(this.activeDate.getTime());

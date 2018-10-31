@@ -1,5 +1,6 @@
-import { Component, EventEmitter, HostListener, Input, OnInit, Output } from '@angular/core';
-import { DateUtil } from '../../../utils/date.util';
+import {Component, EventEmitter, HostListener, Input, OnInit, Output} from '@angular/core';
+import {DateUtil} from '../../../utils/date.util';
+import {TrackingServiceService} from '../../../providers/tracking-service.service';
 
 @Component( {
   selector: 'app-weekdayselector',
@@ -17,7 +18,7 @@ export class WeekdayselectorComponent implements OnInit {
   @Output()
   activeDateChange = new EventEmitter<Date>();
 
-  constructor() {
+  constructor(private track: TrackingServiceService) {
   }
 
   ngOnInit() {
@@ -41,14 +42,17 @@ export class WeekdayselectorComponent implements OnInit {
 
   next() {
     this.activeDateChange.emit( new Date( this.activeDate.getTime() + (60 * 60 * 24 * 1000) ) );
+    this.track.trackEvent('timetable', 'next-date');
   }
 
   prev() {
     this.activeDateChange.emit( new Date( this.activeDate.getTime() - (60 * 60 * 24 * 1000) ) );
+    this.track.trackEvent('timetable', 'prev-date');
   }
 
   updateDate( event: Date ) {
     this.activeDateChange.emit( new Date( event.getTime() - (event.getTimezoneOffset() * 60000) ) );
+    this.track.trackEvent('timetable', 'change-date');
   }
 
 }
