@@ -4,7 +4,9 @@
 
     <app-project-select formControlName="project"></app-project-select>
 
-    <app-project-service-select [projectId]="projectId" formControlName="projectservice"></app-project-service-select>
+    <app-project-service-select [projectId]="projectId"
+                                [startDate]="startDate"
+                                formControlName="projectservice"></app-project-service-select>
 
     <app-service-type-select [serviceId]="projectserviceId" formControlName="type"></app-service-type-select>
     <div class="flex time">

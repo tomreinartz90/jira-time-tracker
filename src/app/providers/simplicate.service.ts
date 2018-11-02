@@ -232,11 +232,11 @@ export class SimplicateService {
     );
   }
 
-  getProjectSerices( projectId: string ) {
+  getProjectSerices( projectId: string, startDate:Date = new Date() ) {
     let params = new HttpParams();
     params = params.set( 'q[project_id]', projectId );
     params = params.set( 'q[mileage]', '0' );
-    params = params.set( 'q[start_date]', new Date().toISOString() );
+    params = params.set( 'q[start_date]', startDate.toISOString() );
 
     if ( !projectId ) {
       return of( [] );

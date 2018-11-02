@@ -16,6 +16,7 @@ export class TimeDetailsSheetComponent implements OnDestroy {
 
   projectId: string;
   projectserviceId: string;
+  startDate: Date;
 
   const;
   subs: Array<Subscription> = [];
@@ -48,6 +49,7 @@ export class TimeDetailsSheetComponent implements OnDestroy {
 
     this.projectId = data.project.id;
     this.projectserviceId = data.projectservice.id;
+    this.startDate = data.start_date;
 
     this.subs.push(
       this.timeForm.controls['project'].valueChanges.subscribe(id => {

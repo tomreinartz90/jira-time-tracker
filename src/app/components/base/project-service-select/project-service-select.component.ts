@@ -28,6 +28,9 @@ export class ProjectServiceSelectComponent extends BaseSelect implements OnChang
   @Input()
   projectId: string;
 
+  @Input()
+  startDate: string;
+
   constructor( private simplicateService: SimplicateService ) {
     super();
 
@@ -40,7 +43,7 @@ export class ProjectServiceSelectComponent extends BaseSelect implements OnChang
 
   ngOnChanges() {
     this.subs.push(
-      this.simplicateService.getProjectSerices( this.projectId ).subscribe( services => {
+      this.simplicateService.getProjectSerices( this.projectId, this.startDate ).subscribe( services => {
         this.services = sortBy( services, ( proj ) => proj.cleanName );
         this.writeValue( this.selectedServiceId );
       } )
