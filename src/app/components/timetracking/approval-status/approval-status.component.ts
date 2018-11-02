@@ -11,9 +11,7 @@ export class ApprovalStatusComponent {
   date: Date;
 
   @Input()
-  approvalStatus: string = 'EMPTY';
-
-  loading = true;
+  approvalStatus = 'EMPTY';
 
   constructor( private simplicateService: SimplicateService ) { }
 
