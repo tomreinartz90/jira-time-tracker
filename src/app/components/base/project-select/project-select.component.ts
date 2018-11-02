@@ -1,11 +1,11 @@
-import { Component, forwardRef, OnInit } from '@angular/core';
-import { Observable } from 'rxjs';
-import { ProjectModel } from '../../../domain/project.model';
-import { map, startWith } from 'rxjs/operators';
-import { SimplicateService } from '../../../providers/simplicate.service';
-import { NG_VALUE_ACCESSOR } from '@angular/forms';
-import { BaseSelect } from '../base-input/base-select';
-import { sortBy } from 'lodash';
+import {Component, forwardRef, OnInit} from '@angular/core';
+import {Observable} from 'rxjs';
+import {ProjectModel} from '../../../domain/project.model';
+import {map, startWith} from 'rxjs/operators';
+import {SimplicateService} from '../../../providers/simplicate.service';
+import {NG_VALUE_ACCESSOR} from '@angular/forms';
+import {BaseSelect} from '../base-input/base-select';
+import {sortBy} from 'lodash';
 
 @Component( {
   selector: 'app-project-select',
@@ -48,7 +48,7 @@ export class ProjectSelectComponent extends BaseSelect implements OnInit {
   }
 
   protected getName( option: ProjectModel ): string {
-    return option.project_name;
+    return option.name;
   }
 
   protected _filterOptions( value: string ): Array<ProjectModel> {

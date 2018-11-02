@@ -8,8 +8,8 @@
          appSelectOnFocus
          [matAutocomplete]="auto">
   <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete">
-    <mat-option *ngFor="let option of filteredProjects | async" [value]="option.project_name">
-      {{option.cleanName}}
+    <mat-option *ngFor="let option of filteredProjects | async" [value]="option.name">
+      <span [innerHtml]="option.name"></span>
     </mat-option>
   </mat-autocomplete>
 </mat-form-field>
