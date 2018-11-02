@@ -1,4 +1,4 @@
-import {Component, HostListener, Input} from '@angular/core';
+import {Component, HostListener, Input, OnChanges} from '@angular/core';
 import {fadeInContent, MatBottomSheet} from '@angular/material';
 import {TimeDetailsSheetComponent} from '../time-details-sheet/time-details-sheet.component';
 import {HourModel} from '../../../domain/hour.model';
@@ -12,7 +12,7 @@ import {TrackingServiceService} from '../../../providers/tracking-service.servic
   styleUrls: ['./timetable.component.scss'],
   animations: [fadeInContent]
 })
-export class TimetableComponent {
+export class TimetableComponent implements OnChanges {
 
   @Input()
   groupedHours: { [key: string]: Array<HourModel> } = {};
@@ -26,7 +26,26 @@ export class TimetableComponent {
   @Input()
   timer: string;
 
+  approvalStatus = 'EMPTY';
+
   constructor(private bottomSheet: MatBottomSheet, public simplicateService: SimplicateService, private track: TrackingServiceService) {
+  }
+
+  ngOnChanges() {
+    const todaysHours = this.groupedHours[this.days[0]] || [];
+    const totalApprovedHours = todaysHours.filter(hour => !hour.approvalstatus.label);
+    const totalSubmittedHours = todaysHours.filter(hour => hour.approvalstatus.label);
+    console.log(todaysHours, totalApprovedHours);
+
+    if (todaysHours.length === 0) {
+      this.approvalStatus = 'EMPTY';
+    } else if (totalApprovedHours.length === todaysHours.length) {
+      this.approvalStatus = 'APPROVED';
+    } else if (totalSubmittedHours.length > 1) {
+      this.approvalStatus = 'TO_RESUBMIT';
+    } else {
+      this.approvalStatus = 'TO_APPROVE';
+    }
   }
 
   showTimeDetails(item: HourModel, newTimer: boolean = false) {
@@ -67,7 +86,7 @@ export class TimetableComponent {
   }
 
   addItemToList(day: string, isTimer: boolean = false) {
-      this.track.trackEvent('timetable', 'add-item');
+    this.track.trackEvent('timetable', 'add-item');
     const lastItem: HourModel = this.groupedHours[day][this.groupedHours[day].length - 1] || ({} as HourModel);
     const newItem: HourModel = HourModel.fromJSON(lastItem);
     newItem.id = null;
@@ -89,7 +108,7 @@ export class TimetableComponent {
   }
 
   addNewItemToList(isTimer: boolean = false) {
-      this.track.trackEvent('timetable', 'add-new-item');
+    this.track.trackEvent('timetable', 'add-new-item');
     const item = new HourModel();
     item.employee.id = this.simplicateService.employee.id;
     item.start_date = new Date(this.activeDate.getTime());

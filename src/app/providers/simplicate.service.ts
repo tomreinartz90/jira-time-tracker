@@ -190,7 +190,7 @@ export class SimplicateService {
       end_date: endDate.toISOString().slice( 0, 10 )
     };
     return this.post( 'api/v2/hours/submit', postBody ).pipe(
-      tap( ( resp: any ) => this.onUpdateApprovalStatus.next( true ) )
+      tap( ( resp: any ) => this.onUpdateHour.next( true ) )
     );
   }
 
