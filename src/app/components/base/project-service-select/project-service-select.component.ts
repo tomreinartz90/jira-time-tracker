@@ -1,11 +1,11 @@
-import { Component, forwardRef, Input, OnChanges } from '@angular/core';
-import { Observable } from 'rxjs';
-import { map, startWith } from 'rxjs/operators';
-import { SimplicateService } from '../../../providers/simplicate.service';
-import { NG_VALUE_ACCESSOR } from '@angular/forms';
-import { ProjectServiceModel } from '../../../domain/project-service.model';
-import { BaseSelect } from '../base-input/base-select';
-import { sortBy } from 'lodash';
+import {Component, forwardRef, Input, OnChanges} from '@angular/core';
+import {Observable} from 'rxjs';
+import {map, startWith} from 'rxjs/operators';
+import {SimplicateService} from '../../../providers/simplicate.service';
+import {NG_VALUE_ACCESSOR} from '@angular/forms';
+import {ProjectServiceModel} from '../../../domain/project-service.model';
+import {BaseSelect} from '../base-input/base-select';
+import {sortBy} from 'lodash';
 
 @Component( {
   selector: 'app-project-service-select',
@@ -29,7 +29,7 @@ export class ProjectServiceSelectComponent extends BaseSelect implements OnChang
   projectId: string;
 
   @Input()
-  startDate: string;
+  startDate: Date;
 
   constructor( private simplicateService: SimplicateService ) {
     super();
