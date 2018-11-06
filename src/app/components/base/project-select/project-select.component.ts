@@ -53,7 +53,7 @@ export class ProjectSelectComponent extends BaseSelect implements OnInit {
 
   protected _filterOptions( value: string ): Array<ProjectModel> {
     if ( value ) {
-      return this.projects.filter( options => options.cleanName.toLowerCase().includes( value.toLowerCase() ) );
+      return this.projects.filter( options => options.name.toLowerCase().includes( value.toLowerCase() ) );
     }
     return this.projects;
   }
