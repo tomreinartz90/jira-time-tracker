@@ -62,7 +62,7 @@ export class ProjectSelectComponent extends BaseSelect implements OnInit {
   writeValue( obj: any ): void {
     if ( this.projects.length ) {
       const project = this.projects.find( proj => proj.id === obj );
-      super.writeValue( project && project.cleanName );
+      super.writeValue( project && project.name );
     } else {
       this.selectedProjectId = obj;
       super.writeValue( null );

@@ -35,7 +35,6 @@ export class TimetableComponent implements OnChanges {
     const todaysHours = this.groupedHours[this.days[0]] || [];
     const totalApprovedHours = todaysHours.filter(hour => !hour.approvalstatus.label);
     const totalSubmittedHours = todaysHours.filter(hour => hour.approvalstatus.label);
-    console.log(todaysHours, totalApprovedHours);
 
     if (todaysHours.length === 0) {
       this.approvalStatus = 'EMPTY';
@@ -50,7 +49,6 @@ export class TimetableComponent implements OnChanges {
 
   showTimeDetails(item: HourModel, newTimer: boolean = false) {
     const activeTimer = this.simplicateService.getActiveTimer();
-    console.log(activeTimer);
     this.track.trackEvent('timetable', 'show-details');
     this.bottomSheet.open(TimeDetailsSheetComponent, {
       data: {
