@@ -17,7 +17,7 @@
         [@fadeInContent]="'showing'"
         [item]="hour"
         [timer]="timer"
-        (click)="showTimeDetails(hour)">
+        (action)="handleTimeAction($event, hour)">
       </app-timetableitem>
     </mat-card-content>
 

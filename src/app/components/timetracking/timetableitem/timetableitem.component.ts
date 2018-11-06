@@ -1,4 +1,4 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {SimplicateService} from '../../../providers/simplicate.service';
 import {DateUtil} from '../../../utils/date.util';
 
@@ -14,6 +14,9 @@ export class TimetableitemComponent implements OnInit {
 
   @Input()
   timer: string;
+
+  @Output()
+  action: EventEmitter<string> = new EventEmitter();
 
   constructor(private simplicate: SimplicateService) {
   }
@@ -41,7 +44,7 @@ export class TimetableitemComponent implements OnInit {
     return `${hours}:${Math.round(60 * parseFloat(`0.${decimals}`))}`;
   }
 
-  getTime(date:Date){
+  getTime(date: Date) {
     return DateUtil.getTimeForInput(date);
   }
 

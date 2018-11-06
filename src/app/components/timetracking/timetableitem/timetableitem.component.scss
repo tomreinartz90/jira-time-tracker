@@ -1,13 +1,16 @@
 :host {
   display: block;
-  cursor: pointer;
   margin: 0 -1rem;
   padding: 1rem;
   transition: .5s;
   position: relative;
   background-color: rgba(white, 0);
+  overflow: hidden;
+
   &:hover {
-    background-color: rgba(white, 0.1);
+    .actions {
+      bottom: 0;
+    }
   }
 }
 
@@ -19,12 +22,48 @@
   top: 0;
   bottom: 0;
   opacity: .05;
+}
+
+.actions {
+  transition: bottom .3s;
+  position: absolute;
+  bottom: -5rem;
+  right: 0;
+  left: 0;
+  padding: .5rem 1rem;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  background-color: rgba(black, .7);
+
+  &:active,
+  &:focus {
+    bottom: 0;
+  }
+
+  .mat-icon {
+    margin-bottom: .8rem;
+    font-size: 1rem;
+    height: 1rem;
+    cursor: pointer;
+  }
+
+  .mat-icon-button {
+    height: 2rem;
+    text-transform: uppercase;
+    &:hover {
+      color: #FF2345;
+    }
+
+    &:focus {
+      display: none;
+    }
+  }
 
 }
 
 .container {
   display: flex;
-
   .content {
     flex: 1 1;
     padding: 0 .5rem 0 2rem;

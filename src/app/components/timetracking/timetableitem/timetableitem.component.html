@@ -17,4 +17,16 @@
       <strong>{{(item.hours | hoursToMs) | msToTime}}</strong>
     </div>
   </div>
+  <div class="actions" tabindex="0">
+
+    <button mat-icon-button tabindex="-1" matTooltip="Copy item" (click)="action.emit('COPY')">
+      <mat-icon>file_copy</mat-icon>
+    </button>
+    <button mat-icon-button tabindex="-1" matTooltip="Copy as timer" (click)="action.emit('COPY_TIMER')">
+      <mat-icon>update</mat-icon>
+    </button>
+    <button mat-icon-button tabindex="-1" matTooltip="Edit item" class="edit" (click)="action.emit('EDIT')">
+      <mat-icon>edit</mat-icon>
+    </button>
+  </div>
 </div>

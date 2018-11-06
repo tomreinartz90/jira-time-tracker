@@ -85,17 +85,17 @@ export class TimetableComponent implements OnChanges {
     }
   }
 
-  addItemToList(day: string, isTimer: boolean = false) {
+  addItemToList(day: string, isTimer: boolean = false, copyFrom?: HourModel) {
     this.track.trackEvent('timetable', 'add-item');
     const lastItem: HourModel = this.groupedHours[day][this.groupedHours[day].length - 1] || ({} as HourModel);
-    const newItem: HourModel = HourModel.fromJSON(lastItem);
+    const newItem: HourModel = HourModel.fromJSON(copyFrom || lastItem);
     newItem.id = null;
-    newItem.start_date = lastItem.end_date;
 
     if (isTimer) {
       newItem.start_date = DateUtil.UTCDateFromLocalDate(new Date());
       newItem.end_date = DateUtil.UTCDateFromLocalDate(new Date());
     } else {
+      newItem.start_date = lastItem.end_date;
       newItem.end_date = DateUtil.addTimeInMilliseconds(newItem.start_date, 30 * 60 * 1000);
     }
 
@@ -143,6 +143,17 @@ export class TimetableComponent implements OnChanges {
       const prev = this.groupedHours[this.days[0]][i - 1].end_date;
       // max 10 sec between two items
       return (curr.getTime() - prev.getTime() > 1000 * 10);
+    }
+  }
+
+  handleTimeAction(event: string, item: HourModel) {
+    switch (event) {
+      case 'EDIT':
+        return this.showTimeDetails(item);
+      case 'COPY_TIMER':
+        return this.addItemToList(this.days[0], true, item);
+      case 'COPY':
+        return this.addItemToList(this.days[0], false, item);
     }
   }
 }
