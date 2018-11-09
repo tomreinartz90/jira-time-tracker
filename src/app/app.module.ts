@@ -34,7 +34,7 @@ import {
   MatIconModule,
   MatInputModule,
   MatListModule,
-  MatNativeDateModule,
+  MatNativeDateModule, MatProgressBarModule, MatSlideToggleModule,
   MatToolbarModule, MatTooltipModule
 } from '@angular/material';
 import {TimeDetailsSheetComponent} from './components/timetracking/time-details-sheet/time-details-sheet.component';
@@ -66,7 +66,9 @@ const matModules = [
   MatNativeDateModule,
   MatAutocompleteModule,
   MatIconModule,
-  MatTooltipModule
+  MatTooltipModule,
+  MatProgressBarModule,
+  MatSlideToggleModule
 ];
 
 @NgModule({

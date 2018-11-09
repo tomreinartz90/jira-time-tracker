@@ -8,10 +8,15 @@
   overflow: hidden;
 
   &:hover {
-    .actions {
-      bottom: 0;
+    .container .itemActions {
+      opacity: 1;
     }
   }
+}
+
+.info {
+  display: flex;
+
 }
 
 .overlay {
@@ -67,6 +72,13 @@
   .content {
     flex: 1 1;
     padding: 0 .5rem 0 2rem;
+
+    &:hover {
+      cursor: pointer;
+      h3 {
+        text-decoration: underline;
+      }
+    }
 
     h3 {
       margin-top: 0;
@@ -126,6 +138,33 @@
     font-size: 0.75rem;
     letter-spacing: .1rem;
     color: #CACACA;
+  }
+
+  .itemActions {
+    text-align: right;
+    opacity: 0;
+    transition: opacity .2s;
+
+    .mat-icon {
+      margin-bottom: .8rem;
+      font-size: 1rem;
+      height: 1rem;
+      cursor: pointer;
+    }
+
+    .mat-icon-button {
+      height: 2rem;
+      width: 2rem;
+      line-height: 1;
+      text-transform: uppercase;
+      &:hover {
+        color: #FF2345;
+      }
+
+      &:focus {
+        display: none;
+      }
+    }
   }
 }
 

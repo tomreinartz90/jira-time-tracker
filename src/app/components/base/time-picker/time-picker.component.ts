@@ -30,6 +30,8 @@ export class TimePickerComponent extends BaseInput implements OnChanges, Control
   @Input()
   public maxDate: Date;
 
+
+
   writeValue( obj: Date ): void {
     this.timeDate = obj;
     super.writeValue( DateUtil.getTimeForInput( obj ) );

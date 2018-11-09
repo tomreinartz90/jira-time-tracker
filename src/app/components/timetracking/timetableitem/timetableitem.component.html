@@ -1,5 +1,5 @@
 <div class="overlay" [style.background]="item.project.name | stringToHexColor"></div>
-<div class="container">
+<div class="container" >
   <div class="time">
     <div class="start">{{getTime(item.start_date) }}h</div>
     <div [ngClass]="{'end': true, 'is-timing': isTimer}">{{getTime(item.end_date)}}h</div>
@@ -7,26 +7,19 @@
       <app-timer></app-timer>
     </div>
   </div>
-  <div class="content">
+  <div class="content" (click)="action.emit('EDIT')">
     <h3 [style.color]="item.project.name | stringToHexColor">{{item.project.name}}</h3>
     <div class="service">{{item.projectservice.name}} / {{item.type.label}}</div>
     <div class="note">{{item.note}}</div>
   </div>
   <div class="totalTime">
+    <div class="itemActions">
+      <button mat-icon-button tabindex="-1" matTooltip="Copy item" (click)="action.emit('COPY')">
+        <mat-icon>file_copy</mat-icon>
+      </button>
+    </div>
     <div class="duration">
       <strong>{{(item.hours | hoursToMs) | msToTime}}</strong>
     </div>
-  </div>
-  <div class="actions" tabindex="0">
-
-    <button mat-icon-button tabindex="-1" matTooltip="Copy item" (click)="action.emit('COPY')">
-      <mat-icon>file_copy</mat-icon>
-    </button>
-    <button mat-icon-button tabindex="-1" matTooltip="Copy as timer" (click)="action.emit('COPY_TIMER')">
-      <mat-icon>update</mat-icon>
-    </button>
-    <button mat-icon-button tabindex="-1" matTooltip="Edit item" class="edit" (click)="action.emit('EDIT')">
-      <mat-icon>edit</mat-icon>
-    </button>
   </div>
 </div>
