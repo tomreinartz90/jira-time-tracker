@@ -1,11 +1,11 @@
-import {HttpClient, HttpHeaders, HttpParams} from '@angular/common/http';
-import {Injectable} from '@angular/core';
-import {filter, map, mergeMap, tap} from 'rxjs/operators';
-import {HourModel} from '../domain/hour.model';
-import {interval, NEVER, Observable, of, Subject} from 'rxjs';
-import {Router} from '@angular/router';
-import {ProjectModel} from '../domain/project.model';
-import {ProjectServiceModel} from '../domain/project-service.model';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
+import { Injectable } from '@angular/core';
+import { filter, map, mergeMap, tap } from 'rxjs/operators';
+import { HourModel } from '../domain/hour.model';
+import { interval, NEVER, Observable, of, Subject } from 'rxjs';
+import { Router } from '@angular/router';
+import { ProjectModel } from '../domain/project.model';
+import { ProjectServiceModel } from '../domain/project-service.model';
 
 interface AuthData {
   authentication_key: string;
@@ -118,7 +118,7 @@ export class SimplicateService {
   }
 
   private runTimer() {
-    interval( 1000 * 30 ).pipe(
+    interval( 1000 * 60 ).pipe(
       map( () => this.getActiveTimer() ),
       filter( ( timer ) => !!timer ),
       mergeMap( ( timer ) => this.getHourById( timer ) ),
@@ -127,8 +127,7 @@ export class SimplicateService {
         hour.end_date.setUTCHours( now.getHours(), now.getMinutes(), now.getSeconds() );
         return hour;
       } ),
-      mergeMap( ( hour ) => this.updateEmployeeHours( hour ) ),
-      tap( ( resp: any ) => this.updateActiveTimer( resp.data.id ) )
+      mergeMap( ( hour ) => this.updateEmployeeHours( hour ) )
     ).subscribe();
   }
 
@@ -212,7 +211,12 @@ export class SimplicateService {
   updateEmployeeHours( item: HourModel ) {
     const update = item.toUpdateJSON();
     return this.put( `api/v2/hours/hours/${item.id}`, update ).pipe(
-      tap( () => this.onUpdateHour.next( true ) )
+      tap( () => this.onUpdateHour.next( true ) ),
+      tap( ( resp: any ) => {
+        if ( item.id === this.getActiveTimer() ) {
+          this.updateActiveTimer( resp.data.id );
+        }
+      } )
     );
   }
 
@@ -232,7 +236,7 @@ export class SimplicateService {
     );
   }
 
-  getProjectSerices( projectId: string, startDate:Date = new Date() ) {
+  getProjectSerices( projectId: string, startDate: Date = new Date() ) {
     let params = new HttpParams();
     params = params.set( 'q[project_id]', projectId );
     params = params.set( 'q[mileage]', '0' );
@@ -254,7 +258,7 @@ export class SimplicateService {
     );
   }
 
-  getActiveTimer() {
+  getActiveTimer(): string {
     return localStorage.getItem( 'timer' );
   }
 

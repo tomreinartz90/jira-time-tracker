@@ -11,6 +11,7 @@
 .example-container {
   display: flex;
   flex-direction: column;
+  padding-top: 1rem;
 }
 
 .example-container > * {
@@ -19,18 +20,30 @@
 
 .full-width {
   width: 100%;
+  margin-top: 2rem;
+
 }
 
 .time {
-  margin: 1rem 0;
+  margin: 2rem 0 0;
   app-time-picker {
     width: 100%;
     &:first-child {
       margin-right: .5rem;
     }
-    &:last-child {
+    &:last-child:not(:first-child) {
       margin-left: .5rem;
     }
+  }
+}
+
+  .mat-toolbar {
+  background-color: #FF2345;
+  margin: -1.5rem -1.5rem 1.5rem;
+  width: calc(100% + 3rem);
+
+  .spacer {
+    flex: 1;
   }
 }
 

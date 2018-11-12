@@ -1,12 +1,15 @@
 import { BaseInput } from './base-input';
-import { Subscription } from 'rxjs';
+import { Subject, Subscription } from 'rxjs';
 import { OnDestroy } from '@angular/core';
+import { debounceTime, filter } from 'rxjs/operators';
 
 export abstract class BaseSelect extends BaseInput implements OnDestroy {
 
   subs: Array<Subscription> = [];
 
   protected valueChangedSinceFocus = false;
+
+  protected onBlur: Subject<string> = new Subject();
 
   protected abstract _filterOptions( value: string ): Array<any>;
 
@@ -20,7 +23,11 @@ export abstract class BaseSelect extends BaseInput implements OnDestroy {
     this.subs.push(
       this.formControl.valueChanges.subscribe( val => {
         this.valueChangedSinceFocus = this.formControl.dirty;
-      } )
+      } ),
+      this.onBlur.pipe(
+        debounceTime( 100 ),
+        filter( state => state === this.formControl.value )
+      ).subscribe( ( state ) => this.handleSelect( state ) )
     );
   }
 
@@ -40,15 +47,16 @@ export abstract class BaseSelect extends BaseInput implements OnDestroy {
     }
   }
 
+  handleSelect( option ) {
+    const selectedOption = this._filterOptions( option )[0];
+    this.updateSelectedOption( selectedOption );
+  }
+
   handleBlur() {
     this.valueChangedSinceFocus = false;
     const state = this.formControl.value;
-    if ( state ) {
-      const selectedOption = this._filterOptions( state )[0];
-      this.updateSelectedOption( selectedOption );
-    } else {
-      this.updateSelectedOption( this._filterOptions( null )[0] );
-    }
+    this.onBlur.next( state );
     this.formControl.markAsPristine();
   }
+
 }

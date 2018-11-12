@@ -1,5 +1,5 @@
 :host {
-  padding-bottom: 1rem;
+  padding-bottom: 7rem;
 }
 
 .heading {
@@ -123,5 +123,17 @@
     left: 0;
     right: 0;
     background-image: url(/assets/strokes.svg);
+  }
+}
+
+.fab-container {
+  display: flex;
+  flex-direction: column;
+  position: fixed;
+  bottom: 2rem;
+  right: 2rem;
+  align-items: center;
+  button {
+    margin-top: .5rem;
   }
 }

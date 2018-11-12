@@ -21,19 +21,6 @@
       </app-timetableitem>
     </mat-card-content>
 
-    <div class="bottom-bar">
-
-      <button (click)="addItemToList(days[0])" mat-flat-button color="accent">
-        <mat-icon>add</mat-icon>
-        <span>Add time</span>
-      </button>
-      <div class="spacer"></div>
-      <button (click)="startStopTimer(days[0])" mat-flat-button color="black"
-              [matTooltip]="timer ? 'stop timer' : 'start timer'"
-      >
-        <mat-icon>{{timer ? 'stop' : 'play_arrow'}}</mat-icon>
-      </button>
-    </div>
   </mat-card>
 
   <mat-card *ngIf="!days || days.length === 0" [@fadeInContent]="'showing'">
@@ -49,22 +36,19 @@
         </div>
       </div>
     </mat-card-content>
-    <div class="bottom-bar">
-      <button (click)="addNewItemToList()" mat-flat-button color="accent">
-        <mat-icon>add</mat-icon>
-        <span>Add time</span>
-      </button>
-      <div class="spacer"></div>
 
-      <button (click)="startStopTimer()" mat-flat-button color="black"
-              [matTooltip]="timer ? 'stop timer' : 'start timer'"
-
-      >
-        <mat-icon>{{timer ? 'stop' : 'play_arrow'}}</mat-icon>
-      </button>
-
-    </div>
   </mat-card>
+  <div class="fab-container">
+    <button *ngIf="timer"
+            [@fadeInContent]="'showing'"
+            (click)="startStopTimer()" mat-mini-fab color="black">
+      <mat-icon>stop</mat-icon>
+    </button>
+
+    <button (click)="add()" mat-fab color="accent">
+      <mat-icon>add</mat-icon>
+    </button>
+  </div>
 
 
 </div>

@@ -9,7 +9,6 @@ export class SelectOnFocusDirective {
 
   @HostListener( 'focus', ['$event'] )
   onFocus( event: FocusEvent ) {
-    console.log( event );
     (<any>event.currentTarget).select();
   }
 

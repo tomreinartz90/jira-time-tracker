@@ -6,12 +6,12 @@ import {SimplicateService} from '../../../providers/simplicate.service';
 import {DateUtil} from '../../../utils/date.util';
 import {TrackingServiceService} from '../../../providers/tracking-service.service';
 
-@Component({
+@Component( {
   selector: 'app-timetable',
   templateUrl: './timetable.component.html',
   styleUrls: ['./timetable.component.scss'],
   animations: [fadeInContent]
-})
+} )
 export class TimetableComponent implements OnChanges {
 
   @Input()
@@ -28,7 +28,7 @@ export class TimetableComponent implements OnChanges {
 
   approvalStatus = 'EMPTY';
 
-  constructor(private bottomSheet: MatBottomSheet, public simplicateService: SimplicateService, private track: TrackingServiceService) {
+  constructor( private bottomSheet: MatBottomSheet, public simplicateService: SimplicateService, private track: TrackingServiceService ) {
   }
 
   ngOnChanges() {
@@ -36,36 +36,38 @@ export class TimetableComponent implements OnChanges {
     const totalApprovedHours = todaysHours.filter(hour => !hour.approvalstatus.label);
     const totalSubmittedHours = todaysHours.filter(hour => hour.approvalstatus.label);
 
-    if (todaysHours.length === 0) {
+    if ( todaysHours.length === 0 ) {
       this.approvalStatus = 'EMPTY';
-    } else if (totalApprovedHours.length === todaysHours.length) {
+    } else if ( totalApprovedHours.length === todaysHours.length ) {
       this.approvalStatus = 'APPROVED';
-    } else if (totalSubmittedHours.length > 1) {
+    } else if ( totalSubmittedHours.length > 1 ) {
       this.approvalStatus = 'TO_RESUBMIT';
     } else {
       this.approvalStatus = 'TO_APPROVE';
     }
   }
 
-  showTimeDetails(item: HourModel, newTimer: boolean = false) {
+  showTimeDetails( item: HourModel, newTimer: boolean = false ) {
     const activeTimer = this.simplicateService.getActiveTimer();
-    this.track.trackEvent('timetable', 'show-details');
-    this.bottomSheet.open(TimeDetailsSheetComponent, {
+    this.track.trackEvent( 'timetable', 'show-details' );
+    this.bottomSheet.open<TimeDetailsSheetComponent>( TimeDetailsSheetComponent as any, {
+      disableClose: true,
+      autoFocus: false,
       data: {
         hour: item,
         isTimer: newTimer || (activeTimer && item.id === activeTimer)
       }
-    });
+    } );
   }
 
 
-  @HostListener('window:keydown', ['$event'])
-  onKeyDown(event: KeyboardEvent) {
-    if ((<any>event.target).nodeName === 'BODY') {
-      const {code} = event;
-      if (code === 'KeyN') {
-        if (this.days && this.days.length > 0) {
-          this.addItemToList(this.days[this.days.length - 1]);
+  @HostListener( 'window:keydown', ['$event'] )
+  onKeyDown( event: KeyboardEvent ) {
+    if ( (<any>event.target).nodeName === 'BODY' ) {
+      const { code } = event;
+      if ( code === 'KeyN' ) {
+        if ( this.days && this.days.length > 0 ) {
+          this.addItemToList( this.days[this.days.length - 1] );
         } else {
           this.addNewItemToList();
         }
@@ -73,51 +75,49 @@ export class TimetableComponent implements OnChanges {
     }
   }
 
-  startStopTimer(day?: string) {
-    if (this.timer) {
-      this.track.trackEvent('timetable', 'stop-timer');
+  startStopTimer( day?: string ) {
+    if ( this.timer ) {
+      this.track.trackEvent( 'timetable', 'stop-timer' );
       this.simplicateService.clearTimer();
     } else {
-      day ? this.addItemToList(day, true) : this.addNewItemToList(true);
-      this.track.trackEvent('timetable', 'start-timer');
+      day ? this.addItemToList( day, ) : this.addNewItemToList(  );
+      this.track.trackEvent( 'timetable', 'start-timer' );
     }
   }
 
-  addItemToList(day: string, isTimer: boolean = false, copyFrom?: HourModel) {
-    this.track.trackEvent('timetable', 'add-item');
+  add() {
+    if ( this.days && this.days.length ) {
+      this.addItemToList( this.days[0] );
+    } else {
+      this.addNewItemToList();
+    }
+  }
+
+  addItemToList( day: string, copyFrom?: HourModel ) {
+    this.track.trackEvent( 'timetable', 'add-item' );
     const lastItem: HourModel = this.groupedHours[day][this.groupedHours[day].length - 1] || ({} as HourModel);
-    const newItem: HourModel = HourModel.fromJSON(copyFrom || lastItem);
+    const newItem: HourModel = HourModel.fromJSON( copyFrom || lastItem );
     newItem.id = null;
 
-    if (isTimer) {
-      newItem.start_date = DateUtil.UTCDateFromLocalDate(new Date());
-      newItem.end_date = DateUtil.UTCDateFromLocalDate(new Date());
-    } else {
-      newItem.start_date = lastItem.end_date;
-      newItem.end_date = DateUtil.addTimeInMilliseconds(newItem.start_date, 30 * 60 * 1000);
-    }
+    newItem.start_date = lastItem.end_date;
+    newItem.end_date = DateUtil.addTimeInMilliseconds( newItem.start_date, 30 * 60 * 1000 );
 
     newItem.hours = 0;
     newItem.note = null;
     newItem.approvalstatus = null;
     newItem.is_time_defined = true;
 
-    this.showTimeDetails(newItem, isTimer);
+    this.showTimeDetails( newItem, false );
   }
 
-  addNewItemToList(isTimer: boolean = false) {
-    this.track.trackEvent('timetable', 'add-new-item');
+  addNewItemToList() {
+    this.track.trackEvent( 'timetable', 'add-new-item' );
     const item = new HourModel();
     item.employee.id = this.simplicateService.employee.id;
-    item.start_date = new Date(this.activeDate.getTime());
-    item.start_date.setUTCHours(8, 30, 0);
+    item.start_date = new Date( this.activeDate.getTime() );
+    item.start_date.setUTCHours( 8, 30, 0 );
 
-    if (isTimer) {
-      item.start_date = DateUtil.UTCDateFromLocalDate(new Date());
-      item.end_date = DateUtil.UTCDateFromLocalDate(new Date());
-    } else {
-      item.end_date = DateUtil.addTimeInMilliseconds(item.start_date, 30 * 60 * 1000);
-    }
+    item.end_date = DateUtil.addTimeInMilliseconds( item.start_date, 30 * 60 * 1000 );
 
     // item.end_date = null;
     item.hours = 0;
@@ -125,18 +125,18 @@ export class TimetableComponent implements OnChanges {
     item.approvalstatus = null;
     item.is_time_defined = true;
 
-    this.showTimeDetails(item, isTimer);
+    this.showTimeDetails( item );
   }
 
   getTotalHours(): number {
-    if (this.groupedHours && this.days.length && this.groupedHours[this.days[0]]) {
-      return this.groupedHours[this.days[0]].map(hour => hour.hours).reduce((previousValue, currentValue) => previousValue + currentValue, 0);
+    if ( this.groupedHours && this.days.length && this.groupedHours[this.days[0]] ) {
+      return this.groupedHours[this.days[0]].map( hour => hour.hours ).reduce( ( previousValue, currentValue ) => previousValue + currentValue, 0 );
     }
     return 0;
   }
 
-  hasGap(i: number) {
-    if (i > 0 && this.groupedHours && this.days.length && this.groupedHours[this.days[0]][i - 1]) {
+  hasGap( i: number ) {
+    if ( i > 0 && this.groupedHours && this.days.length && this.groupedHours[this.days[0]][i - 1] ) {
       const curr = this.groupedHours[this.days[0]][i].start_date;
       const prev = this.groupedHours[this.days[0]][i - 1].end_date;
       // max 10 sec between two items
@@ -144,14 +144,12 @@ export class TimetableComponent implements OnChanges {
     }
   }
 
-  handleTimeAction(event: string, item: HourModel) {
-    switch (event) {
+  handleTimeAction( event: string, item: HourModel ) {
+    switch ( event ) {
       case 'EDIT':
-        return this.showTimeDetails(item);
-      case 'COPY_TIMER':
-        return this.addItemToList(this.days[0], true, item);
+        return this.showTimeDetails( item );
       case 'COPY':
-        return this.addItemToList(this.days[0], false, item);
+        return this.addItemToList( this.days[0], item );
     }
   }
 }

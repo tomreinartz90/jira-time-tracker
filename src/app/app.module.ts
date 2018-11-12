@@ -33,6 +33,8 @@ import {
   MatInputModule,
   MatListModule,
   MatNativeDateModule,
+  MatProgressBarModule,
+  MatSlideToggleModule,
   MatToolbarModule,
   MatTooltipModule
 } from '@angular/material';
@@ -66,7 +68,9 @@ const matModules = [
   MatNativeDateModule,
   MatAutocompleteModule,
   MatIconModule,
-  MatTooltipModule
+  MatTooltipModule,
+  MatProgressBarModule,
+  MatSlideToggleModule
 ];
 
 @NgModule({
@@ -111,7 +115,7 @@ const matModules = [
   entryComponents: [
     TimeDetailsSheetComponent
   ],
-  providers: [ SimplicateService,
+  providers: [SimplicateService,
     {
       provide: ErrorHandler,
       useClass: CustomErrorHandler,
