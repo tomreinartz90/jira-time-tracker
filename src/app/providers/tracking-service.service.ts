@@ -7,35 +7,11 @@ declare var ga: Function;
   providedIn: 'root'
 })
 export class TrackingServiceService {
-  private googleAnalyticsKey = 'UA-128388033-1';
 
   constructor(public router: Router) {
-    this.setup();
     this.trackRouterChanges();
-
-    (<any>window).onerror = (msg, url, line, col, error) => {
-      this.trackException(JSON.stringify({msg, url, error}));
-    }
-
   }
 
-  private setup() {
-    try {
-      const script = document.createElement('script');
-      script.innerHTML = `
-        (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-        m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-        })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
-
-        ga('create', '` + this.googleAnalyticsKey + `', 'auto');
-      `;
-      document.head.appendChild(script);
-    } catch (ex) {
-      console.error('Error appending google analytics');
-      console.error(ex);
-    }
-  }
 
   private trackRouterChanges() {
     this.router.events.subscribe(event => {
@@ -67,6 +43,13 @@ export class TrackingServiceService {
                     eventLabel: string = null,
                     eventValue: number = null) {
     if (typeof ga === 'function') {
+      console.info('send', 'event', {
+        eventCategory: eventCategory,
+        eventLabel: eventLabel,
+        eventAction: eventAction,
+        eventValue: eventValue
+      });
+
       ga('send', 'event', {
         eventCategory: eventCategory,
         eventLabel: eventLabel,
@@ -78,6 +61,12 @@ export class TrackingServiceService {
 
   public trackException(errMessage) {
     if (typeof ga === 'function') {
+
+      console.info('send', 'exception', {
+        'exDescription': errMessage,
+        'exFatal': false
+      });
+
       ga('send', 'exception', {
         'exDescription': errMessage,
         'exFatal': false

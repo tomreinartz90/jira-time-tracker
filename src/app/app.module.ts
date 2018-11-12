@@ -2,7 +2,7 @@ import 'zone.js/dist/zone-mix';
 import 'reflect-metadata';
 import '../polyfills';
 import {BrowserModule} from '@angular/platform-browser';
-import {NgModule} from '@angular/core';
+import {ErrorHandler, NgModule} from '@angular/core';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 
 import {HttpClient, HttpClientModule} from '@angular/common/http';
@@ -11,8 +11,6 @@ import {AppRoutingModule} from './app-routing.module';
 // NG Translate
 import {TranslateLoader, TranslateModule} from '@ngx-translate/core';
 import {TranslateHttpLoader} from '@ngx-translate/http-loader';
-
-import {ElectronService} from './providers/electron.service';
 
 import {WebviewDirective} from './directives/webview.directive';
 
@@ -35,7 +33,8 @@ import {
   MatInputModule,
   MatListModule,
   MatNativeDateModule,
-  MatToolbarModule, MatTooltipModule
+  MatToolbarModule,
+  MatTooltipModule
 } from '@angular/material';
 import {TimeDetailsSheetComponent} from './components/timetracking/time-details-sheet/time-details-sheet.component';
 import {TimePickerComponent} from './components/base/time-picker/time-picker.component';
@@ -43,12 +42,13 @@ import {LoginComponent} from './components/login/login/login.component';
 import {ProjectSelectComponent} from './components/base/project-select/project-select.component';
 import {ProjectServiceSelectComponent} from './components/base/project-service-select/project-service-select.component';
 import {ServiceTypeSelectComponent} from './components/base/service-type-select/service-type-select.component';
-import { MsToTimePipe } from './components/base/ms-to-time.pipe';
-import { HoursToMsPipe } from './components/base/hours-to-ms.pipe';
-import { TimerComponent } from './components/base/timer/timer.component';
-import { SelectOnFocusDirective } from './components/base/select-on-focus.directive';
-import { StringToHexColorPipe } from './components/base/string-to-hex-color.pipe';
-import { ApprovalStatusComponent } from './components/timetracking/approval-status/approval-status.component';
+import {MsToTimePipe} from './components/base/ms-to-time.pipe';
+import {HoursToMsPipe} from './components/base/hours-to-ms.pipe';
+import {TimerComponent} from './components/base/timer/timer.component';
+import {SelectOnFocusDirective} from './components/base/select-on-focus.directive';
+import {StringToHexColorPipe} from './components/base/string-to-hex-color.pipe';
+import {ApprovalStatusComponent} from './components/timetracking/approval-status/approval-status.component';
+import {CustomErrorHandler} from './providers/custom-error-handler.service';
 
 // AoT requires an exported function for factories
 export function HttpLoaderFactory(http: HttpClient) {
@@ -111,7 +111,11 @@ const matModules = [
   entryComponents: [
     TimeDetailsSheetComponent
   ],
-  providers: [ElectronService, SimplicateService],
+  providers: [ SimplicateService,
+    {
+      provide: ErrorHandler,
+      useClass: CustomErrorHandler,
+    },],
   bootstrap: [AppComponent]
 })
 export class AppModule {

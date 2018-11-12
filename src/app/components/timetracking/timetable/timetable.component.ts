@@ -32,7 +32,7 @@ export class TimetableComponent implements OnChanges {
   }
 
   ngOnChanges() {
-    const todaysHours = this.groupedHours[this.days[0]] || [];
+    const todaysHours = (this.days ? this.groupedHours[this.days[0]] : null) || [];
     const totalApprovedHours = todaysHours.filter(hour => !hour.approvalstatus.label);
     const totalSubmittedHours = todaysHours.filter(hour => hour.approvalstatus.label);
 
