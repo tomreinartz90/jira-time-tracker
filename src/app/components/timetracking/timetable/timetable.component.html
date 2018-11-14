@@ -8,10 +8,10 @@
   <app-approval-status *ngIf="getTotalHours() > 0" class="approval-status" [approvalStatus]="approvalStatus" [date]="activeDate"></app-approval-status>
 </div>
 <div class="row">
-  <mat-card *ngIf="days && days.length">
+  <mat-card >
     <mat-card-content>
       <app-timetableitem
-        *ngFor="let hour of groupedHours[days[0]]; let i = index"
+        *ngFor="let hour of hours; let i = index"
         class="cell"
         [class.has-gap]="hasGap(i)"
         [@fadeInContent]="'showing'"
@@ -23,17 +23,11 @@
 
   </mat-card>
 
-  <mat-card *ngIf="!days || days.length === 0" [@fadeInContent]="'showing'">
+  <mat-card *ngIf="!hours || hours.length === 0" [@fadeInContent]="'showing'">
     <mat-card-content>
       <div class="empty-message">
-
         You have no hours tracked for this day yet,
         start tracking your time.
-        <div>
-          <button mat-fab (click)="addNewItemToList()">
-            <mat-icon>add</mat-icon>
-          </button>
-        </div>
       </div>
     </mat-card-content>
 

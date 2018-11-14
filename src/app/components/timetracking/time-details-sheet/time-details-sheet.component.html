@@ -32,8 +32,9 @@
   </mat-card-content>
 
   <mat-card-actions>
+    <button class="hidden"></button>
+    <app-confirm-button *ngIf="!data.isTimer && data && data.hour.id" (confirm)="delete()">delete</app-confirm-button>
 
-    <button type="submit" *ngIf="!data.isTimer && data && data.hour.id" tabindex="-1" (click)="delete()" mat-stroked-button color="warn">delete</button>
     <div class="spacer"></div>
     <button (click)="close()" mat-stroked-button color="accent">Cancel</button>
 

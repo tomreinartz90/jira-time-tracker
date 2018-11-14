@@ -34,6 +34,7 @@ import {
   MatListModule,
   MatNativeDateModule,
   MatProgressBarModule,
+  MatProgressSpinnerModule,
   MatSlideToggleModule,
   MatToolbarModule,
   MatTooltipModule
@@ -51,6 +52,7 @@ import {SelectOnFocusDirective} from './components/base/select-on-focus.directiv
 import {StringToHexColorPipe} from './components/base/string-to-hex-color.pipe';
 import {ApprovalStatusComponent} from './components/timetracking/approval-status/approval-status.component';
 import {CustomErrorHandler} from './providers/custom-error-handler.service';
+import {ConfirmButtonComponent} from './components/base/confirm-button/confirm-button.component';
 
 // AoT requires an exported function for factories
 export function HttpLoaderFactory(http: HttpClient) {
@@ -70,7 +72,8 @@ const matModules = [
   MatIconModule,
   MatTooltipModule,
   MatProgressBarModule,
-  MatSlideToggleModule
+  MatSlideToggleModule,
+  MatProgressSpinnerModule
 ];
 
 @NgModule({
@@ -95,6 +98,7 @@ const matModules = [
     SelectOnFocusDirective,
     StringToHexColorPipe,
     ApprovalStatusComponent,
+    ConfirmButtonComponent,
   ],
   imports: [
     BrowserModule,

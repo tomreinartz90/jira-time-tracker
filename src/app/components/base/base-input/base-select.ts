@@ -1,7 +1,7 @@
-import { BaseInput } from './base-input';
-import { Subject, Subscription } from 'rxjs';
-import { OnDestroy } from '@angular/core';
-import { debounceTime, filter } from 'rxjs/operators';
+import {BaseInput} from './base-input';
+import {Subject, Subscription} from 'rxjs';
+import {OnDestroy} from '@angular/core';
+import {debounceTime, filter} from 'rxjs/operators';
 
 export abstract class BaseSelect extends BaseInput implements OnDestroy {
 
@@ -37,7 +37,7 @@ export abstract class BaseSelect extends BaseInput implements OnDestroy {
     } );
   }
 
-  private updateSelectedOption( selectedOption: any ) {
+  protected updateSelectedOption( selectedOption: any ) {
     if ( selectedOption ) {
       this.onChange( this.getId( selectedOption ) );
       this.formControl.patchValue( this.getName( selectedOption ) );

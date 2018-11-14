@@ -1,4 +1,3 @@
-<div class="overlay" [style.background]="item.project.name | stringToHexColor"></div>
 <div class="container" >
   <div class="time">
     <div class="start">{{getTime(item.start_date) }}h</div>
@@ -8,7 +7,7 @@
     </div>
   </div>
   <div class="content" (click)="action.emit('EDIT')">
-    <h3 [style.color]="item.project.name | stringToHexColor">{{item.project.name}}</h3>
+    <h3 ><span class="badge" [style.backgroundColor]="item.project.name | stringToHexColor"></span>{{item.project.name}}</h3>
     <div class="service">{{item.projectservice.name}} / {{item.type.label}}</div>
     <div class="note">{{item.note}}</div>
   </div>

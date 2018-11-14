@@ -6,19 +6,16 @@ import {SimplicateService} from '../../../providers/simplicate.service';
 import {DateUtil} from '../../../utils/date.util';
 import {TrackingServiceService} from '../../../providers/tracking-service.service';
 
-@Component( {
+@Component({
   selector: 'app-timetable',
   templateUrl: './timetable.component.html',
   styleUrls: ['./timetable.component.scss'],
   animations: [fadeInContent]
-} )
+})
 export class TimetableComponent implements OnChanges {
 
   @Input()
-  groupedHours: { [key: string]: Array<HourModel> } = {};
-
-  @Input()
-  days: Array<string> = [];
+  hours: Array<HourModel> = [];
 
   @Input()
   activeDate: Date;
@@ -28,46 +25,46 @@ export class TimetableComponent implements OnChanges {
 
   approvalStatus = 'EMPTY';
 
-  constructor( private bottomSheet: MatBottomSheet, public simplicateService: SimplicateService, private track: TrackingServiceService ) {
+  constructor(private bottomSheet: MatBottomSheet, public simplicateService: SimplicateService, private track: TrackingServiceService) {
   }
 
   ngOnChanges() {
-    const todaysHours = (this.days ? this.groupedHours[this.days[0]] : null) || [];
+    const todaysHours = this.hours;
     const totalApprovedHours = todaysHours.filter(hour => !hour.approvalstatus.label);
     const totalSubmittedHours = todaysHours.filter(hour => hour.approvalstatus.label);
 
-    if ( todaysHours.length === 0 ) {
+    if (todaysHours.length === 0) {
       this.approvalStatus = 'EMPTY';
-    } else if ( totalApprovedHours.length === todaysHours.length ) {
+    } else if (totalApprovedHours.length === todaysHours.length) {
       this.approvalStatus = 'APPROVED';
-    } else if ( totalSubmittedHours.length > 1 ) {
+    } else if (totalSubmittedHours.length > 1) {
       this.approvalStatus = 'TO_RESUBMIT';
     } else {
       this.approvalStatus = 'TO_APPROVE';
     }
   }
 
-  showTimeDetails( item: HourModel, newTimer: boolean = false ) {
+  showTimeDetails(item: HourModel, newTimer: boolean = false) {
     const activeTimer = this.simplicateService.getActiveTimer();
-    this.track.trackEvent( 'timetable', 'show-details' );
-    this.bottomSheet.open<TimeDetailsSheetComponent>( TimeDetailsSheetComponent as any, {
+    this.track.trackEvent('timetable', 'show-details');
+    this.bottomSheet.open<TimeDetailsSheetComponent>(TimeDetailsSheetComponent as any, {
       disableClose: true,
       autoFocus: false,
       data: {
         hour: item,
         isTimer: newTimer || (activeTimer && item.id === activeTimer)
       }
-    } );
+    });
   }
 
 
-  @HostListener( 'window:keydown', ['$event'] )
-  onKeyDown( event: KeyboardEvent ) {
-    if ( (<any>event.target).nodeName === 'BODY' ) {
-      const { code } = event;
-      if ( code === 'KeyN' ) {
-        if ( this.days && this.days.length > 0 ) {
-          this.addItemToList( this.days[this.days.length - 1] );
+  @HostListener('window:keydown', ['$event'])
+  onKeyDown(event: KeyboardEvent) {
+    if ((<any>event.target).nodeName === 'BODY') {
+      const {code} = event;
+      if (code === 'KeyN') {
+        if (this.hours && this.hours.length > 0) {
+          this.addItemToList();
         } else {
           this.addNewItemToList();
         }
@@ -75,49 +72,49 @@ export class TimetableComponent implements OnChanges {
     }
   }
 
-  startStopTimer( day?: string ) {
-    if ( this.timer ) {
-      this.track.trackEvent( 'timetable', 'stop-timer' );
+  startStopTimer() {
+    if (this.timer) {
+      this.track.trackEvent('timetable', 'stop-timer');
       this.simplicateService.clearTimer();
     } else {
-      day ? this.addItemToList( day, ) : this.addNewItemToList(  );
-      this.track.trackEvent( 'timetable', 'start-timer' );
+      this.add();
+      this.track.trackEvent('timetable', 'start-timer');
     }
   }
 
   add() {
-    if ( this.days && this.days.length ) {
-      this.addItemToList( this.days[0] );
+    if (this.hours && this.hours.length) {
+      this.addItemToList(this.hours[0]);
     } else {
       this.addNewItemToList();
     }
   }
 
-  addItemToList( day: string, copyFrom?: HourModel ) {
-    this.track.trackEvent( 'timetable', 'add-item' );
-    const lastItem: HourModel = this.groupedHours[day][this.groupedHours[day].length - 1] || ({} as HourModel);
-    const newItem: HourModel = HourModel.fromJSON( copyFrom || lastItem );
+  addItemToList(copyFrom?: HourModel) {
+    this.track.trackEvent('timetable', 'add-item');
+    const lastItem: HourModel = this.hours[this.hours.length - 1] || ({} as HourModel);
+    const newItem: HourModel = HourModel.fromJSON(copyFrom || lastItem);
     newItem.id = null;
 
     newItem.start_date = lastItem.end_date;
-    newItem.end_date = DateUtil.addTimeInMilliseconds( newItem.start_date, 30 * 60 * 1000 );
+    newItem.end_date = DateUtil.addTimeInMilliseconds(newItem.start_date, 30 * 60 * 1000);
 
     newItem.hours = 0;
     newItem.note = null;
     newItem.approvalstatus = null;
     newItem.is_time_defined = true;
 
-    this.showTimeDetails( newItem, false );
+    this.showTimeDetails(newItem, false);
   }
 
   addNewItemToList() {
-    this.track.trackEvent( 'timetable', 'add-new-item' );
+    this.track.trackEvent('timetable', 'add-new-item');
     const item = new HourModel();
     item.employee.id = this.simplicateService.employee.id;
-    item.start_date = new Date( this.activeDate.getTime() );
-    item.start_date.setUTCHours( 8, 30, 0 );
+    item.start_date = new Date(this.activeDate.getTime());
+    item.start_date.setUTCHours(8, 30, 0);
 
-    item.end_date = DateUtil.addTimeInMilliseconds( item.start_date, 30 * 60 * 1000 );
+    item.end_date = DateUtil.addTimeInMilliseconds(item.start_date, 30 * 60 * 1000);
 
     // item.end_date = null;
     item.hours = 0;
@@ -125,31 +122,31 @@ export class TimetableComponent implements OnChanges {
     item.approvalstatus = null;
     item.is_time_defined = true;
 
-    this.showTimeDetails( item );
+    this.showTimeDetails(item);
   }
 
   getTotalHours(): number {
-    if ( this.groupedHours && this.days.length && this.groupedHours[this.days[0]] ) {
-      return this.groupedHours[this.days[0]].map( hour => hour.hours ).reduce( ( previousValue, currentValue ) => previousValue + currentValue, 0 );
+    if (this.hours && this.hours.length) {
+      return this.hours.map(hour => hour.hours).reduce((previousValue, currentValue) => previousValue + currentValue, 0);
     }
     return 0;
   }
 
-  hasGap( i: number ) {
-    if ( i > 0 && this.groupedHours && this.days.length && this.groupedHours[this.days[0]][i - 1] ) {
-      const curr = this.groupedHours[this.days[0]][i].start_date;
-      const prev = this.groupedHours[this.days[0]][i - 1].end_date;
+  hasGap(i: number) {
+    if (i > 0 && this.hours && this.hours.length) {
+      const curr = this.hours[i].start_date;
+      const prev = this.hours[i].end_date;
       // max 10 sec between two items
-      return (curr.getTime() - prev.getTime() > 1000 * 10);
+      return (curr.getTime() - prev.getTime() > 1000 * 60);
     }
   }
 
-  handleTimeAction( event: string, item: HourModel ) {
-    switch ( event ) {
+  handleTimeAction(event: string, item: HourModel) {
+    switch (event) {
       case 'EDIT':
-        return this.showTimeDetails( item );
+        return this.showTimeDetails(item);
       case 'COPY':
-        return this.addItemToList( this.days[0], item );
+        return this.addItemToList(item);
     }
   }
 }
