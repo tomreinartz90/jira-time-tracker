@@ -5,3 +5,17 @@
 .mat-form-field {
   width: 100%;
 }
+
+.project-select {
+  display: flex;
+  align-items: center;
+}
+
+.badge {
+  display: inline-block;
+  margin-right: .5rem;
+  margin-bottom: .1rem;
+  border-radius: 50%;
+  width: .5rem;
+  height: .5rem;
+}

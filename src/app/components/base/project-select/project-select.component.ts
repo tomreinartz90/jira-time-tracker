@@ -5,7 +5,7 @@ import {map, startWith} from 'rxjs/operators';
 import {SimplicateService} from '../../../providers/simplicate.service';
 import {NG_VALUE_ACCESSOR} from '@angular/forms';
 import {BaseSelect} from '../base-input/base-select';
-import {sortBy} from 'lodash';
+import {sortBy,debounce} from 'lodash';
 
 @Component({
   selector: 'app-project-select',
@@ -25,6 +25,8 @@ export class ProjectSelectComponent extends BaseSelect implements OnInit {
 
   private selectedProjectId: string;
 
+  protected hasFocus: boolean = false;
+
   constructor(private simplicateService: SimplicateService) {
     super();
     this.filteredProjects = this.formControl.valueChanges
@@ -43,7 +45,24 @@ export class ProjectSelectComponent extends BaseSelect implements OnInit {
     );
   }
 
-  protected getId(option: ProjectModel): string {
+  updateFocus = debounce((val) => {
+    this.hasFocus = val;
+  }, 200);
+
+  blur = () => {
+    super.handleBlur();
+    this.updateFocus(false);
+  };
+
+  protected get getCleanName() : string {
+    const proj = this.projects.find(options => options.id === this.selectedProjectId);
+    if(proj) {
+      return proj.cleanName;
+    }
+    return '';
+  }
+
+  protected getId( option: ProjectModel ): string {
     return option.id;
   }
 
