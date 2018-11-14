@@ -42,7 +42,6 @@
     "@angular/animations": "^7.0.3",
     "@angular/cdk": "^7.0.3",
     "@angular/material": "^7.0.3",
-    "angular-material": "^1.1.10",
     "lodash": "latest"
   },
   "devDependencies": {
