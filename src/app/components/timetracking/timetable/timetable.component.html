@@ -5,7 +5,7 @@
     </div>
     <div class="total-time"><strong>{{ (getTotalHours() | hoursToMs) | msToTime:true }} / {{ 8 | hoursToMs | msToTime}}</strong></div>
   </div>
-  <app-approval-status *ngIf="getTotalHours() > 0" class="approval-status" [approvalStatus]="approvalStatus" [date]="activeDate"></app-approval-status>
+  <app-approval-status class="approval-status" [approvalStatus]="approvalStatus" [date]="activeDate"></app-approval-status>
 </div>
 <div class="row">
   <mat-card >
