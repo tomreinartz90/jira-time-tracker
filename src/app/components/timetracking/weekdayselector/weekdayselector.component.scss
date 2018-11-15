@@ -1,11 +1,15 @@
 :host {
   height: 6rem;
 
-
   .mat-toolbar-row,
   .mat-toolbar-single-row {
     height: 3rem;
   }
+
+  .draggable {
+    -webkit-app-region: drag;
+  }
+
   h3 {
     flex: 1 1 auto;
     font-size: 1rem;

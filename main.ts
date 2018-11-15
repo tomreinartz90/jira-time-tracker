@@ -1,8 +1,9 @@
-import {app, BrowserWindow, screen} from 'electron';
+import {app, BrowserWindow, screen, Tray} from 'electron';
 import * as path from 'path';
 import * as url from 'url';
+import { createPlatformFactory } from '@angular/core';
 
-let win, serve;
+let win, serve, tray;
 const args = process.argv.slice(1);
 serve = args.some(val => val === '--serve');
 
@@ -21,7 +22,8 @@ function createWindow() {
     minHeight: 600,
     resizable: true,
     skipTaskbar: false,
-    title: 'Simplicate Time Tracker'
+    titleBarStyle: 'hiddenInset',
+    title: 'Simplicate Time Tracker',
   });
 
   if (serve) {
@@ -49,12 +51,47 @@ function createWindow() {
 
 }
 
+function createTray() {
+  tray = new Tray(path.join(__dirname, 'dist/assets/menubar.png'));
+  tray.setToolTip('Simplicate Time Tracker');
+
+  tray.on('click', toggleWindow);
+}
+
+function toggleWindow() {
+  const trayPos = tray.getBounds();
+  const windowPos = win.getBounds();
+
+  let x, y = 0
+  if (process.platform == 'darwin') {
+    x = Math.round(trayPos.x + (trayPos.width / 2) - (windowPos.width / 2))
+    y = Math.round(trayPos.y + trayPos.height)
+  } else {
+    x = Math.round(trayPos.x + (trayPos.width / 2) - (windowPos.width / 2))
+    y = Math.round(trayPos.y + trayPos.height * 10)
+  }
+
+  win.setPosition(x, y, false)
+
+  if(win.isVisible()) {
+    win.hide();
+  }
+  else {
+    win.show();
+    win.focus();
+  }
+}
+
+
 try {
 
   // This method will be called when Electron has finished
   // initialization and is ready to create browser windows.
   // Some APIs can only be used after this event occurs.
-  app.on('ready', createWindow);
+  app.on('ready', () => {
+    createWindow();
+    createTray();
+  });
 
   // Quit when all windows are closed.
   app.on('window-all-closed', () => {
