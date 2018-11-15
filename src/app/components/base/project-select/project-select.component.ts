@@ -25,7 +25,7 @@ export class ProjectSelectComponent extends BaseSelect implements OnInit {
 
   private selectedProjectId: string;
 
-  protected hasFocus = false;
+  hasFocus = false;
 
   updateFocus = debounce( ( val ) => {
     this.hasFocus = val;
