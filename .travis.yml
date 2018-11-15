@@ -24,28 +24,29 @@ cache:
 
 jobs:
   include:
-#  - stage: test
-#    script:
-#    - yarn test
-#    - ng lint
-#  - stage: build
-#    if: branch != master
-#    script: yarn build
+  - stage: test
+    script:
+    - yarn test
+    - ng lint
+  - stage: build
+    if: branch != master
+    script: yarn electron:local
   - stage: build + deploy osx
-#    if: branch = master
+    if: branch = master
     os:
     - osx
-    script: yarn electron:mac
+    script:
+    - yarn electron:mac
     deploy:
       provider: releases
       api_key: $ENCRYPTED_GITHUB_TOKEN
       file_glob: true
       file: release/*.dmg
-  - stage: build + deploy
-#    if: branch = master
+  - stage: build + deploy win
+    if: branch = master
     os:
     - windows
-    script: yarn electron:windows win
+    script: yarn electron:windows
     deploy:
       provider: releases
       api_key: $ENCRYPTED_GITHUB_TOKEN

@@ -1,7 +1,5 @@
 <mat-toolbar>
   <mat-toolbar-row class="draggable">
-  </mat-toolbar-row>
-  <mat-toolbar-row>
     <div *ngIf="initials" class="user">{{initials}}</div>
     <div class="name">Timesheet</div>
     <input [ngModel]="activeDate" (ngModelChange)="updateDate($event)" [matDatepicker]="picker">
