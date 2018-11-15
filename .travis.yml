@@ -24,13 +24,12 @@ cache:
 
 jobs:
   include:
-  - stage: test
+  - stage: test + build
+    if: branch != master
     script:
     - yarn test
     - ng lint
-  - stage: build
-    if: branch != master
-    script: yarn electron:local
+    - yarn electron:local
   - stage: build + deploy osx
     if: branch = master
     os:
