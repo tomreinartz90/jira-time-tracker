@@ -1,8 +1,8 @@
 <mat-toolbar>
   {{data.hour.id ? 'Edit item' : 'New item'}}
   <div class="spacer"></div>
-  <button mat-icon-button tabindex="-1">
-    <mat-icon (click)="close()">close</mat-icon>
+  <button mat-icon-button tabindex="-1" (click)="close()">
+    <mat-icon>close</mat-icon>
   </button>
 </mat-toolbar>
 

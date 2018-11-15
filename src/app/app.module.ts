@@ -50,6 +50,7 @@ import {HoursToMsPipe} from './components/base/hours-to-ms.pipe';
 import {TimerComponent} from './components/base/timer/timer.component';
 import {SelectOnFocusDirective} from './components/base/select-on-focus.directive';
 import {StringToHexColorPipe} from './components/base/string-to-hex-color.pipe';
+import {CleanNamePipe} from './components/base/clean-name.pipe';
 import {ApprovalStatusComponent} from './components/timetracking/approval-status/approval-status.component';
 import {CustomErrorHandler} from './providers/custom-error-handler.service';
 import {ConfirmButtonComponent} from './components/base/confirm-button/confirm-button.component';
@@ -97,6 +98,7 @@ const matModules = [
     TimerComponent,
     SelectOnFocusDirective,
     StringToHexColorPipe,
+    CleanNamePipe,
     ApprovalStatusComponent,
     ConfirmButtonComponent,
   ],
