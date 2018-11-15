@@ -1,5 +1,6 @@
 import { BaseModel } from './base.model';
 import { OrganizationModel } from './organization.model';
+import { StringUtil } from '../utils/string.util';
 
 export class ProjectModel extends BaseModel<ProjectModel> {
   id: string;
@@ -10,10 +11,10 @@ export class ProjectModel extends BaseModel<ProjectModel> {
 
 
   get cleanName() {
-    return this.project_name || this.name
-      .replace( /<?.b>/g, '' )
-      .replace( '\'', ' - ' )
-      .replace( '\'', '' )
-      .trim();
+    if(this.project_name) {
+      return this.project_name.replace(`(${this.project_number})`, '').trim();
+    }
+
+    return StringUtil.clean(this.name);
   }
 }
