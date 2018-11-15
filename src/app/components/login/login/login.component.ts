@@ -10,9 +10,9 @@ import {TrackingServiceService} from '../../../providers/tracking-service.servic
 })
 export class LoginComponent implements OnInit {
 
-  password: string = '';
-  email: string = '';
-  domain: string = '';
+  password = '';
+  email = '';
+  domain = '';
   error: string = null;
 
   constructor(private simplicateService: SimplicateService,

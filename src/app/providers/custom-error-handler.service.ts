@@ -1,16 +1,16 @@
-import {ErrorHandler, Injectable} from '@angular/core';
-import {TrackingServiceService} from './tracking-service.service';
+import { ErrorHandler, Injectable } from '@angular/core';
+import { TrackingServiceService } from './tracking-service.service';
 
-@Injectable({
+@Injectable( {
   providedIn: 'root'
-})
+} )
 export class CustomErrorHandler implements ErrorHandler {
-  constructor(private trackSerivce: TrackingServiceService) {
+  constructor( private trackSerivce: TrackingServiceService ) {
   }
 
-  handleError(error) {
+  handleError( error ) {
     // your custom error handling logic
-    console.error(error);
-    this.trackSerivce.trackException(error);
+    console.error( error );
+    this.trackSerivce.trackException( error );
   }
 }
