@@ -25,7 +25,7 @@ jobs:
   include:
   - stage: test
     if: os = linux
-      script:
+    script:
       - ng lint
       - yarn test
   - stage: build
