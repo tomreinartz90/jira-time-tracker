@@ -13,6 +13,9 @@ addons:
 before_script:
 - export DISPLAY=:99.0
 
+before_deploy:
+- git tag "$(date +'%Y%m%d%H%M%S')-$(git log --format=%h -1)"
+
 install:
 - yarn install
 
@@ -21,19 +24,22 @@ cache:
 
 jobs:
   include:
-  - stage: test
-    script:
-    - yarn test
-    - ng lint
-  - stage: build
-    if: branch != master
-    script: yarn build
+#  - stage: test
+#    script:
+#    - yarn test
+#    - ng lint
+#  - stage: build
+#    if: branch != master
+#    script: yarn build
   - stage: build + deploy
-    if: branch = master
+#    if: branch = master
     os:
     - osx
     - windows
     - linux
-    script: yarn build
+    script: yarn electron:local
     deploy:
       provider: releases
+      api_key: $ENCRYPTED_GITHUB_TOKEN
+      file_glob: true
+      file: release/*
