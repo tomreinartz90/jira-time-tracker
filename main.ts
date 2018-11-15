@@ -62,21 +62,20 @@ function toggleWindow() {
   const trayPos = tray.getBounds();
   const windowPos = win.getBounds();
 
-  let x, y = 0
-  if (process.platform == 'darwin') {
-    x = Math.round(trayPos.x + (trayPos.width / 2) - (windowPos.width / 2))
-    y = Math.round(trayPos.y + trayPos.height)
+  let x, y = 0;
+  if (process.platform === 'darwin') {
+    x = Math.round(trayPos.x + (trayPos.width / 2) - (windowPos.width / 2));
+    y = Math.round(trayPos.y + trayPos.height);
   } else {
-    x = Math.round(trayPos.x + (trayPos.width / 2) - (windowPos.width / 2))
-    y = Math.round(trayPos.y + trayPos.height * 10)
+    x = Math.round(trayPos.x + (trayPos.width / 2) - (windowPos.width / 2));
+    y = Math.round(trayPos.y + trayPos.height * 10);
   }
 
-  win.setPosition(x, y, false)
+  win.setPosition(x, y, false);
 
-  if(win.isVisible()) {
+  if (win.isVisible()) {
     win.hide();
-  }
-  else {
+  } else {
     win.show();
     win.focus();
   }
