@@ -1,10 +1,24 @@
 <mat-toolbar>
-    <span><</span>
-    <span>mon</span>
-    <span>tue</span>
-    <span>wed</span>
-    <span>thu</span>
-    <span>fri</span>
-    <span>sat</span>
-    <span>></span>
+  <mat-toolbar-row class="draggable">
+    <div *ngIf="initials" class="user">{{initials}}</div>
+    <div class="name">Timesheet</div>
+    <input [ngModel]="activeDate" (ngModelChange)="updateDate($event)" [matDatepicker]="picker">
+    <mat-datepicker-toggle matSuffix [for]="picker" matTooltip="Select date"></mat-datepicker-toggle>
+    <mat-datepicker touchUi #picker></mat-datepicker>
+  </mat-toolbar-row>
+  <mat-toolbar-row>
+    <h3>
+      <span *ngIf="isActiveDateToday">Today</span>
+      <span *ngIf="!isActiveDateToday">{{activeDate | date:'EE MMM d'}}</span>
+    </h3>
+
+    <button mat-icon-button (click)="prev()" matTooltip="Previous day">
+      <mat-icon>chevron_left</mat-icon>
+    </button>
+    <button mat-icon-button (click)="next()" matTooltip="Next day">
+      <mat-icon>chevron_right</mat-icon>
+    </button>
+
+  </mat-toolbar-row>
+
 </mat-toolbar>

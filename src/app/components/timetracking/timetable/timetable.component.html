@@ -1,16 +1,48 @@
+<div class="row flex">
+  <div class="progress-container">
+    <div class="progress">
+      <span [style.width.%]="getTotalHours() / 8 * 100"></span>
+    </div>
+    <div class="total-time"><strong>{{ (getTotalHours() | hoursToMs) | msToTime:true }} / {{ 8 | hoursToMs | msToTime}}</strong></div>
+  </div>
+  <app-approval-status class="approval-status" [approvalStatus]="approvalStatus" [date]="activeDate"></app-approval-status>
+</div>
 <div class="row">
-  <mat-card *ngFor="let day of days">
-    <h3 class="heading">{{day | date }} - <small>{{getTotalHours(groupedHours[day]) | number:'1.0-1'}}h</small></h3>
+  <mat-card >
     <mat-card-content>
-      <app-timetableitem class="cell" [item]="hour" *ngFor="let hour of groupedHours[day]" (click)="showTimeDetails(hour)">
+      <app-timetableitem
+        *ngFor="let hour of hours; let i = index"
+        class="cell"
+        [class.has-gap]="hasGap(i)"
+        [@fadeInContent]="'showing'"
+        [item]="hour"
+        [timer]="timer"
+        (action)="handleTimeAction($event, hour)">
       </app-timetableitem>
     </mat-card-content>
 
-    <mat-card-actions>
-      <button (click)="addItemToList(day)" mat-button>ADD</button>
-    </mat-card-actions>
+  </mat-card>
+
+  <mat-card *ngIf="!hours || hours.length === 0" [@fadeInContent]="'showing'">
+    <mat-card-content>
+      <div class="empty-message">
+        You have no hours tracked for this day yet,
+        start tracking your time.
+      </div>
+    </mat-card-content>
 
   </mat-card>
+  <div class="fab-container">
+    <button *ngIf="timer"
+            [@fadeInContent]="'showing'"
+            (click)="startStopTimer()" mat-mini-fab color="black">
+      <mat-icon>stop</mat-icon>
+    </button>
+
+    <button (click)="add()" mat-fab color="accent">
+      <mat-icon>add</mat-icon>
+    </button>
+  </div>
 
 
 </div>

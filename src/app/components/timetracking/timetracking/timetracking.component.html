@@ -1,2 +1,3 @@
-<app-weekdayselector [groupedHours]="groupedHours" [days]="days"></app-weekdayselector>
-<app-timetable [groupedHours]="groupedHours" [days]="days"></app-timetable>
+<app-weekdayselector [initials]="employee?.avatar.initials" [activeDate]="activeDate" (activeDateChange)="setActiveDate($event)"></app-weekdayselector>
+<app-timetable *ngIf="!loading" [hours]="hours" [activeDate]="activeDate" [timer]="timer"></app-timetable>
+<mat-progress-bar mode="indeterminate" *ngIf="loading"></mat-progress-bar>

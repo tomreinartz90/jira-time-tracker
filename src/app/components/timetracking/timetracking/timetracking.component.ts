@@ -1,7 +1,6 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, HostBinding, OnInit} from '@angular/core';
 import {SimplicateService} from '../../../providers/simplicate.service';
-import {DateUtil} from '../../../utils/date.util';
-import {mergeMap, startWith} from 'rxjs/operators';
+import {delay} from 'rxjs/operators';
 
 @Component({
   selector: 'app-timetracking',
@@ -9,28 +8,65 @@ import {mergeMap, startWith} from 'rxjs/operators';
   styleUrls: ['./timetracking.component.scss']
 })
 export class TimetrackingComponent implements OnInit {
+  loading: boolean;
   groupedHours: any;
   hours: any;
+  timer: string;
   days: string[];
+
+  activeDate = new Date();
+
+  @HostBinding('class.active')
+  active: boolean;
+
+  employee: any;
 
   constructor(private simplicate: SimplicateService) {
   }
 
   ngOnInit() {
+    this.active = true;
     this.getEmployeeHours();
+    this.getEmployee();
+    this.getTimer();
+    this.simplicate.onUpdateHour.subscribe(() => {
+      this.getEmployeeHours();
+    });
+  }
+
+  getEmployee() {
+    this.simplicate.getEmployeeInfo().subscribe(employee => {
+      this.employee = employee;
+    });
   }
 
   getEmployeeHours() {
-    this.simplicate.onUpdateHour.pipe(
-      startWith(true),
-      mergeMap(() => (this.simplicate.getCurrentEmployeeHours(new Date())))
+    this.loading = true;
+    this.simplicate.getCurrentEmployeeHours(this.activeDate).pipe(
+      delay(500)
     ).subscribe(resp => {
         this.hours = resp;
-        this.groupedHours = DateUtil.groupByDateDay(resp, (item) => item.start_date);
-        this.days = Object.keys(this.groupedHours).sort();
-        console.log(this);
-      }
+      },
+      () => {
+      },
+      () => this.loading = false
     );
+
   }
 
+  getTimer() {
+    this.timer = this.simplicate.getActiveTimer();
+
+    this.simplicate.onUpdateTimer.subscribe(resp => {
+      this.timer = resp;
+    });
+  }
+
+  setActiveDate(date: Date) {
+    this.activeDate = date;
+    this.hours = [];
+    this.groupedHours = [];
+    this.days = [];
+    this.getEmployeeHours();
+  }
 }

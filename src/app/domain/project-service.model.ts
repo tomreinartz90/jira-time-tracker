@@ -7,6 +7,6 @@ export class ProjectServiceModel extends BaseModel<ProjectServiceModel> {
   revenue_group_id: string;
 
   get cleanName() {
-    return this.name.replace( /<b.*b>/, '' );
+    return this.name.replace( /<b.*b>/, '' ).trim();
   }
 }

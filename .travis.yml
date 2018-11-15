@@ -1,17 +1,54 @@
 language: node_js
 node_js:
-  - 8
+- 8
+
 sudo: required
+
+os:
+- osx
+
 addons:
-    chrome: stable
+  chrome: stable
+
 before_script:
-  - export DISPLAY=:99.0
-  - sh -e /etc/init.d/xvfb start
+- export DISPLAY=:99.0
+
+before_deploy:
+- git tag "$(date +'%Y%m%d%H%M%S')-$(git log --format=%h -1)"
+
 install:
-  - npm set progress=false
-  - npm install
-script:
-  - ng lint
-  - npm run test
-  - npm run e2e
-  - npm run build
+- yarn install
+
+cache:
+  yarn: true
+
+jobs:
+  include:
+  - stage: test
+    script:
+    - yarn test
+    - ng lint
+  - stage: build
+    if: branch != master
+    script: yarn electron:local
+  - stage: build + deploy osx
+    if: branch = master
+    os:
+    - osx
+    script:
+    - yarn electron:mac
+    deploy:
+      provider: releases
+      api_key: $ENCRYPTED_GITHUB_TOKEN
+      file_glob: true
+      file: release/*.dmg
+  - stage: build + deploy win
+    if: branch = master
+    os:
+    - windows
+    script: yarn electron:windows
+    deploy:
+      provider: releases
+      api_key: $ENCRYPTED_GITHUB_TOKEN
+      file_glob: true
+      file: release/*.exe

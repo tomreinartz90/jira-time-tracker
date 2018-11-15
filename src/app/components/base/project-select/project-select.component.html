@@ -1,13 +1,20 @@
 <mat-form-field class="example-full-width">
-  <input type="text"
-         matInput
-         placeholder="Project"
-         [formControl]="formControl"
-         (blur)="handleBlur()"
-         [matAutocomplete]="auto">
-  <mat-autocomplete #auto="matAutocomplete">
-    <mat-option *ngFor="let option of filteredProjects | async" [value]="option.cleanName">
-      {{option.cleanName}}
+  <div class="project-select">
+    <span class="badge" *ngIf="!hasFocus" [style.backgroundColor]="getCleanName | stringToHexColor"></span>
+    <input type="text"
+      matInput
+      required
+      placeholder="Project"
+      [formControl]="formControl"
+      (blur)="blur()"
+      (focus)="updateFocus(true)"
+      appSelectOnFocus
+      [matAutocomplete]="auto">
+  </div>
+  <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete">
+    <mat-option *ngFor="let option of filteredProjects | async" [value]="option.name">
+      <span class="badge" [style.backgroundColor]="option.cleanName | stringToHexColor"></span>
+      <span [innerHtml]="option.name"></span>
     </mat-option>
   </mat-autocomplete>
 </mat-form-field>

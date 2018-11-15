@@ -1,5 +1,5 @@
 {
-  "productName": "Track hours",
+  "productName": "Simplicate Time Tracker",
   "directories": {
     "output": "release/"
   },
@@ -22,7 +22,7 @@
   "win": {
     "icon": "dist",
     "target": [
-      "portable"
+      "nsis"
     ]
   },
   "mac": {

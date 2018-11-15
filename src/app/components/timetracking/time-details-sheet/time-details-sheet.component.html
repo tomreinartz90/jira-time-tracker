@@ -1,27 +1,55 @@
-<mat-card>
+<mat-toolbar>
+  {{data.hour.id ? 'Edit item' : 'New item'}}
+  <div class="spacer"></div>
+  <button mat-icon-button tabindex="-1" (click)="close()">
+    <mat-icon>close</mat-icon>
+  </button>
+</mat-toolbar>
 
-  <form class="example-container" [formGroup]="timeForm" (ngSubmit)="onSubmit()">
-    <mat-card-content>
+<mat-progress-bar *ngIf="loading" mode="indeterminate"></mat-progress-bar>
 
-      <app-project-select formControlName="project"></app-project-select>
+<form class="example-container" [formGroup]="timeForm">
+  <mat-card-content>
 
-      <app-project-service-select [projectId]="projectId" formControlName="projectservice"></app-project-service-select>
+    <app-project-select formControlName="project"></app-project-select>
 
-      <app-service-type-select [serviceId]="projectserviceId" formControlName="type"></app-service-type-select>
+    <app-project-service-select [projectId]="projectId"
+                                [startDate]="startDate"
+                                formControlName="projectservice"></app-project-service-select>
 
-      <app-time-picker formControlName="startTime" placeholder="Start Time"></app-time-picker>
+    <app-service-type-select [serviceId]="projectserviceId" formControlName="type"></app-service-type-select>
 
-      <app-time-picker formControlName="endTime" placeholder="End Time"></app-time-picker>
-      <!--<h6>Notes</h6>-->
-      <mat-form-field class="full-width">
-        <textarea matInput placeholder="Notes" formControlName="note"></textarea>
-      </mat-form-field>
-    </mat-card-content>
+    <div class="flex time">
+      <app-time-picker formControlName="startTime" [timeDate]="data.hour.start_date" placeholder="Start Time"></app-time-picker>
 
-    <mat-card-actions>
-      <button type="submit" mat-button>Save</button>
-    </mat-card-actions>
+      <app-time-picker [isDisabled]="data.isTimer" formControlName="endTime" [timeDate]="data.hour.end_date" placeholder="End Time"></app-time-picker>
+    </div>
+    <mat-slide-toggle *ngIf="!data.hour.id" [checked]="data.isTimer" (change)="data.isTimer = !data.isTimer">Use timer to determine End Time</mat-slide-toggle>
 
-  </form>
+    <mat-form-field class="full-width">
+      <textarea matInput placeholder="Notes" formControlName="note"></textarea>
+    </mat-form-field>
+  </mat-card-content>
 
-</mat-card>
+  <mat-card-actions>
+    <button class="hidden"></button>
+    <app-confirm-button *ngIf="!data.isTimer && data && data.hour.id" (confirm)="delete()">delete</app-confirm-button>
+
+    <div class="spacer"></div>
+    <button (click)="close()" mat-stroked-button color="accent">Cancel</button>
+
+
+    <ng-container *ngIf="data.isTimer">
+      <button *ngIf="!isActiveTimer" type="submit" [disabled]="!timeForm.valid" (click)="onSubmit()" mat-raised-button color="accent">Start timer</button>
+      <button *ngIf="isActiveTimer" type="button" [disabled]="!timeForm.valid" (click)="onTimerStop()" mat-raised-button color="accent">Stop timer</button>
+    </ng-container>
+
+    <ng-container *ngIf="!data.isTimer || data.hour.id">
+      <button type="submit" [disabled]="!timeForm.valid" (click)="onSubmit()" mat-raised-button color="accent">{{data.hour.id ? 'Update' : 'Save'}}</button>
+    </ng-container>
+
+
+  </mat-card-actions>
+
+</form>
+

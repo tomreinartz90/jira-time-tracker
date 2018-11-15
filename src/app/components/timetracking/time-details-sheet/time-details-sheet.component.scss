@@ -1,15 +1,19 @@
 :host {
   display: block;
-  //padding: 1rem;
-  //margin-bottom: 3rem;
+  padding: 1rem .5rem;
+  margin-bottom: 2rem;
 }
 
 .mat-card {
   box-shadow: 0 0 0 0;
 }
+.hidden {
+  display: none;
+}
 .example-container {
   display: flex;
   flex-direction: column;
+  padding-top: 1rem;
 }
 
 .example-container > * {
@@ -18,4 +22,43 @@
 
 .full-width {
   width: 100%;
+  margin-top: 2rem;
+
 }
+
+.time {
+  margin: 2rem 0 0;
+  app-time-picker {
+    width: 100%;
+    &:first-child {
+      margin-right: .5rem;
+    }
+    &:last-child:not(:first-child) {
+      margin-left: .5rem;
+    }
+  }
+}
+
+  .mat-toolbar {
+  background-color: #FF2345;
+  margin: -1.5rem -1.5rem 1.5rem;
+  width: calc(100% + 3rem);
+
+  .spacer {
+    flex: 1;
+  }
+}
+
+.mat-card-actions {
+  display: flex;
+  .spacer {
+    flex: 1;
+  }
+
+  button {
+    margin-left: .5rem;
+  }
+
+}
+
+
