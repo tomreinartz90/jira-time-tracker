@@ -1,22 +1,22 @@
 language: node_js
 node_js:
-  - 8
+- 8
 
 sudo: required
 
 os:
-  - windows
-  - linux
-  - osx
+- windows
+- linux
+- osx
 
 addons:
-    chrome: stable
+  chrome: stable
 
 before_script:
-  - export DISPLAY=:99.0
+- export DISPLAY=:99.0
 
 install:
-  - yarn install
+- yarn install
 
 cache:
   yarn: true
@@ -24,7 +24,8 @@ cache:
 jobs:
   include:
   - stage: test
-    script:
+    if: os = linux
+      script:
       - ng lint
       - yarn test
   - stage: build
