@@ -1,12 +1,12 @@
-import { TestBed } from '@angular/core/testing';
+import {TestBed} from '@angular/core/testing';
 
-import { CustomErrorHandlerService } from './custom-error-handler.service';
+import {CustomErrorHandler} from './custom-error-handler.service';
 
 describe('CustomErrorHandlerService', () => {
   beforeEach(() => TestBed.configureTestingModule({}));
 
   it('should be created', () => {
-    const service: CustomErrorHandlerService = TestBed.get(CustomErrorHandlerService);
+    const service: CustomErrorHandler = TestBed.get(CustomErrorHandler);
     expect(service).toBeTruthy();
   });
 });
