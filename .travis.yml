@@ -1,34 +1,37 @@
 language: node_js
 node_js:
   - 8
+
 sudo: required
+
 os:
   - windows
   - linux
   - osx
+
 addons:
     chrome: stable
+
 before_script:
   - export DISPLAY=:99.0
+
 install:
-  - npm set progress=false
-  - npm install
+  - yarn install
+
+cache:
+  yarn: true
+
 jobs:
   include:
   - stage: test
     script:
       - ng lint
-      - npm run test
+      - yarn test
   - stage: build
     if: branch != master
-    script: npm run build
+    script: yarn build
   - stage: build + deploy
     if: branch = master
-    script: npm run build
+    script: yarn build
     deploy:
       provider: releases
-stages:
-- test
-- build
-- deploy
-
