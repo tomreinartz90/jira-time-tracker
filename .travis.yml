@@ -14,7 +14,6 @@ addons:
 
 before_script:
 - export DISPLAY=:99.0
-
 install:
 - yarn install
 
@@ -24,10 +23,10 @@ cache:
 jobs:
   include:
   - stage: test
-    if: os = linux
+    if: os = osx
     script:
-      - ng lint
-      - yarn test
+    - yarn test
+    - ng lint
   - stage: build
     if: branch != master
     script: yarn build
