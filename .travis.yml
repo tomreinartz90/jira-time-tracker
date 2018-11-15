@@ -31,15 +31,23 @@ jobs:
 #  - stage: build
 #    if: branch != master
 #    script: yarn build
-  - stage: build + deploy
+  - stage: build + deploy osx
 #    if: branch = master
     os:
     - osx
-    - windows
-    - linux
-    script: yarn electron:local
+    script: yarn electron:mac
     deploy:
       provider: releases
       api_key: $ENCRYPTED_GITHUB_TOKEN
       file_glob: true
-      file: release/*
+      file: release/*.dmg
+  - stage: build + deploy
+#    if: branch = master
+    os:
+    - windows
+    script: yarn electron:windows win
+    deploy:
+      provider: releases
+      api_key: $ENCRYPTED_GITHUB_TOKEN
+      file_glob: true
+      file: release/*.exe
