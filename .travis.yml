@@ -29,12 +29,10 @@ jobs:
     - yarn test
     - ng lint
   - stage: build
-    if:
-    - branch != master
+    if: branch != master
     script: yarn build
   - stage: build + deploy
-    if:
-    - branch = master
+    if: branch = master
     script: yarn build
     deploy:
       provider: releases
