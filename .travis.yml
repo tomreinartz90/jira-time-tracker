@@ -2,6 +2,10 @@ language: node_js
 node_js:
   - 8
 sudo: required
+os:
+  - windows
+  - linux
+  - osx
 addons:
     chrome: stable
 before_script:
@@ -10,7 +14,16 @@ before_script:
 install:
   - npm set progress=false
   - npm install
-script:
-  - ng lint
-  - npm run test
-  - npm run build
+jobs:
+  include:
+  - stage: test
+    script:
+      - ng lint
+      - npm run test
+  - stage: release
+    script: npm run build
+  - stage: deploy
+    if: branch = master
+    deploy:
+      provider: releases
+
