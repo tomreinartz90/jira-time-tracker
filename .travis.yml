@@ -39,7 +39,7 @@ jobs:
     deploy:
       provider: releases
       api_key:
-        secure: KpOMs0iGWgjD59HOWnueOgTI3gtUxRQ5/WJIuTGrI45AYwuhdDQLfhJxTWWxpRjxCPH$
+        secure: nHpK13Hy+CquZ6rMiQ5uKsCnvcK1l/elPU1WLLQP79LWhsQV24kyd6JT0Y6qq4V+s4dZQxPZ0wWIYIqByweCLhqzvE9RlPyxp2Vz3l7lFGX79a9Pb+6Y1sEY8dCe/Mj2BJKz3EoK5guYxYYAK/TmBIDxRYhvrZagPM9QONSOf7tovMAanBVSb/FazvIhTziV2ptep6sd24MbqWK4Ccw7Imj4KOv/4FJzwgtVnaT0LQFG9C2CJlTplcmPkelGilrGHKLdo5YpIekzEkioI2S43CI60VBffUhmOUEMWIFURt9v/Kphs1QigKBAL7pjjoprSkJ0ZAdXUJSoYWEjLDo8jUfN2y3dXRHHaVYyZDSdIxyZvmZmNutgg0D08au1nlPvkVNiLQ5nlDr0NPXWeX3XwgYwyBihJfeS7K1ZiIvCFvi96ln2BOpZEXl4xMJMQpMFQtqBObKaTUZptirULOGumLRWp7msTx/fLBLNrvHA6VJDJ/D29sX5RXIFZL1NMjLRiKIBuw8GW1caKtj+Jz6zs67M6R3KxiXVTH12sJEgMdVBSwvB2AqlaSxFL8ha6wbQTrXbyeltqdz1fqcmaWTr6M7LpZCk0sCKfXqL+ypFEEam3xqhzE/oNtVKWhoHoZ5EIvEIdQ9qj24oMFeUYsMIEUxQu0nTfgp4s7274bWeJ6s=
       file_glob: true
       file: release/*.dmg
   - stage: build + deploy win
@@ -50,6 +50,6 @@ jobs:
     deploy:
       provider: releases
       api_key:
-        secure: KpOMs0iGWgjD59HOWnueOgTI3gtUxRQ5/WJIuTGrI45AYwuhdDQLfhJxTWWxpRjxCPH$
+        secure: nHpK13Hy+CquZ6rMiQ5uKsCnvcK1l/elPU1WLLQP79LWhsQV24kyd6JT0Y6qq4V+s4dZQxPZ0wWIYIqByweCLhqzvE9RlPyxp2Vz3l7lFGX79a9Pb+6Y1sEY8dCe/Mj2BJKz3EoK5guYxYYAK/TmBIDxRYhvrZagPM9QONSOf7tovMAanBVSb/FazvIhTziV2ptep6sd24MbqWK4Ccw7Imj4KOv/4FJzwgtVnaT0LQFG9C2CJlTplcmPkelGilrGHKLdo5YpIekzEkioI2S43CI60VBffUhmOUEMWIFURt9v/Kphs1QigKBAL7pjjoprSkJ0ZAdXUJSoYWEjLDo8jUfN2y3dXRHHaVYyZDSdIxyZvmZmNutgg0D08au1nlPvkVNiLQ5nlDr0NPXWeX3XwgYwyBihJfeS7K1ZiIvCFvi96ln2BOpZEXl4xMJMQpMFQtqBObKaTUZptirULOGumLRWp7msTx/fLBLNrvHA6VJDJ/D29sX5RXIFZL1NMjLRiKIBuw8GW1caKtj+Jz6zs67M6R3KxiXVTH12sJEgMdVBSwvB2AqlaSxFL8ha6wbQTrXbyeltqdz1fqcmaWTr6M7LpZCk0sCKfXqL+ypFEEam3xqhzE/oNtVKWhoHoZ5EIvEIdQ9qj24oMFeUYsMIEUxQu0nTfgp4s7274bWeJ6s=
       file_glob: true
       file: release/*.exe
