@@ -1,5 +1,6 @@
 import {Injectable} from '@angular/core';
 import {NavigationEnd, Router} from '@angular/router';
+import {SimplicateService} from './simplicate.service';
 
 declare var ga: Function;
 
@@ -8,8 +9,9 @@ declare var ga: Function;
 })
 export class TrackingServiceService {
 
-  constructor(public router: Router) {
+  constructor(public router: Router, simplicate: SimplicateService) {
     this.trackRouterChanges();
+    this.trackDimension('dimension1', simplicate.employee.id);
   }
 
 
@@ -71,6 +73,18 @@ export class TrackingServiceService {
         'exDescription': errMessage,
         'exFatal': false
       });
+    }
+  }
+
+  public trackDimension(dimension, value) {
+    if (typeof ga === 'function') {
+
+      console.info('send', 'dimension', {
+        'dimension': dimension,
+        'value': value
+      });
+
+      ga('set', dimension, value);
     }
   }
 }
