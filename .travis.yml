@@ -16,9 +16,6 @@ before_script:
 install:
 - yarn install
 
-cache:
-  yarn: true
-
 jobs:
   include:
   - stage: test + build
