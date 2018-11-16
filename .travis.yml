@@ -13,9 +13,6 @@ addons:
 before_script:
 - export DISPLAY=:99.0
 
-before_deploy:
-- git tag "$(date +'%Y%m%d%H%M%S')-$(git log --format=%h -1)"
-
 install:
 - yarn install
 

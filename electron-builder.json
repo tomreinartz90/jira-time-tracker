@@ -21,14 +21,12 @@
   ],
   "win": {
     "icon": "dist",
-    "artifactName": "${productName}.${ext}",
     "target": [
       "nsis"
     ]
   },
   "mac": {
     "icon": "dist",
-    "artifactName": "${productName}.${ext}",
     "target": [
       "dmg"
     ]
