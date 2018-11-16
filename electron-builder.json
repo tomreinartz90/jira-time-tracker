@@ -3,36 +3,39 @@
   "directories": {
     "output": "release/"
   },
-    "files": [
-        "**/*",
-        "!*.ts",
-        "!*.code-workspace",
-        "!LICENSE.md",
-        "!package.json",
-        "!package-lock.json",
-        "!src/",
-        "!e2e/",
-        "!hooks/",
-        "!.angular-cli.json",
-        "!_config.yml",
-        "!karma.conf.js",
-        "!tsconfig.json",
-        "!tslint.json"
-    ],
+  "files": [
+    "**/*",
+    "!*.ts",
+    "!*.code-workspace",
+    "!LICENSE.md",
+    "!package.json",
+    "!package-lock.json",
+    "!src/",
+    "!e2e/",
+    "!hooks/",
+    "!.angular-cli.json",
+    "!_config.yml",
+    "!karma.conf.js",
+    "!tsconfig.json",
+    "!tslint.json"
+  ],
   "win": {
     "icon": "dist",
+    "artifactName": "${productName}.${ext}",
     "target": [
       "nsis"
     ]
   },
   "mac": {
     "icon": "dist",
+    "artifactName": "${productName}.${ext}",
     "target": [
       "dmg"
     ]
   },
   "linux": {
     "icon": "dist",
+    "artifactName": "${productName}.${ext}",
     "target": [
       "AppImage"
     ]
