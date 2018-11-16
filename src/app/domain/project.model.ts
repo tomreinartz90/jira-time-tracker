@@ -11,7 +11,7 @@ export class ProjectModel extends BaseModel<ProjectModel> {
 
 
   get cleanName() {
-    if(this.project_name) {
+    if (this.project_name) {
       return this.project_name.replace(`(${this.project_number})`, '').trim();
     }
 

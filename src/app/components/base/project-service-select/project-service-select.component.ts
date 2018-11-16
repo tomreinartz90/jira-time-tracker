@@ -67,7 +67,7 @@ export class ProjectServiceSelectComponent extends BaseSelect implements OnChang
 
   writeValue( obj: any ): void {
     if ( this.services.length ) {
-      const service = this.services.find( service => service.id === obj );
+      const service = this.services.find( ser => ser.id === obj );
       super.writeValue( service && service.cleanName );
     } else {
       this.selectedServiceId = obj;

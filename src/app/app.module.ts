@@ -125,7 +125,7 @@ const matModules = [
     {
       provide: ErrorHandler,
       useClass: CustomErrorHandler,
-    },],
+    }, ],
   bootstrap: [AppComponent]
 })
 export class AppModule {

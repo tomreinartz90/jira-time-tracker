@@ -38,7 +38,7 @@ export class TimePickerComponent extends BaseInput implements OnChanges, Control
   }
 
   ngOnChanges() {
-    //todo: handle change
+    // todo: handle change
   }
 
   handleKeyDown( event: KeyboardEvent ) {

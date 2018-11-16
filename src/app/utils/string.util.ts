@@ -1,6 +1,6 @@
 export class StringUtil {
   static clean(value: string) {
-    if(!value) {
+    if (!value) {
       return '';
     }
 

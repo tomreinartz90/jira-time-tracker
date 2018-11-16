@@ -45,6 +45,7 @@ export class TrackingServiceService {
                     eventLabel: string = null,
                     eventValue: number = null) {
     if (typeof ga === 'function') {
+      // tslint:disable-next-line
       console.info('send', 'event', {
         eventCategory: eventCategory,
         eventLabel: eventLabel,
@@ -52,6 +53,7 @@ export class TrackingServiceService {
         eventValue: eventValue
       });
 
+      // tslint:disable-next-line
       ga('send', 'event', {
         eventCategory: eventCategory,
         eventLabel: eventLabel,
@@ -64,6 +66,7 @@ export class TrackingServiceService {
   public trackException(errMessage) {
     if (typeof ga === 'function') {
 
+      // tslint:disable-next-line
       console.info('send', 'exception', {
         'exDescription': errMessage,
         'exFatal': false

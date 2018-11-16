@@ -1,22 +1,22 @@
-import {Component, forwardRef, OnInit} from '@angular/core';
-import {Observable} from 'rxjs';
-import {ProjectModel} from '../../../domain/project.model';
-import {map, startWith} from 'rxjs/operators';
-import {SimplicateService} from '../../../providers/simplicate.service';
-import {NG_VALUE_ACCESSOR} from '@angular/forms';
-import {BaseSelect} from '../base-input/base-select';
-import {sortBy,debounce} from 'lodash';
+import { Component, forwardRef, OnInit } from '@angular/core';
+import { Observable } from 'rxjs';
+import { ProjectModel } from '../../../domain/project.model';
+import { map, startWith } from 'rxjs/operators';
+import { SimplicateService } from '../../../providers/simplicate.service';
+import { NG_VALUE_ACCESSOR } from '@angular/forms';
+import { BaseSelect } from '../base-input/base-select';
+import { sortBy, debounce } from 'lodash';
 
-@Component({
+@Component( {
   selector: 'app-project-select',
   templateUrl: './project-select.component.html',
   styleUrls: ['./project-select.component.scss'],
   providers: [{
     provide: NG_VALUE_ACCESSOR,
-    useExisting: forwardRef(() => ProjectSelectComponent),
+    useExisting: forwardRef( () => ProjectSelectComponent ),
     multi: true
   }]
-})
+} )
 export class ProjectSelectComponent extends BaseSelect implements OnInit {
 
   filteredProjects: Observable<Array<ProjectModel>>;
@@ -25,38 +25,39 @@ export class ProjectSelectComponent extends BaseSelect implements OnInit {
 
   private selectedProjectId: string;
 
-  protected hasFocus: boolean = false;
+  hasFocus = false;
 
-  constructor(private simplicateService: SimplicateService) {
+  updateFocus = debounce( ( val ) => {
+    this.hasFocus = val;
+  }, 200 );
+
+  constructor( private simplicateService: SimplicateService ) {
     super();
     this.filteredProjects = this.formControl.valueChanges
       .pipe(
-        startWith(''),
-        map(state => this._filterOptions(this.valueChangedSinceFocus ? state : null))
+        startWith( '' ),
+        map( state => this._filterOptions( this.valueChangedSinceFocus ? state : null ) )
       );
   }
 
   ngOnInit() {
     this.subs.push(
-      this.simplicateService.getEmployeeProjects().subscribe(projects => {
-        this.projects = sortBy(projects, (proj) => proj.cleanName);
-        this.writeValue(this.selectedProjectId);
-      })
+      this.simplicateService.getEmployeeProjects().subscribe( projects => {
+        this.projects = sortBy( projects, ( proj ) => proj.cleanName );
+        this.writeValue( this.selectedProjectId );
+      } )
     );
   }
 
-  updateFocus = debounce((val) => {
-    this.hasFocus = val;
-  }, 200);
 
   blur = () => {
     super.handleBlur();
-    this.updateFocus(false);
-  };
+    this.updateFocus( false );
+  }
 
-  protected get getCleanName() : string {
-    const proj = this.projects.find(options => options.id === this.selectedProjectId);
-    if(proj) {
+  protected get getCleanName(): string {
+    const proj = this.projects.find( options => options.id === this.selectedProjectId );
+    if ( proj ) {
       return proj.cleanName;
     }
     return '';
@@ -66,29 +67,29 @@ export class ProjectSelectComponent extends BaseSelect implements OnInit {
     return option.id;
   }
 
-  protected getName(option: ProjectModel): string {
+  protected getName( option: ProjectModel ): string {
     return option.name;
   }
 
-  protected _filterOptions(value: string): Array<ProjectModel> {
-    if (value) {
-      return this.projects.filter(options => options.name.toLowerCase().includes(value.toLowerCase()));
+  protected _filterOptions( value: string ): Array<ProjectModel> {
+    if ( value ) {
+      return this.projects.filter( options => options.name.toLowerCase().includes( value.toLowerCase() ) );
     }
     return this.projects;
   }
 
-  updateSelectedOption(option: any) {
-    this.selectedProjectId = this.getId(option);
-    return super.updateSelectedOption(option);
+  updateSelectedOption( option: any ) {
+    this.selectedProjectId = this.getId( option );
+    return super.updateSelectedOption( option );
   }
 
-  writeValue(obj: any): void {
-    if (this.projects.length) {
-      const project = this.projects.find(proj => proj.id === obj);
-      super.writeValue(project && project.name);
+  writeValue( obj: any ): void {
+    if ( this.projects.length ) {
+      const project = this.projects.find( proj => proj.id === obj );
+      super.writeValue( project && project.name );
     } else {
       this.selectedProjectId = obj;
-      super.writeValue(null);
+      super.writeValue( null );
     }
   }
 
