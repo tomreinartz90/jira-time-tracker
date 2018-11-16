@@ -38,7 +38,8 @@ jobs:
     - yarn electron:mac
     deploy:
       provider: releases
-      api_key: $ENCRYPTED_GITHUB_TOKEN
+      api_key:
+        secure: KpOMs0iGWgjD59HOWnueOgTI3gtUxRQ5/WJIuTGrI45AYwuhdDQLfhJxTWWxpRjxCPH$
       file_glob: true
       file: release/*.dmg
   - stage: build + deploy win
@@ -48,6 +49,7 @@ jobs:
     script: yarn electron:windows
     deploy:
       provider: releases
-      api_key: $ENCRYPTED_GITHUB_TOKEN
+      api_key:
+        secure: KpOMs0iGWgjD59HOWnueOgTI3gtUxRQ5/WJIuTGrI45AYwuhdDQLfhJxTWWxpRjxCPH$
       file_glob: true
       file: release/*.exe
