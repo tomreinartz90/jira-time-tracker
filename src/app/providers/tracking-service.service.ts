@@ -81,7 +81,7 @@ export class TrackingServiceService {
 
   public trackDimension(dimension, value) {
     if (typeof ga === 'function') {
-
+      // tslint:disable-next-line
       console.info('send', 'dimension', {
         'dimension': dimension,
         'value': value
