@@ -14,22 +14,22 @@ before_script:
 - export DISPLAY=:99.0
 
 install:
-- yarn install
+- npm install
 
 jobs:
   include:
   - stage: test + build
     if: branch != master
     script:
-    - yarn test
+    - npm run test
     - ng lint
-    - yarn build:prod
+    - npm run build:prod
   - stage: build + deploy osx
     if: branch = master
     os:
     - osx
     script:
-    - yarn electron:mac
+    - npm run electron:mac
     deploy:
       provider: releases
       skip_cleanup: true
@@ -43,7 +43,7 @@ jobs:
     if: branch = master
     os:
     - windows
-    script: yarn electron:windows
+    script: npm run electron:windows
     deploy:
       provider: releases
       skip_cleanup: true
