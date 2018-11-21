@@ -113,7 +113,9 @@
 }
 
 .has-gap {
-  margin-top: 2.5rem;
+  margin-top: 3rem;
+  border-top: thin solid #676767;
+
   &:before {
     height: 2.5rem;
     content: '';

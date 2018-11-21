@@ -51,7 +51,6 @@ export class ProjectSelectComponent extends BaseSelect implements OnInit {
 
 
   blur = () => {
-    super.handleBlur();
     this.updateFocus( false );
   }
 
