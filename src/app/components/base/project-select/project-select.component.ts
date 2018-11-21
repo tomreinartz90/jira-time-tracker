@@ -54,7 +54,7 @@ export class ProjectSelectComponent extends BaseSelect implements OnInit {
     this.updateFocus( false );
   }
 
-  protected get getCleanName(): string {
+  public get getCleanName(): string {
     const proj = this.projects.find( options => options.id === this.selectedProjectId );
     if ( proj ) {
       return proj.cleanName;
