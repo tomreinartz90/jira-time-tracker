@@ -168,7 +168,8 @@ export class SimplicateService {
         map( ( resp: Array<any> ) => resp.map(
           item => HourModel.fromJSON( item )
           ).sort( ( a, b ) => getTime( a ) - getTime( b ) )
-        );
+        )
+      );
   }
 
   getCurrentEmployeeApprovalStatussus( startDate: Date, endDate: Date = new Date( startDate.getTime() + 86400000 ) ) {
