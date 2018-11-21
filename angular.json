@@ -4,6 +4,7 @@
   "newProjectRoot": "projects",
   "projects": {
     "angular-electron": {
+
       "root": "",
       "sourceRoot": "src",
       "projectType": "application",
@@ -70,7 +71,9 @@
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
-            "browserTarget": "angular-electron:build"
+            "browserTarget": "angular-electron:build",
+
+            "host": "0.0.0.0"
           },
           "configurations": {
             "dev": {

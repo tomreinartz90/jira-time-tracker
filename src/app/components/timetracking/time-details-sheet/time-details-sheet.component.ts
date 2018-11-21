@@ -71,6 +71,12 @@ export class TimeDetailsSheetComponent implements OnDestroy {
     );
   }
 
+  get endDatePastStartTime() {
+    const start = this.timeForm.controls['startTime'].value;
+    const end = this.timeForm.controls['endTime'].value;
+    return start && end && end.getTime() > start.getTime();
+  }
+
   ngOnDestroy() {
     this.subs.forEach( sub => sub.unsubscribe() );
   }

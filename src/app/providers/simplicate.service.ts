@@ -159,13 +159,16 @@ export class SimplicateService {
       params = params.set( 'q[start_date][le]', `${endDate.toISOString().slice( 0, 10 )}` );
     }
     params = params.set( 'mode', 'day' );
+
+    const getTime = ( item: HourModel ) => (item.is_time_defined ? item.start_date.getTime() : 0);
+
     return this.get<Array<HourModel>>( `api/v2/hours/hours`, params )
       .pipe(
         map( ( resp: any ) => resp.data ),
         map( ( resp: Array<any> ) => resp.map(
           item => HourModel.fromJSON( item )
-        ) )
-      );
+          ).sort( ( a, b ) => getTime( a ) - getTime( b ) )
+        );
   }
 
   getCurrentEmployeeApprovalStatussus( startDate: Date, endDate: Date = new Date( startDate.getTime() + 86400000 ) ) {
@@ -213,7 +216,8 @@ export class SimplicateService {
     return this.put( `api/v2/hours/hours/${item.id}`, update ).pipe(
       tap( () => this.onUpdateHour.next( true ) ),
       tap( ( resp: any ) => {
-        if ( item.id === this.getActiveTimer() ) {
+        // update timer id only if id is the same and timer did not run longer than 6 hours
+        if ( item.id === this.getActiveTimer() && item.end_date.getTime() - item.start_date.getTime() < 1000 * 60 * 60 * 6 ) {
           this.updateActiveTimer( resp.data.id );
         }
       } )

@@ -85,17 +85,18 @@
       margin-top: 0;
       margin-bottom: .25rem;
       font-size: 0.8rem;
-
+      font-weight: normal;
     }
 
     .service {
       font-size: .7rem;
-      font-weight: 600;
+      line-height: 1.5;
+      font-weight: 500;
       margin-top: .3rem;
     }
 
     .note {
-      margin-top: 0.8rem;
+      margin-top: 0.5rem;
       font-size: 0.7rem;
       &:empty {
         display: none;
@@ -107,6 +108,7 @@
     font-size: 0.7rem;
     letter-spacing: .1rem;
     color: #cacaca;
+    min-width: 2.7rem;
 
     .start {
       position: relative;

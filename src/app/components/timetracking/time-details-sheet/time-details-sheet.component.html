@@ -40,12 +40,12 @@
 
 
     <ng-container *ngIf="data.isTimer">
-      <button *ngIf="!isActiveTimer" type="submit" [disabled]="!timeForm.valid" (click)="onSubmit()" mat-raised-button color="accent">Start timer</button>
-      <button *ngIf="isActiveTimer" type="button" [disabled]="!timeForm.valid" (click)="onTimerStop()" mat-raised-button color="accent">Stop timer</button>
+      <button *ngIf="!isActiveTimer" [disabled]="!timeForm.valid || !endDatePastStartTime" (click)="onSubmit()" mat-raised-button color="accent">Start timer</button>
+      <button *ngIf="isActiveTimer" [disabled]="!timeForm.valid || !endDatePastStartTime" (click)="onTimerStop()" mat-raised-button color="accent">Stop timer</button>
     </ng-container>
 
     <ng-container *ngIf="!data.isTimer || data.hour.id">
-      <button type="submit" [disabled]="!timeForm.valid" (click)="onSubmit()" mat-raised-button color="accent">{{data.hour.id ? 'Update' : 'Save'}}</button>
+      <button [disabled]="!timeForm.valid || !endDatePastStartTime" (click)="onSubmit()" mat-raised-button color="accent">{{data.hour.id ? 'Update' : 'Save'}}</button>
     </ng-container>
 
 
