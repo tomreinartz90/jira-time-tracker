@@ -1,11 +1,11 @@
-import { Component, forwardRef, OnInit } from '@angular/core';
-import { Observable } from 'rxjs';
-import { ProjectModel } from '../../../domain/project.model';
-import { map, startWith } from 'rxjs/operators';
-import { SimplicateService } from '../../../providers/simplicate.service';
-import { NG_VALUE_ACCESSOR } from '@angular/forms';
-import { BaseSelect } from '../base-input/base-select';
-import { sortBy, debounce } from 'lodash';
+import {Component, forwardRef, OnInit} from '@angular/core';
+import {Observable} from 'rxjs';
+import {ProjectModel} from '../../../domain/project.model';
+import {map, startWith} from 'rxjs/operators';
+import {SimplicateService} from '../../../providers/simplicate.service';
+import {NG_VALUE_ACCESSOR} from '@angular/forms';
+import {BaseSelect} from '../base-input/base-select';
+import {debounce, sortBy} from 'lodash';
 
 @Component( {
   selector: 'app-project-select',
@@ -27,7 +27,7 @@ export class ProjectSelectComponent extends BaseSelect implements OnInit {
 
   hasFocus = false;
 
-  updateFocus = debounce( ( val ) => {
+  updateFocus: (e: boolean) => void = debounce( ( val ) => {
     this.hasFocus = val;
   }, 200 );
 
@@ -50,7 +50,8 @@ export class ProjectSelectComponent extends BaseSelect implements OnInit {
   }
 
 
-  blur = () => {
+  handleBlur() {
+    super.handleBlur();
     this.updateFocus( false );
   }
 

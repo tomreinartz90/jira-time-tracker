@@ -1,7 +1,7 @@
 import {BaseInput} from './base-input';
 import {Subject, Subscription} from 'rxjs';
 import {OnDestroy} from '@angular/core';
-import {debounceTime, filter} from 'rxjs/operators';
+import {debounceTime, map} from 'rxjs/operators';
 
 export abstract class BaseSelect extends BaseInput implements OnDestroy {
 
@@ -25,8 +25,8 @@ export abstract class BaseSelect extends BaseInput implements OnDestroy {
         this.valueChangedSinceFocus = this.formControl.dirty;
       } ),
       this.onBlur.pipe(
-        debounceTime( 100 ),
-        filter( state => state === this.formControl.value )
+        debounceTime( 250 ),
+        map( () => this.formControl.value ),
       ).subscribe( ( state ) => this.handleSelect( state ) )
     );
   }
