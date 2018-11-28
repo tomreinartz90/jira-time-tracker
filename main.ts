@@ -1,7 +1,6 @@
-import {app, BrowserWindow, screen, Tray} from 'electron';
+import {app, BrowserWindow, Menu, screen, Tray} from 'electron';
 import * as path from 'path';
 import * as url from 'url';
-import { createPlatformFactory } from '@angular/core';
 
 let win, serve, tray;
 const args = process.argv.slice(1);
@@ -22,6 +21,8 @@ function createWindow() {
     minHeight: 600,
     resizable: true,
     skipTaskbar: false,
+    darkTheme: true,
+    vibrancy: 'dark',
     titleBarStyle: 'hiddenInset',
     title: 'Simplicate Time Tracker',
   });
@@ -49,6 +50,55 @@ function createWindow() {
     win = null;
   });
 
+}
+
+function createMenu() {
+  const template = [
+    {
+      label: 'Edit',
+      submenu: [
+        {role: 'cut'},
+        {role: 'copy'},
+        {role: 'paste'},
+        {role: 'delete'},
+        {role: 'selectall'}
+      ]
+    },
+    {
+      label: 'View',
+      submenu: [
+        {role: 'reload'},
+        {role: 'toggledevtools'},
+      ]
+    },
+    {
+      role: 'window',
+      submenu: [
+        {role: 'minimize'},
+        {role: 'close'}
+      ]
+    },
+    {
+      role: 'help',
+      submenu: [
+        {
+          label: 'About',
+          click() {
+            require('electron').shell.openExternal('https://github.com/tomreinartz90/simplicate-app');
+          }
+        },
+        {
+          label: 'Releases',
+          click() {
+            require('electron').shell.openExternal('https://github.com/tomreinartz90/simplicate-app/releases');
+          }
+        }
+      ]
+    }
+  ];
+
+  const menu = Menu.buildFromTemplate(template);
+  Menu.setApplicationMenu(menu);
 }
 
 function createTray() {
@@ -90,6 +140,7 @@ try {
   app.on('ready', () => {
     createWindow();
     createTray();
+    createMenu();
   });
 
   // Quit when all windows are closed.
