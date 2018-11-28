@@ -24,7 +24,7 @@
 
       <app-time-picker [isDisabled]="data.isTimer" formControlName="endTime" [timeDate]="data.hour.end_date" placeholder="End Time"></app-time-picker>
     </div>
-    <mat-slide-toggle *ngIf="!data.hour.id" [checked]="data.isTimer" (change)="data.isTimer = !data.isTimer">Use timer to determine End Time</mat-slide-toggle>
+    <mat-slide-toggle *ngIf="!data.hour.id" [checked]="data.isTimer" (change)="setIsTimer(!data.isTimer)">Use timer to determine End Time</mat-slide-toggle>
 
     <mat-form-field class="full-width">
       <textarea matInput placeholder="Notes" formControlName="note"></textarea>
