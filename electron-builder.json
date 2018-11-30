@@ -21,6 +21,7 @@
   ],
   "win": {
     "icon": "dist",
+    "publish": ["github"],
     "target": [
       "nsis"
     ]
