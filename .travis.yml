@@ -29,9 +29,4 @@ jobs:
     os:
     - osx
     script:
-    - npm run publish:mac
-  - stage: build + deploy win
-    if: branch = master
-    os:
-    - windows
-    script: npm run publish:windows
+    - npm run publish
