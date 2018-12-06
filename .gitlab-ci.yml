@@ -1,5 +1,15 @@
-deploy-mac:
+test:
   script:
-    - npm install --silent && npm prune && npm run publish:mac
+    - npm install --silent && npm prune
+    - npm run test
+    - ng lint
+    - npm run build:prod
+  only:
+    - development
+
+deploy:
+  script:
+    - npm install --silent && npm prune
+    - npm run publish:mac
   only:
     - master
