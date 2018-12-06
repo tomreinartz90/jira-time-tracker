@@ -10,6 +10,9 @@ test:
 deploy:
   script:
     - npm install --silent && npm prune
-    - npm run publish
+    - npm run publish:gitlab
+  artifacts:
+    paths:
+      - release/
   only:
     - master
