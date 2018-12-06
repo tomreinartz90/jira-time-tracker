@@ -6,12 +6,10 @@ test:
     - npm run test
     - ng lint
     - npm run build:prod
-  only:
-    - development
 
 deploy:
   script:
     - npm install --silent && npm prune
-    - npm run publish:mac
+    - npm run publish
   only:
     - master
