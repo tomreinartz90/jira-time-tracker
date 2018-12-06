@@ -3,5 +3,3 @@ deploy-mac:
     - npm install --silent && npm prune && npm run publish:mac
   only:
     - master
-  tags:
-    - mac
