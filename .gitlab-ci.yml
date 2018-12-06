@@ -1,4 +1,4 @@
-image: machimachi/docker-node-with-chrome
+image: electronuserland/builder
 
 test:
   script:
