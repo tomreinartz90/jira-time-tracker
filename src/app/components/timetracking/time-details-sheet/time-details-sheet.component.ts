@@ -63,10 +63,13 @@ export class TimeDetailsSheetComponent implements OnDestroy {
     this.subs.push(
       this.timeForm.controls['project'].valueChanges.subscribe(id => {
         this.projectId = id;
+        this.timeForm.controls['projectservice'].setValue(null);
+        this.timeForm.controls['type'].setValue(null);
       }),
 
       this.timeForm.controls['projectservice'].valueChanges.subscribe(id => {
         this.projectserviceId = id;
+        this.timeForm.controls['type'].setValue(null);
       }),
     );
   }

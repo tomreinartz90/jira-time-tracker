@@ -1,0 +1,5 @@
+deploy-mac:
+  script:
+    - npm install --silent && npm prune && npm run publish:mac
+  only:
+    - master
