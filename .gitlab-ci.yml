@@ -1,3 +1,5 @@
+image: machimachi/docker-node-with-chrome
+
 test:
   script:
     - npm install --silent && npm prune
