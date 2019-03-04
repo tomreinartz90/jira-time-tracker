@@ -26,23 +26,26 @@ function createWindow() {
     vibrancy: 'dark',
     titleBarStyle: 'hiddenInset',
     title: 'Simplicate Time Tracker',
+
     webPreferences: {
       webSecurity: false,
       allowRunningInsecureContent: true
-    },
+    }
   } );
 
   if ( serve ) {
     require( 'electron-reload' )( __dirname, {
       electron: require( `${__dirname}/node_modules/electron` )
     } );
-    win.loadURL( 'http://localhost:4200' );
+    win.loadURL( 'http://localhost:4200', { userAgent: 'Chrome' } );
   } else {
     win.loadURL( url.format( {
       pathname: path.join( __dirname, 'dist/index.html' ),
       protocol: 'file:',
       slashes: true
-    } ) );
+    } ), {
+      userAgent: 'Chrome'
+    } );
   }
 
   // win.webContents.openDevTools();

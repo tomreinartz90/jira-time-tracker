@@ -84,9 +84,12 @@ export class JiraService {
 
   private post( path, body ) {
     const { domain } = this.authInfo;
+    const headers = this.authHeaders();
+    headers.append( 'X-Atlassian-Token', 'nocheck' );
+    headers.append( 'Origin', 'localhost' );
 
     const options = {
-      headers: this.authHeaders()
+      headers
     };
 
     return this.http.post( `${domain}/rest/api/2/${path}`, body, options );
