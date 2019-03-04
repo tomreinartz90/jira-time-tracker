@@ -11,6 +11,6 @@ export class CustomErrorHandler implements ErrorHandler {
   handleError( error ) {
     // your custom error handling logic
     console.error( error );
-    this.trackSerivce.trackException( error );
+    // this.trackSerivce.trackException( error );
   }
 }

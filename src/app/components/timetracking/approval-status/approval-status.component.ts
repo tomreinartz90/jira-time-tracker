@@ -1,5 +1,5 @@
 import {Component, Input} from '@angular/core';
-import {SimplicateService} from '../../../providers/simplicate.service';
+import {JiraService} from '../../../providers/jira.service';
 
 @Component( {
   selector: 'app-approval-status',
@@ -13,7 +13,7 @@ export class ApprovalStatusComponent {
   @Input()
   approvalStatus = 'EMPTY';
 
-  constructor( private simplicateService: SimplicateService ) { }
+  constructor( private simplicateService: JiraService ) { }
 
   approve() {
     this.simplicateService.submitCurrentEmployeeHours( this.date, this.date )

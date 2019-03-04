@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {SimplicateService} from '../../../providers/simplicate.service';
+import {JiraService} from '../../../providers/jira.service';
 import {Router} from '@angular/router';
 import {TrackingServiceService} from '../../../providers/tracking-service.service';
 
@@ -15,7 +15,7 @@ export class LoginComponent implements OnInit {
   domain = '';
   error: string = null;
 
-  constructor(private simplicateService: SimplicateService,
+  constructor(private simplicateService: JiraService,
               private track: TrackingServiceService,
               private router: Router) {
   }
@@ -43,7 +43,7 @@ export class LoginComponent implements OnInit {
     }, (err) => {
       console.error(err);
       this.track.trackEvent('login', 'error');
-      this.error = err.error.errors[0].message.replace(/_/g, ' ');
+      this.error = err;
     });
   }
 }

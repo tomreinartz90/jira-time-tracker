@@ -1,5 +1,5 @@
 import {Component, HostBinding, OnInit} from '@angular/core';
-import {SimplicateService} from '../../../providers/simplicate.service';
+import {JiraService} from '../../../providers/jira.service';
 import {delay} from 'rxjs/operators';
 
 @Component({
@@ -21,17 +21,13 @@ export class TimetrackingComponent implements OnInit {
 
   employee: any;
 
-  constructor(private simplicate: SimplicateService) {
+  constructor(private simplicate: JiraService) {
   }
 
   ngOnInit() {
     this.active = true;
     this.getEmployeeHours();
     this.getEmployee();
-    this.getTimer();
-    this.simplicate.onUpdateHour.subscribe(() => {
-      this.getEmployeeHours();
-    });
   }
 
   getEmployee() {
@@ -40,26 +36,22 @@ export class TimetrackingComponent implements OnInit {
     });
   }
 
+  get totalTimeSpend() {
+    if (this.hours) {
+      return this.hours.map(issue => issue.totalTimeSpendSeconds)
+    }
+    return 0
+  }
+
   getEmployeeHours() {
     this.loading = true;
-    this.simplicate.getCurrentEmployeeHours(this.activeDate).pipe(
-      delay(500)
-    ).subscribe(resp => {
+    this.simplicate.getCurrentEmployeeHours(this.activeDate).subscribe(resp => {
         this.hours = resp;
       },
       () => {
       },
       () => this.loading = false
     );
-
-  }
-
-  getTimer() {
-    this.timer = this.simplicate.getActiveTimer();
-
-    this.simplicate.onUpdateTimer.subscribe(resp => {
-      this.timer = resp;
-    });
   }
 
   setActiveDate(date: Date) {
@@ -69,4 +61,6 @@ export class TimetrackingComponent implements OnInit {
     this.days = [];
     this.getEmployeeHours();
   }
+
+
 }

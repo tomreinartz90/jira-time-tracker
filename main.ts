@@ -25,7 +25,11 @@ function createWindow() {
     darkTheme: true,
     vibrancy: 'dark',
     titleBarStyle: 'hiddenInset',
-    title: 'Simplicate Time Tracker'
+    title: 'Simplicate Time Tracker',
+    webPreferences: {
+      webSecurity: false,
+      allowRunningInsecureContent: true
+    },
   } );
 
   if ( serve ) {

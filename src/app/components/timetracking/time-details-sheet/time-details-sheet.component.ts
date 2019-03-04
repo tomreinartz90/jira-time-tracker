@@ -1,7 +1,7 @@
 import {Component, Inject, OnDestroy} from '@angular/core';
 import {MAT_BOTTOM_SHEET_DATA, MatBottomSheetRef} from '@angular/material';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
-import {SimplicateService} from '../../../providers/simplicate.service';
+import {JiraService} from '../../../providers/jira.service';
 import {Subscription} from 'rxjs';
 import {HourModel} from '../../../domain/hour.model';
 import {TrackingServiceService} from '../../../providers/tracking-service.service';
@@ -28,7 +28,7 @@ export class TimeDetailsSheetComponent implements OnDestroy {
     @Inject(MAT_BOTTOM_SHEET_DATA) public data: { hour: HourModel, isTimer: boolean },
     public fb: FormBuilder,
     private tracking: TrackingServiceService,
-    private simplicateService: SimplicateService,
+    private simplicateService: JiraService,
     private prefs: UserPrefService
   ) {
     this.initForm(data.hour);

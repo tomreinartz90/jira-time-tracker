@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { SimplicateService } from '../../../providers/simplicate.service';
+import { JiraService } from '../../../providers/jira.service';
 
 @Component( {
   selector: 'app-user-info-bar',
@@ -9,7 +9,7 @@ import { SimplicateService } from '../../../providers/simplicate.service';
 export class UserInfoBarComponent implements OnInit {
   public employee: any;
 
-  constructor( private simplicate: SimplicateService ) {
+  constructor( private simplicate: JiraService ) {
   }
 
   ngOnInit() {

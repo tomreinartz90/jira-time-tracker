@@ -1,5 +1,5 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
-import {SimplicateService} from '../../../providers/simplicate.service';
+import {JiraService} from '../../../providers/jira.service';
 import {DateUtil} from '../../../utils/date.util';
 
 @Component({
@@ -18,7 +18,7 @@ export class TimetableitemComponent implements OnInit {
   @Output()
   action: EventEmitter<string> = new EventEmitter();
 
-  constructor(private simplicate: SimplicateService) {
+  constructor(private simplicate: JiraService) {
   }
 
   ngOnInit() {

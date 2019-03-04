@@ -16,7 +16,7 @@ import {WebviewDirective} from './directives/webview.directive';
 
 import {AppComponent} from './app.component';
 import {HomeComponent} from './components/home/home.component';
-import {SimplicateService} from './providers/simplicate.service';
+import {JiraService} from './providers/jira.service';
 import {TimetableComponent} from './components/timetracking/timetable/timetable.component';
 import {TimetrackingComponent} from './components/timetracking/timetracking/timetracking.component';
 import {WeekdayselectorComponent} from './components/timetracking/weekdayselector/weekdayselector.component';
@@ -54,6 +54,7 @@ import {CleanNamePipe} from './components/base/clean-name.pipe';
 import {ApprovalStatusComponent} from './components/timetracking/approval-status/approval-status.component';
 import {CustomErrorHandler} from './providers/custom-error-handler.service';
 import {ConfirmButtonComponent} from './components/base/confirm-button/confirm-button.component';
+import {MinutesToMsPipe} from "./components/base/minutes-to-ms.pipe";
 
 // AoT requires an exported function for factories
 export function HttpLoaderFactory(http: HttpClient) {
@@ -95,6 +96,7 @@ const matModules = [
     ServiceTypeSelectComponent,
     MsToTimePipe,
     HoursToMsPipe,
+    MinutesToMsPipe,
     TimerComponent,
     SelectOnFocusDirective,
     StringToHexColorPipe,
@@ -121,7 +123,7 @@ const matModules = [
   entryComponents: [
     TimeDetailsSheetComponent
   ],
-  providers: [SimplicateService,
+  providers: [JiraService,
     {
       provide: ErrorHandler,
       useClass: CustomErrorHandler,

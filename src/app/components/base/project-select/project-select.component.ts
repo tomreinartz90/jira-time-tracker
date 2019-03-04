@@ -2,7 +2,7 @@ import {Component, forwardRef, OnInit} from '@angular/core';
 import {Observable} from 'rxjs';
 import {ProjectModel} from '../../../domain/project.model';
 import {map, startWith} from 'rxjs/operators';
-import {SimplicateService} from '../../../providers/simplicate.service';
+import {JiraService} from '../../../providers/jira.service';
 import {NG_VALUE_ACCESSOR} from '@angular/forms';
 import {BaseSelect} from '../base-input/base-select';
 import {debounce, sortBy} from 'lodash';
@@ -31,7 +31,7 @@ export class ProjectSelectComponent extends BaseSelect implements OnInit {
     this.hasFocus = val;
   }, 200 );
 
-  constructor( private simplicateService: SimplicateService ) {
+  constructor( private simplicateService: JiraService ) {
     super();
     this.filteredProjects = this.formControl.valueChanges
       .pipe(

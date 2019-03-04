@@ -5,7 +5,7 @@
 @include mat-core();
 $primary-color: #FF2345;
 
-$mat-dc: (
+$mat-mx: (
   50: #fce4ec,
   100: #f8bbd0,
   200: #f48fb1,
@@ -39,16 +39,10 @@ $mat-dc: (
 );
 
 // hue. Available color palettes: https://material.io/design/color/
-$candy-app-primary: mat-palette($mat-blue-gray);
-$candy-app-accent: mat-palette($mat-dc, A200, A100, A400);
+$candy-app-primary: mat-palette($mat-blue);
+$candy-app-accent: mat-palette($mat-deep-orange);
 
-// The warn palette is optional (defaults to red).
-$candy-app-warn: mat-palette($mat-red);
-
-// Create the theme object (a Sass map containing all of the palettes).
-$candy-app-theme: mat-light-theme($candy-app-primary, $candy-app-accent, $candy-app-warn);
-
-@include angular-material-theme($candy-app-theme);
+//@include angular-material-theme($candy-app-primary);
 
 @keyframes bodyInit {
   from {
@@ -75,134 +69,7 @@ html, body {
   height: 100%;
   font-family: Roboto, "Helvetica Neue", sans-serif;
   background-color: #1D1D1D;
-  color: $white-87-opacity;
+  color: white;
   animation-delay: 4s;
   animation-duration: 1s;
-}
-
-app-root {
-  display: block;
-  transition: .5s;
-  max-width: 100%;
-  overflow-x: hidden;
-
-  app-weekdayselector {
-    margin: -5rem 0 5rem;
-    display: block;
-    transition: .5s;
-  }
-
-  app-timetable {
-    display: block;
-    opacity: 0;
-    transition: .5s;
-  }
-
-  &.ready {
-    app-timetable {
-      opacity: 1;
-    }
-    app-weekdayselector {
-      margin: 0;
-    }
-
-  }
-}
-
-h1, h2, h3, h4, h5, h6 {
-  font-weight: 700;
-  .small,
-  small {
-    font-weight: normal;
-    font-size: 90%;
-  }
-}
-
-.mat-card {
-  margin-bottom: 1rem;
-  background-color: #1D1D1D;
-  color: $white-87-opacity;
-}
-
-.mat-calendar-body-selected {
-  background-color: #FF2345;
-
-}
-
-.mat-toolbar {
-  background-color: #1D1D1D;
-  color: #fefefe;
-}
-
-.mat-datepicker-toggle, .mat-datepicker-content .mat-calendar-next-button, .mat-datepicker-content .mat-calendar-previous-button {
-  color: #fefefe;
-}
-
-::-webkit-scrollbar {
-  width: .2rem;
-}
-
-::-webkit-scrollbar-thumb {
-  background: #aaa;
-  border-radius: 1rem;
-}
-
-::-webkit-scrollbar-track {
-  background: #eee;
-  border-radius: 0;
-}
-
-.flex {
-  display: flex;
-}
-
-.mat-form-field-infix {
-  width: 100% !important;
-}
-
-.mat-datepicker-dialog {
-  max-width: none !important;
-  width: 100%;
-  align-self: flex-start;
-
-  .mat-datepicker-content {
-    border-bottom: thick solid $primary-color;
-  }
-
-  .mat-calendar {
-    margin: 0 auto;
-  }
-}
-
-.mat-form-field.mat-focused {
-
-  .mat-form-field-label-wrapper .mat-form-field-label {
-    //font-weight: 700;
-    color: $primary-color;
-  }
-
-  .mat-form-field-ripple {
-    background-color: $primary-color;
-  }
-
-}
-
-.mat-card-header {
-  color: $primary-color;
-  font-weight: 700;
-  border-bottom: thin solid $primary-color;
-  padding-bottom: .5rem;
-
-  .mat-card-header-text:empty {
-    display: none;
-  }
-}
-
-.mat-tooltip {
-  margin: .5rem!important;
-  background-color: rgba(#1D1D1D, .8);
-}
-
-button {
-  text-transform: uppercase;
 }

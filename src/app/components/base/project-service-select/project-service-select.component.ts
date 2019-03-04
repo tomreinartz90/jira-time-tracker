@@ -1,7 +1,7 @@
 import {Component, forwardRef, Input, OnChanges} from '@angular/core';
 import {Observable} from 'rxjs';
 import {map, startWith} from 'rxjs/operators';
-import {SimplicateService} from '../../../providers/simplicate.service';
+import {JiraService} from '../../../providers/jira.service';
 import {NG_VALUE_ACCESSOR} from '@angular/forms';
 import {ProjectServiceModel} from '../../../domain/project-service.model';
 import {BaseSelect} from '../base-input/base-select';
@@ -31,7 +31,7 @@ export class ProjectServiceSelectComponent extends BaseSelect implements OnChang
   @Input()
   startDate: Date;
 
-  constructor( private simplicateService: SimplicateService ) {
+  constructor( private simplicateService: JiraService ) {
     super();
 
     this.filteredServices = this.formControl.valueChanges

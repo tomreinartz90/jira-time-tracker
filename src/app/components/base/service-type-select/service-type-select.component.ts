@@ -1,6 +1,6 @@
 import { Component, forwardRef, Input, OnChanges } from '@angular/core';
 import { Observable } from 'rxjs';
-import { SimplicateService } from '../../../providers/simplicate.service';
+import { JiraService } from '../../../providers/jira.service';
 import { map, startWith } from 'rxjs/operators';
 import { NG_VALUE_ACCESSOR } from '@angular/forms';
 import { BaseSelect } from '../base-input/base-select';
@@ -27,7 +27,7 @@ export class ServiceTypeSelectComponent extends BaseSelect implements OnChanges 
   @Input()
   serviceId: string;
 
-  constructor( private simplicateService: SimplicateService ) {
+  constructor( private simplicateService: JiraService ) {
     super();
 
     this.filteredServices = this.formControl.valueChanges

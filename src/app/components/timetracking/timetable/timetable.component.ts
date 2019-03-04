@@ -2,7 +2,7 @@ import { Component, HostListener, Input, OnChanges } from '@angular/core';
 import { fadeInContent, MatBottomSheet } from '@angular/material';
 import { TimeDetailsSheetComponent } from '../time-details-sheet/time-details-sheet.component';
 import { HourModel } from '../../../domain/hour.model';
-import { SimplicateService } from '../../../providers/simplicate.service';
+import { JiraService } from '../../../providers/jira.service';
 import { DateUtil } from '../../../utils/date.util';
 import { TrackingServiceService } from '../../../providers/tracking-service.service';
 
@@ -25,7 +25,7 @@ export class TimetableComponent implements OnChanges {
 
   approvalStatus = 'EMPTY';
 
-  constructor( private bottomSheet: MatBottomSheet, public simplicateService: SimplicateService, private track: TrackingServiceService ) {
+  constructor(private bottomSheet: MatBottomSheet, public simplicateService: JiraService, private track: TrackingServiceService ) {
   }
 
   ngOnChanges() {

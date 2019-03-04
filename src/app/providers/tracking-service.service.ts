@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
 import {NavigationEnd, Router} from '@angular/router';
-import {SimplicateService} from './simplicate.service';
+import {JiraService} from './jira.service';
 
 declare var ga: Function;
 
@@ -9,9 +9,8 @@ declare var ga: Function;
 })
 export class TrackingServiceService {
 
-  constructor(public router: Router, simplicate: SimplicateService) {
+  constructor(public router: Router, simplicate: JiraService) {
     this.trackRouterChanges();
-    this.trackDimension('dimension1', simplicate.employee.id);
   }
 
 
