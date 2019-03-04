@@ -1,8 +1,11 @@
 <app-weekdayselector [activeDate]="activeDate" (activeDateChange)="setActiveDate($event)"></app-weekdayselector>
-<!--<app-timetable *ngIf="!loading" [hours]="hours" [activeDate]="activeDate" [timer]="timer"></app-timetable>-->
+<!--<app-timetable *ngIf="!loading" [issues]="issues" [activeDate]="activeDate" [timer]="timer"></app-timetable>-->
 <mat-progress-bar mode="indeterminate" *ngIf="loading"></mat-progress-bar>
 <h6>Total time - {{totalTimeSpend | minutesToMs | msToTime}}</h6>
 
-<div *ngFor="let issue of hours">
-  {{issue.issueKey}} - {{issue.totalTimeSpendSeconds | minutesToMs | msToTime}}
+
+<div *ngFor="let issue of issues">
+  <app-worklog-entry [worklog]="issue"></app-worklog-entry>
 </div>
+
+<app-worklog-form></app-worklog-form>

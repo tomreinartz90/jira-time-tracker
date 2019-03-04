@@ -1,0 +1,12 @@
+<p>
+  worklog-form works!
+</p>
+
+
+<input matInput type="text" placeholder="Issue" name="your username" [(ngModel)]="issue">
+
+<input matInput type="text" placeholder="Time" name="your username" [(ngModel)]="time">
+<div class="buttons">
+  <button mat-flat-button="secondary">Cancel</button>
+  <button mat-flat-button="primary" (click)="addWorkLog()">Save</button>
+</div>

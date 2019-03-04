@@ -1,2 +1,0 @@
-<span *ngIf="approvalStatus === 'EMPTY' || approvalStatus === 'APPROVED'">{{approvalStatus === 'EMPTY' ? 'Start working' : 'Approved'}}</span>
-<button *ngIf="approvalStatus === 'TO_RESUBMIT' || approvalStatus === 'TO_APPROVE'" (click)="approve()" mat-flat-button color="accent">send for approval</button>

@@ -1,0 +1,10 @@
+<div class="worklog-entry__content">
+  <div class="worklog-entry__issue">
+    {{worklog.issueKey}}
+  </div>
+  <div class="worklog-entry__summary">
+    {{worklog.issue.fields.summary}}
+  </div>
+</div>
+<div class="worklog-entry__time">{{worklog.totalTimeSpendSeconds | minutesToMs | msToTime}}</div>
+

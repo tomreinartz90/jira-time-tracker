@@ -5,12 +5,12 @@
       <div class="form-container">
         <div class="example-full-width">
           <mat-form-field class="">
-            <input matInput type="url" placeholder="organisation" name="domain" [(ngModel)]="domain">
+            <input matInput type="url" placeholder="Jira url" name="URL to jira" [ngModel]="url" (blur)="url = $event.target.value">
           </mat-form-field>
         </div>
 
         <mat-form-field class="example-full-width">
-          <input matInput type="email" placeholder="email" name="your email" [(ngModel)]="email">
+          <input matInput type="text" placeholder="Username" name="your username" [(ngModel)]="email">
         </mat-form-field>
 
         <mat-form-field class="example-full-width">

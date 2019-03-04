@@ -1,0 +1,40 @@
+:host {
+  display: flex;
+  padding-top: 1rem;
+  padding-bottom: 1rem;
+
+  margin: 1rem 0;
+  background-color: rgba(black, 0);
+  transition: background-color .2s ease;
+  cursor: pointer;
+
+  &:hover {
+    background-color: rgba(black, .1)
+  }
+}
+
+.worklog-entry {
+
+  &__content {
+    flex: 1;
+  }
+
+  &__time {
+    flex: 1 0 5rem;
+    max-width: 5rem;
+    text-align: right;
+    font-weight: bold;
+    color: #FA004B;
+  }
+
+  &__issue {
+    font-weight: bold;
+    font-size: 16px;
+  }
+
+  &__summary {
+    font-size: 12px;
+    padding-top: 5px;
+    color: #565353;
+  }
+}

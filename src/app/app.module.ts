@@ -17,11 +17,9 @@ import {WebviewDirective} from './directives/webview.directive';
 import {AppComponent} from './app.component';
 import {HomeComponent} from './components/home/home.component';
 import {JiraService} from './providers/jira.service';
-import {TimetableComponent} from './components/timetracking/timetable/timetable.component';
 import {TimetrackingComponent} from './components/timetracking/timetracking/timetracking.component';
 import {WeekdayselectorComponent} from './components/timetracking/weekdayselector/weekdayselector.component';
 import {UserInfoBarComponent} from './components/user/user-info-bar/user-info-bar.component';
-import {TimetableitemComponent} from './components/timetracking/timetableitem/timetableitem.component';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {
   MatAutocompleteModule,
@@ -39,7 +37,6 @@ import {
   MatToolbarModule,
   MatTooltipModule
 } from '@angular/material';
-import {TimeDetailsSheetComponent} from './components/timetracking/time-details-sheet/time-details-sheet.component';
 import {TimePickerComponent} from './components/base/time-picker/time-picker.component';
 import {LoginComponent} from './components/login/login/login.component';
 import {ProjectSelectComponent} from './components/base/project-select/project-select.component';
@@ -51,10 +48,11 @@ import {TimerComponent} from './components/base/timer/timer.component';
 import {SelectOnFocusDirective} from './components/base/select-on-focus.directive';
 import {StringToHexColorPipe} from './components/base/string-to-hex-color.pipe';
 import {CleanNamePipe} from './components/base/clean-name.pipe';
-import {ApprovalStatusComponent} from './components/timetracking/approval-status/approval-status.component';
 import {CustomErrorHandler} from './providers/custom-error-handler.service';
 import {ConfirmButtonComponent} from './components/base/confirm-button/confirm-button.component';
-import {MinutesToMsPipe} from "./components/base/minutes-to-ms.pipe";
+import {MinutesToMsPipe} from './components/base/minutes-to-ms.pipe';
+import { WorklogEntryComponent } from './components/timetracking/worklog-entry/worklog-entry.component';
+import { WorklogFormComponent } from './components/timetracking/worklog-form/worklog-form.component';
 
 // AoT requires an exported function for factories
 export function HttpLoaderFactory(http: HttpClient) {
@@ -83,12 +81,9 @@ const matModules = [
     AppComponent,
     HomeComponent,
     WebviewDirective,
-    TimetableComponent,
     TimetrackingComponent,
     WeekdayselectorComponent,
     UserInfoBarComponent,
-    TimetableitemComponent,
-    TimeDetailsSheetComponent,
     TimePickerComponent,
     LoginComponent,
     ProjectSelectComponent,
@@ -101,8 +96,9 @@ const matModules = [
     SelectOnFocusDirective,
     StringToHexColorPipe,
     CleanNamePipe,
-    ApprovalStatusComponent,
     ConfirmButtonComponent,
+    WorklogEntryComponent,
+    WorklogFormComponent,
   ],
   imports: [
     BrowserModule,
@@ -121,7 +117,6 @@ const matModules = [
     })
   ],
   entryComponents: [
-    TimeDetailsSheetComponent
   ],
   providers: [JiraService,
     {
