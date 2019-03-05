@@ -1,7 +1,5 @@
-import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
 
-export interface IssueModel {
+export interface IssueI {
   expand: string;
   id: string;
   self: string;

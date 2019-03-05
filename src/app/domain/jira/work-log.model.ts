@@ -9,7 +9,7 @@ export interface WorkLogModel {
   comment?: string;
   visibility?: { type: string, value: string };
   started?: string;
-  timeSpent: string;
+  timeSpent?: string;
   timeSpentSeconds?: number;
   id?: string;
 }

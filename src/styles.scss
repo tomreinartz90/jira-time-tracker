@@ -19,3 +19,10 @@ html, body {
   padding-right: 30px;
   padding-left: 30px;
 }
+
+.dark-bg {
+  &.mat-form-field-appearance-legacy .mat-form-field-label {
+    color: white;
+  }
+}
+

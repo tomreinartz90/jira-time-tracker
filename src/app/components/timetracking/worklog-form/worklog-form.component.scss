@@ -1,0 +1,25 @@
+:host {
+  display: block;
+  background-color: #13043C;
+  color: white;
+  padding: 30px;
+  position: fixed;
+  bottom:0;
+
+  .mat-form-field {
+    width: 100%;
+  }
+
+
+  .buttons {
+    display: flex;
+    margin-top: 20px;
+    justify-content: flex-end;
+    button {
+      margin-left: 5px;
+    }
+  }
+}
+.mat-form-field-appearance-legacy .mat-form-field-label {
+  color: white;
+}

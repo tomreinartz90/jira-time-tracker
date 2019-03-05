@@ -1,6 +1,8 @@
 import {Component, HostBinding, OnInit} from '@angular/core';
 import {JiraService} from '../../../providers/jira.service';
 import {delay} from 'rxjs/operators';
+import {IssueI} from "../../../domain/jira/issue.model";
+import {WorkLogModel} from "../../../domain/jira/work-log.model";
 
 @Component({
   selector: 'app-timetracking',
@@ -9,7 +11,7 @@ import {delay} from 'rxjs/operators';
 })
 export class TimetrackingComponent implements OnInit {
   loading: boolean;
-  issues: any;
+  issues: { issueKey: string, issue: IssueI, logs: WorkLogModel[], totalTimeSpendSeconds: number }[];
 
   activeDate = new Date();
 
