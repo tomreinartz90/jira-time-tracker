@@ -1,11 +1,28 @@
 <app-weekdayselector [activeDate]="activeDate" (activeDateChange)="setActiveDate($event)"></app-weekdayselector>
 <!--<app-timetable *ngIf="!loading" [issues]="issues" [activeDate]="activeDate" [timer]="timer"></app-timetable>-->
 <mat-progress-bar mode="indeterminate" *ngIf="loading"></mat-progress-bar>
-<h6>Total time - {{totalTimeSpend | minutesToMs | msToTime}}</h6>
+<div class="day-info">
+  <div class="day-date">
+    <small>
+      {{activeDate | date : 'EEEE'}}
+    </small>
+    {{activeDate | date : 'd MMM'}}
+  </div>
+  <div class="total-time">
+    <span>
+    {{totalTimeSpend | minutesToMs | msToTime}}
+    </span>
+  </div>
+</div>
 
 
 <div *ngFor="let issue of issues">
   <app-worklog-entry [worklog]="issue"></app-worklog-entry>
 </div>
-
-<app-worklog-form></app-worklog-form>
+<div class="mat-fab-container">
+  <button mat-fab="primary" (click)="showWorkLogForm = true">add</button>
+</div>
+<app-worklog-form *ngIf="showWorkLogForm"
+                  (onUpdate)="getWorklog()"
+                  (onCancel)="showWorkLogForm = false"
+></app-worklog-form>

@@ -18,6 +18,8 @@ export class TimetrackingComponent implements OnInit {
   @HostBinding('class.active')
   active: boolean;
 
+  showWorkLogForm:boolean = false;
+
   constructor(private jiraService: JiraService) {
   }
 
@@ -28,13 +30,14 @@ export class TimetrackingComponent implements OnInit {
 
   get totalTimeSpend() {
     if (this.issues) {
-      return this.issues.map( issue => issue.totalTimeSpendSeconds)
+      return this.issues.reduce( (previousValue, currentValue) => previousValue + currentValue.totalTimeSpendSeconds, 0)
     }
     return 0;
   }
 
   getWorklog() {
     this.loading = true;
+    this.showWorkLogForm = false;
     this.jiraService.getCurrentEmployeeHours(this.activeDate).subscribe(resp => {
         this.issues = resp;
         console.log(resp);

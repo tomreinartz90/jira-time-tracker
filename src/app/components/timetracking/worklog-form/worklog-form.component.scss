@@ -1,10 +1,24 @@
+@keyframes popInBottom {
+  from {
+    transform: translate(100%, 100%);
+    opacity: 0;
+  }
+  to {
+    transform: translate(0, 0);
+    opacity: 1;
+  }
+}
+
 :host {
   display: block;
   background-color: #13043C;
   color: white;
   padding: 30px;
   position: fixed;
-  bottom:0;
+  bottom: 0;
+  animation-name: popInBottom;
+  animation-duration: .2s;
+  animation-timing-function: cubic-bezier(0.3, 0.54, 1, 0.63);
 
   .mat-form-field {
     width: 100%;
@@ -15,11 +29,13 @@
     display: flex;
     margin-top: 20px;
     justify-content: flex-end;
+
     button {
       margin-left: 5px;
     }
   }
 }
+
 .mat-form-field-appearance-legacy .mat-form-field-label {
   color: white;
 }

@@ -3,10 +3,10 @@
 </mat-form-field>
 
 <mat-form-field class="dark-bg">
-  <input matInput type="text" placeholder="Time" name="your username" [(ngModel)]="time">
+  <input matInput type="text" placeholder="Time" name="your username" [ngModel]="time" (blur)="time = $event.target.value">
 </mat-form-field>
 
 <div class="buttons">
-  <button mat-flat-button="secondary">Cancel</button>
-  <button mat-flat-button="primary" (click)="addWorkLog()">Save</button>
+  <button mat-flat-button="secondary" (click)="onCancel.emit(true)">Cancel</button>
+  <button mat-flat-button="primary" [class.disabled]="_time === 0" (click)="addWorkLog()">Save</button>
 </div>
