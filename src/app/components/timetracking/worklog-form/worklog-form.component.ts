@@ -24,7 +24,6 @@ export class WorklogFormComponent implements OnInit {
 
   addWorkLog() {
     this.jiraService.logWork( this.issue, {
-      created: new Date().toISOString(),
       timeSpentSeconds: this.time
     } ).subscribe( () => {
       this.onUpdate.emit( true );

@@ -39,9 +39,6 @@ import {
 } from '@angular/material';
 import {TimePickerComponent} from './components/base/time-picker/time-picker.component';
 import {LoginComponent} from './components/login/login/login.component';
-import {ProjectSelectComponent} from './components/base/project-select/project-select.component';
-import {ProjectServiceSelectComponent} from './components/base/project-service-select/project-service-select.component';
-import {ServiceTypeSelectComponent} from './components/base/service-type-select/service-type-select.component';
 import {MsToTimePipe} from './components/base/ms-to-time.pipe';
 import {HoursToMsPipe} from './components/base/hours-to-ms.pipe';
 import {TimerComponent} from './components/base/timer/timer.component';
@@ -86,9 +83,6 @@ const matModules = [
     UserInfoBarComponent,
     TimePickerComponent,
     LoginComponent,
-    ProjectSelectComponent,
-    ProjectServiceSelectComponent,
-    ServiceTypeSelectComponent,
     MsToTimePipe,
     HoursToMsPipe,
     MinutesToMsPipe,

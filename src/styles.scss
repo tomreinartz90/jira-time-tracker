@@ -1,10 +1,10 @@
-/* You can add global styles to this file, and also import other style files */
-@import '~@angular/material/theming';
-@import url('https://fonts.googleapis.com/css?family=Roboto');
 
-@include mat-core();
+/* You can add global styles to this file, and also import other style files */
+@import '~@angular/material/prebuilt-themes/indigo-pink.css';
+@import url('https://fonts.googleapis.com/css?family=Roboto');
 $primary-color: #FA004B;
 $secondary-color: #13043C;
+
 
 
 html, body {
