@@ -9,7 +9,7 @@ declare var ga: Function;
 })
 export class TrackingServiceService {
 
-  constructor(public router: Router, simplicate: JiraService) {
+  constructor(public router: Router) {
     this.trackRouterChanges();
   }
 

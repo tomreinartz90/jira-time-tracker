@@ -1,13 +1,12 @@
 
 
 :host {
-  padding-bottom: 60vh;
   display: block;
 
 }
 
 .day-info {
-  padding: 10px 30px 20px;
+  padding: 10px 30px 10px;
   display: flex;
 
   .total-time {
@@ -24,6 +23,7 @@
   .day-date {
     flex: 1;
     font-size: 36px;
+    line-height: 0.8;
 
     small {
       display: block;

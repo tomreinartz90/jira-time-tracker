@@ -15,13 +15,13 @@ export class LoginComponent implements OnInit {
   domain = '';
   error: string = null;
 
-  constructor( private simplicateService: JiraService,
+  constructor( private jiraService: JiraService,
                private track: TrackingServiceService,
                private router: Router ) {
   }
 
   ngOnInit() {
-    this.simplicateService.getEmployeeInfo().subscribe( () => {
+    this.jiraService.getEmployeeInfo().subscribe( () => {
       this.goHome();
     } );
   }
@@ -45,7 +45,7 @@ export class LoginComponent implements OnInit {
   }
 
   handleLogin() {
-    this.simplicateService.login( this.domain, this.email, this.password ).subscribe( result => {
+    this.jiraService.login( this.domain, this.email, this.password ).subscribe( result => {
       console.log( result );
       this.error = null;
       this.track.trackEvent( 'login', 'success' );

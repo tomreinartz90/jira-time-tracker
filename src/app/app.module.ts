@@ -37,19 +37,15 @@ import {
   MatToolbarModule,
   MatTooltipModule
 } from '@angular/material';
-import {TimePickerComponent} from './components/base/time-picker/time-picker.component';
 import {LoginComponent} from './components/login/login/login.component';
 import {MsToTimePipe} from './components/base/ms-to-time.pipe';
 import {HoursToMsPipe} from './components/base/hours-to-ms.pipe';
-import {TimerComponent} from './components/base/timer/timer.component';
 import {SelectOnFocusDirective} from './components/base/select-on-focus.directive';
-import {StringToHexColorPipe} from './components/base/string-to-hex-color.pipe';
-import {CleanNamePipe} from './components/base/clean-name.pipe';
 import {CustomErrorHandler} from './providers/custom-error-handler.service';
-import {ConfirmButtonComponent} from './components/base/confirm-button/confirm-button.component';
 import {MinutesToMsPipe} from './components/base/minutes-to-ms.pipe';
 import { WorklogEntryComponent } from './components/timetracking/worklog-entry/worklog-entry.component';
 import { WorklogFormComponent } from './components/timetracking/worklog-form/worklog-form.component';
+import { IssuesByFilterComponent } from './components/timetracking/issues-by-filter/issues-by-filter.component';
 
 // AoT requires an exported function for factories
 export function HttpLoaderFactory(http: HttpClient) {
@@ -81,18 +77,14 @@ const matModules = [
     TimetrackingComponent,
     WeekdayselectorComponent,
     UserInfoBarComponent,
-    TimePickerComponent,
     LoginComponent,
     MsToTimePipe,
     HoursToMsPipe,
     MinutesToMsPipe,
-    TimerComponent,
     SelectOnFocusDirective,
-    StringToHexColorPipe,
-    CleanNamePipe,
-    ConfirmButtonComponent,
     WorklogEntryComponent,
     WorklogFormComponent,
+    IssuesByFilterComponent,
   ],
   imports: [
     BrowserModule,

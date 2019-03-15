@@ -1,6 +1,7 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {JiraService} from '../../../providers/jira.service';
 import * as ms from 'ms';
+import {IssueI} from "../../../domain/jira/issue.model";
 
 @Component({
   selector: 'app-worklog-form',
@@ -18,12 +19,14 @@ export class WorklogFormComponent implements OnInit {
 
 
   set time(value: string) {
-    if (value && value.match(/\w/)) {
+    if (value && !value.match(/\w/)) {
       value = `${value}m`;
     }
     try {
-      this._time = ms(value) / 1000;
+      console.log(ms(value));
+      this._time = parseInt(ms(value)) / 1000;
     } catch (e) {
+      this._time = 0;
       console.error(`could not update time with ${value}`)
     }
   }
@@ -35,9 +38,11 @@ export class WorklogFormComponent implements OnInit {
     }
   }
 
+  @Input()
+  activeDate:Date = new Date();
 
   @Input()
-  issue = '';
+  issue:IssueI;
 
   @Input('time')
   _time = 0;
@@ -49,7 +54,8 @@ export class WorklogFormComponent implements OnInit {
   }
 
   addWorkLog() {
-    this.jiraService.logWork(this.issue, {
+    this.jiraService.logWork(this.issue.key, {
+      started: this.activeDate.toISOString(),
       timeSpentSeconds: this._time
     }).subscribe(() => {
       this.onUpdate.emit(true);

@@ -1,12 +1,17 @@
-<mat-form-field class="dark-bg">
-  <input matInput type="text" placeholder="Issue" name="your username" [(ngModel)]="issue">
-</mat-form-field>
+<app-issues-by-filter *ngIf="!issue" (issueSelect)="issue = $event" autofocus></app-issues-by-filter>
+<ng-container *ngIf="issue">
+  <mat-form-field class="dark-bg">
+    <input matInput type="text" placeholder="Issue" name="Issue" [ngModel]="issue.key" (focus)="issue = null">
+  </mat-form-field>
 
-<mat-form-field class="dark-bg">
-  <input matInput type="text" placeholder="Time" name="your username" [ngModel]="time" (blur)="time = $event.target.value">
-</mat-form-field>
+  <mat-form-field class="dark-bg">
+    <input matInput type="text" placeholder="Time" autofocus name="Time" [ngModel]="time"
+           (blur)="time = $event.target.value">
 
-<div class="buttons">
-  <button mat-flat-button="secondary" (click)="onCancel.emit(true)">Cancel</button>
-  <button mat-flat-button="primary" [class.disabled]="_time === 0" (click)="addWorkLog()">Save</button>
-</div>
+  </mat-form-field>
+
+  <div class="buttons">
+    <button mat-flat-button="secondary" (click)="onCancel.emit(true)">Cancel</button>
+    <button mat-flat-button="primary" [class.disabled]="_time === 0" (click)="addWorkLog()">Save</button>
+  </div>
+</ng-container>

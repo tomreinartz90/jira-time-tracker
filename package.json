@@ -1,8 +1,8 @@
 {
-  "name": "time-tracker-for-simplicate",
+  "name": "time-tracker-for-jira",
   "version": "0.0.9",
   "description": "Angular 6 with Electron (Typescript + SASS + Hot Reload)",
-  "homepage": "https://github.com/tomreinartz90/simplicate-app",
+  "homepage": "https://github.com/tomreinartz90/jira-time-tracker",
   "author": {
     "name": "Tom Reinartz",
     "email": "tom.reinartz90@gmail.com"

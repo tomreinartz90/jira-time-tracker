@@ -9,11 +9,11 @@ import { JiraService } from '../../../providers/jira.service';
 export class UserInfoBarComponent implements OnInit {
   public employee: any;
 
-  constructor( private simplicate: JiraService ) {
+  constructor( private jiraService: JiraService ) {
   }
 
   ngOnInit() {
-    this.simplicate.getEmployeeInfo().subscribe( employee => {
+    this.jiraService.getEmployeeInfo().subscribe( employee => {
       this.employee = employee;
     } );
   }

@@ -1,0 +1,3 @@
+<div class="issue" *ngFor="let issue of issues" (click)="issueSelect.emit(issue)" tabindex="0">
+  [{{issue.key}}] {{issue.fields.summary}} <span class="time">{{issue.fields.timespent | minutesToMs | msToTime}} <small>/ {{issue.fields.timeoriginalestimate | minutesToMs | msToTime }}</small></span>
+</div>

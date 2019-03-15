@@ -155,6 +155,9 @@ export class JiraService {
 
 
   logWork(ticket: string, workLogModel: WorkLogModel): Observable<any> {
+    if(workLogModel.started){
+      workLogModel.started = workLogModel.started.replace('Z', '+0000');
+    }
     return this.post(`issue/${ticket}/worklog?adjustEstimate=auto`, workLogModel);
   }
 

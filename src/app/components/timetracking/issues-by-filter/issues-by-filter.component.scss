@@ -1,0 +1,26 @@
+:host {
+  max-height: 70vh;
+  overflow: auto;
+  display: block;
+  margin-left: -30px;
+  margin-right: -30px;
+  padding: 0 30px;
+}
+
+.issue {
+  padding: 20px 10px;
+  cursor: pointer;
+  background-color: rgba(white, 0);
+  font-size: 14px;
+
+  &:hover,
+  &:focus {
+    background-color: rgba(white, .1);
+  }
+}
+
+.time {
+  color: #FF3369
+}
+
+

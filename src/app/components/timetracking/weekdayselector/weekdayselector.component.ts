@@ -1,6 +1,6 @@
 import {Component, EventEmitter, HostListener, Input, OnInit, Output} from '@angular/core';
-import {DateUtil} from '../../../utils/date.util';
 import {TrackingServiceService} from '../../../providers/tracking-service.service';
+import {DateUtil} from '../../../utils/date.util';
 
 @Component( {
   selector: 'app-weekdayselector',
