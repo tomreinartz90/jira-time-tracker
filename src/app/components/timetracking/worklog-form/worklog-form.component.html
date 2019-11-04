@@ -1,4 +1,16 @@
-<app-issues-by-filter *ngIf="!issue" (issueSelect)="issue = $event" autofocus></app-issues-by-filter>
+
+<mat-tab-group *ngIf="!issue">
+  <mat-tab label="Quick">
+    <app-issues-by-filter [filterId]="null" (issueSelect)="issue = $event" autofocus></app-issues-by-filter>
+  </mat-tab>
+  <mat-tab *ngFor="let filter of filters" #tab [label]="filter.name">
+    <app-issues-by-filter *ngIf="tab.isActive" [filterId]="filter.filterId" (issueSelect)="issue = $event" autofocus></app-issues-by-filter>
+  </mat-tab>
+  <mat-tab label="Edit">
+      <h3>Edit issues</h3>
+  </mat-tab>
+</mat-tab-group>
+
 <ng-container *ngIf="issue">
   <mat-form-field class="dark-bg">
     <input matInput type="text" placeholder="Issue" name="Issue" [ngModel]="issue.key" (focus)="issue = null">

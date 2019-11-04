@@ -33,7 +33,7 @@ import {
   MatNativeDateModule,
   MatProgressBarModule,
   MatProgressSpinnerModule,
-  MatSlideToggleModule,
+  MatSlideToggleModule, MatTabsModule,
   MatToolbarModule,
   MatTooltipModule
 } from '@angular/material';
@@ -66,7 +66,8 @@ const matModules = [
   MatTooltipModule,
   MatProgressBarModule,
   MatSlideToggleModule,
-  MatProgressSpinnerModule
+  MatProgressSpinnerModule,
+  MatTabsModule
 ];
 
 @NgModule({

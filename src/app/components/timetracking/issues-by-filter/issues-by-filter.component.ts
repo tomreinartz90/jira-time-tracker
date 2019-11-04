@@ -10,7 +10,7 @@ import {IssueI} from "../../../domain/jira/issue.model";
 export class IssuesByFilterComponent implements OnChanges {
 
   @Input()
-  filterId: number = 25797;
+  filterId: number;
 
   @Output()
   issueSelect: EventEmitter<IssueI> = new EventEmitter<IssueI>();
@@ -33,11 +33,13 @@ export class IssuesByFilterComponent implements OnChanges {
 
   updateList() {
     this.loading = true;
-    this.jira.getIssuesByFilterId(this.filterId).subscribe(resp => {
+    const issues$ = this.filterId ? this.jira.getIssuesByFilterId(this.filterId) : this.jira.getQuickSearchIssues();
+
+    issues$.subscribe(resp => {
         this.issues = resp.issues;
       },
       () => null,
-      () => this.loading = false)
+      () => this.loading = false);
   }
 
 }
