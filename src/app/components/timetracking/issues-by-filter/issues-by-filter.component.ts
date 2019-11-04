@@ -1,12 +1,12 @@
-import {Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges} from '@angular/core';
-import {JiraService} from "../../../providers/jira.service";
-import {IssueI} from "../../../domain/jira/issue.model";
+import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges } from '@angular/core';
+import { JiraService } from "../../../providers/jira.service";
+import { IssueI } from "../../../domain/jira/issue.model";
 
-@Component({
+@Component( {
   selector: 'app-issues-by-filter',
   templateUrl: './issues-by-filter.component.html',
-  styleUrls: ['./issues-by-filter.component.scss']
-})
+  styleUrls: [ './issues-by-filter.component.scss' ]
+} )
 export class IssuesByFilterComponent implements OnChanges {
 
   @Input()
@@ -18,28 +18,27 @@ export class IssuesByFilterComponent implements OnChanges {
   issues: Array<any> = [];
   loading: boolean = false;
 
-  constructor(private jira: JiraService) {
+  constructor( private jira: JiraService ) {
   }
 
-  ngOnChanges(changes: SimpleChanges) {
+  ngOnChanges( changes: SimpleChanges ) {
     this.updateList();
   }
 
   ngOnInit() {
-    if (this.filterId) {
+    if ( this.filterId ) {
       this.updateList();
     }
   }
 
   updateList() {
+    this.issues = [];
     this.loading = true;
-    const issues$ = this.filterId ? this.jira.getIssuesByFilterId(this.filterId) : this.jira.getQuickSearchIssues();
-
-    issues$.subscribe(resp => {
+    this.jira.getIssuesByFilterId( this.filterId ).subscribe( resp => {
         this.issues = resp.issues;
       },
       () => null,
-      () => this.loading = false);
+      () => this.loading = false )
   }
 
 }

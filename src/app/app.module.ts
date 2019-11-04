@@ -1,26 +1,26 @@
 import 'zone.js/dist/zone-mix';
 import 'reflect-metadata';
 import '../polyfills';
-import {BrowserModule} from '@angular/platform-browser';
-import {ErrorHandler, NgModule} from '@angular/core';
-import {FormsModule, ReactiveFormsModule} from '@angular/forms';
+import { BrowserModule } from '@angular/platform-browser';
+import { ErrorHandler, NgModule } from '@angular/core';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
-import {HttpClient, HttpClientModule} from '@angular/common/http';
+import { HttpClient, HttpClientModule } from '@angular/common/http';
 
-import {AppRoutingModule} from './app-routing.module';
+import { AppRoutingModule } from './app-routing.module';
 // NG Translate
-import {TranslateLoader, TranslateModule} from '@ngx-translate/core';
-import {TranslateHttpLoader} from '@ngx-translate/http-loader';
+import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
+import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 
-import {WebviewDirective} from './directives/webview.directive';
+import { WebviewDirective } from './directives/webview.directive';
 
-import {AppComponent} from './app.component';
-import {HomeComponent} from './components/home/home.component';
-import {JiraService} from './providers/jira.service';
-import {TimetrackingComponent} from './components/timetracking/timetracking/timetracking.component';
-import {WeekdayselectorComponent} from './components/timetracking/weekdayselector/weekdayselector.component';
-import {UserInfoBarComponent} from './components/user/user-info-bar/user-info-bar.component';
-import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
+import { AppComponent } from './app.component';
+import { HomeComponent } from './components/home/home.component';
+import { JiraService } from './providers/jira.service';
+import { TimetrackingComponent } from './components/timetracking/timetracking/timetracking.component';
+import { WeekdayselectorComponent } from './components/timetracking/weekdayselector/weekdayselector.component';
+import { UserInfoBarComponent } from './components/user/user-info-bar/user-info-bar.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {
   MatAutocompleteModule,
   MatBottomSheetModule,
@@ -33,23 +33,27 @@ import {
   MatNativeDateModule,
   MatProgressBarModule,
   MatProgressSpinnerModule,
-  MatSlideToggleModule, MatTabsModule,
+  MatSelectModule,
+  MatSlideToggleModule,
   MatToolbarModule,
   MatTooltipModule
 } from '@angular/material';
-import {LoginComponent} from './components/login/login/login.component';
-import {MsToTimePipe} from './components/base/ms-to-time.pipe';
-import {HoursToMsPipe} from './components/base/hours-to-ms.pipe';
-import {SelectOnFocusDirective} from './components/base/select-on-focus.directive';
-import {CustomErrorHandler} from './providers/custom-error-handler.service';
-import {MinutesToMsPipe} from './components/base/minutes-to-ms.pipe';
+import { LoginComponent } from './components/login/login/login.component';
+import { MsToTimePipe } from './components/base/ms-to-time.pipe';
+import { HoursToMsPipe } from './components/base/hours-to-ms.pipe';
+import { SelectOnFocusDirective } from './components/base/select-on-focus.directive';
+import { CustomErrorHandler } from './providers/custom-error-handler.service';
+import { MinutesToMsPipe } from './components/base/minutes-to-ms.pipe';
 import { WorklogEntryComponent } from './components/timetracking/worklog-entry/worklog-entry.component';
 import { WorklogFormComponent } from './components/timetracking/worklog-form/worklog-form.component';
 import { IssuesByFilterComponent } from './components/timetracking/issues-by-filter/issues-by-filter.component';
+import { JiraTimeTrackerStore } from "./store/jira-time-tracker.store";
+import { IssuesBySearchComponent } from './components/timetracking/issues-by-search/issues-by-search.component';
+import { WorklogEntryDetailsComponent } from './components/timetracking/worklog-entry-details/worklog-entry-details.component';
 
 // AoT requires an exported function for factories
-export function HttpLoaderFactory(http: HttpClient) {
-  return new TranslateHttpLoader(http, './assets/i18n/', '.json');
+export function HttpLoaderFactory( http: HttpClient ) {
+  return new TranslateHttpLoader( http, './assets/i18n/', '.json' );
 }
 
 const matModules = [
@@ -67,10 +71,10 @@ const matModules = [
   MatProgressBarModule,
   MatSlideToggleModule,
   MatProgressSpinnerModule,
-  MatTabsModule
+  MatSelectModule
 ];
 
-@NgModule({
+@NgModule( {
   declarations: [
     AppComponent,
     HomeComponent,
@@ -86,6 +90,9 @@ const matModules = [
     WorklogEntryComponent,
     WorklogFormComponent,
     IssuesByFilterComponent,
+    IssuesBySearchComponent,
+    WorklogEntryDetailsComponent,
+
   ],
   imports: [
     BrowserModule,
@@ -95,22 +102,25 @@ const matModules = [
     AppRoutingModule,
     matModules,
     ReactiveFormsModule,
-    TranslateModule.forRoot({
+    TranslateModule.forRoot( {
       loader: {
         provide: TranslateLoader,
-        useFactory: (HttpLoaderFactory),
-        deps: [HttpClient]
+        useFactory: ( HttpLoaderFactory ),
+        deps: [ HttpClient ]
       }
-    })
+    } )
   ],
   entryComponents: [
+    WorklogEntryDetailsComponent,
   ],
-  providers: [JiraService,
+  providers: [
+    JiraService,
+    JiraTimeTrackerStore,
     {
       provide: ErrorHandler,
       useClass: CustomErrorHandler,
     }, ],
-  bootstrap: [AppComponent]
-})
+  bootstrap: [ AppComponent ]
+} )
 export class AppModule {
 }

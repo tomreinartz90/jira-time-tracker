@@ -25,7 +25,7 @@ function createWindow() {
     darkTheme: true,
     vibrancy: 'dark',
     titleBarStyle: 'hiddenInset',
-    title: 'Simplicate Time Tracker',
+    title: 'Jira Time Tracker',
 
     webPreferences: {
       webSecurity: false,
@@ -92,13 +92,13 @@ function createMenu() {
         {
           label: 'About',
           click() {
-            require( 'electron' ).shell.openExternal( 'https://github.com/tomreinartz90/simplicate-app' );
+            require( 'electron' ).shell.openExternal( 'https://github.com/tomreinartz90/jira-time-tracker' );
           }
         },
         {
           label: 'Releases',
           click() {
-            require( 'electron' ).shell.openExternal( 'https://github.com/tomreinartz90/simplicate-app/releases' );
+            require( 'electron' ).shell.openExternal( 'https://github.com/tomreinartz90/jira-time-tracker/releases' );
           }
         }
       ]
@@ -111,7 +111,7 @@ function createMenu() {
 
 function createTray() {
   tray = new Tray( path.join( __dirname, 'dist/assets/menubar.png' ) );
-  tray.setToolTip( 'Simplicate Time Tracker' );
+  tray.setToolTip( 'Jira Time Tracker' );
 
   tray.on( 'click', toggleWindow );
 }

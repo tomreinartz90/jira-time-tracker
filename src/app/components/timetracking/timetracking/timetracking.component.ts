@@ -1,58 +1,59 @@
-import {Component, HostBinding, OnInit} from '@angular/core';
-import {JiraService} from '../../../providers/jira.service';
-import {delay} from 'rxjs/operators';
-import {IssueI} from "../../../domain/jira/issue.model";
-import {WorkLogModel} from "../../../domain/jira/work-log.model";
+import { Component, HostBinding } from '@angular/core';
+import { JiraTimeTrackerActions } from "../../../store/jira-time-tracker.actions";
+import { JiraTimeTrackerSelectors } from "../../../store/jira-time-tracker.selectors";
+import { JiraTimeTrackerState, JiraTimeTrackerStore } from "../../../store/jira-time-tracker.store";
+import { StoreAware, StoreAwareComponent } from "../../../../state-management";
 
-@Component({
+@Component( {
   selector: 'app-timetracking',
   templateUrl: './timetracking.component.html',
-  styleUrls: ['./timetracking.component.scss']
-})
-export class TimetrackingComponent implements OnInit {
+  styleUrls: [ './timetracking.component.scss' ]
+} )
+@StoreAware()
+export class TimetrackingComponent extends StoreAwareComponent {
   loading: boolean;
-  issues: { issueKey: string, issue: IssueI, logs: WorkLogModel[], totalTimeSpendSeconds: number }[];
 
-  activeDate = new Date();
+  @HostBinding( 'class.active' )
+  active: boolean = true;
 
-  @HostBinding('class.active')
-  active: boolean;
+  state: JiraTimeTrackerState;
 
-  showWorkLogForm:boolean = false;
-
-  constructor(private jiraService: JiraService) {
+  constructor( protected store: JiraTimeTrackerStore,  ) {
+    super();
   }
 
   ngOnInit() {
-    this.active = true;
-    this.getWorklog();
+    this.setActiveDate( new Date() );
   }
 
   get totalTimeSpend() {
-    if (this.issues) {
-      return this.issues.reduce( (previousValue, currentValue) => previousValue + currentValue.totalTimeSpendSeconds, 0)
-    }
-    return 0;
+    return JiraTimeTrackerSelectors.totalTimeSpend( this.state );
   }
 
-  getWorklog() {
-    this.loading = true;
-    this.showWorkLogForm = false;
-    this.jiraService.getCurrentEmployeeHours(this.activeDate).subscribe(resp => {
-        this.issues = resp;
-        console.log(resp);
-      },
-      () => {
-      },
-      () => this.loading = false
-    );
+  get issues() {
+    return this.state.issues;
   }
 
-  setActiveDate(date: Date) {
-    this.activeDate = date;
-    this.issues = [];
-    this.getWorklog();
+  get showWorkLogForm() {
+    return this.state.addWorkingHours
   }
+
+  get activeDate() {
+    return this.state.activeDate;
+  }
+
+  setActiveDate( date: Date ) {
+    JiraTimeTrackerActions.changeDate( date );
+  }
+
+  showAddHours( show: boolean ) {
+    JiraTimeTrackerActions.addWorkingHours( show );
+  }
+
+  refresh() {
+    JiraTimeTrackerActions.refreshIssues();
+  }
+
 
 
 }

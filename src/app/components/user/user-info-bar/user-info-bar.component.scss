@@ -1,0 +1,21 @@
+:host {
+  background-color: #13043C;
+  color: #fff;
+  display: flex;
+  align-items: center;
+  .employee-avatar {
+    width: 25px;
+    height: 25px;
+    border-radius: 100%;
+    overflow: hidden;
+    margin: 8px 10px;
+
+    > img {
+      max-height: 25px;
+    }
+  }
+
+  .employee-name {
+    //margin-left: 5px;
+  }
+}

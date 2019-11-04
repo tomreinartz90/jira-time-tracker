@@ -1,29 +1,42 @@
+<div class="close-button" (click)="onCancel.emit(true)">
+    <mat-icon>close</mat-icon>
+</div>
+<div class="top-bar-container">
+    <mat-form-field class="dark-bg" *ngIf="!hasSearchQuery">
+        <mat-label>Issues by filter</mat-label>
+        <mat-select placeholder="Search issues" name="filterId" [value]="filterId" (valueChange)="setFilterId($event)">
+            <mat-option>No selection</mat-option>
+            <mat-option *ngFor="let filter of filters" [value]="filter.id">
+                {{filter.name}}
 
-<mat-tab-group *ngIf="!issue">
-  <mat-tab label="Quick">
-    <app-issues-by-filter [filterId]="null" (issueSelect)="issue = $event" autofocus></app-issues-by-filter>
-  </mat-tab>
-  <mat-tab *ngFor="let filter of filters" #tab [label]="filter.name">
-    <app-issues-by-filter *ngIf="tab.isActive" [filterId]="filter.filterId" (issueSelect)="issue = $event" autofocus></app-issues-by-filter>
-  </mat-tab>
-  <mat-tab label="Edit">
-      <h3>Edit issues</h3>
-  </mat-tab>
-</mat-tab-group>
+            </mat-option>
+        </mat-select>
+    </mat-form-field>
 
+    <mat-form-field class="dark-bg">
+        <input matInput type="text" placeholder="Search issues" name="search" [ngModel]="searchQuery"
+               (ngModelChange)="searchIssue($event)">
+    </mat-form-field>
+</div>
+
+<app-issues-by-filter *ngIf="!issue && !hasSearchQuery && filterId" (issueSelect)="issue = $event"
+                      [filterId]="filterId"
+                      autofocus></app-issues-by-filter>
+<app-issues-by-search *ngIf="!issue && hasSearchQuery" (issueSelect)="issue = $event" [searchQuery]="searchQuery"
+                      autofocus></app-issues-by-search>
 <ng-container *ngIf="issue">
-  <mat-form-field class="dark-bg">
-    <input matInput type="text" placeholder="Issue" name="Issue" [ngModel]="issue.key" (focus)="issue = null">
-  </mat-form-field>
+    <mat-form-field class="dark-bg">
+        <input matInput type="text" placeholder="Issue" name="Issue" [ngModel]="issue.key" (focus)="issue = null">
+    </mat-form-field>
 
-  <mat-form-field class="dark-bg">
-    <input matInput type="text" placeholder="Time" autofocus name="Time" [ngModel]="time"
-           (blur)="time = $event.target.value">
+    <mat-form-field class="dark-bg">
+        <input matInput type="text" placeholder="Time" autofocus name="Time" [ngModel]="time"
+               (blur)="time = $event.target.value">
 
-  </mat-form-field>
+    </mat-form-field>
 
-  <div class="buttons">
-    <button mat-flat-button="secondary" (click)="onCancel.emit(true)">Cancel</button>
-    <button mat-flat-button="primary" [class.disabled]="_time === 0" (click)="addWorkLog()">Save</button>
-  </div>
+    <div class="buttons">
+        <button mat-flat-button="secondary" (click)="onCancel.emit(true)">Cancel</button>
+        <button mat-flat-button="primary" [class.disabled]="_time === 0" (click)="addWorkLog()">Save</button>
+    </div>
 </ng-container>

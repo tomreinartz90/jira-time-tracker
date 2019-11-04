@@ -16,7 +16,7 @@ export class DateUtil {
   }
 
   /**
-   * parse a date string from simplicate api to Date
+   * parse a date string from Jira api to Date
    * @param dateString
    */
   static stringToDateIgnoreTimeZone( dateString: string ): Date {

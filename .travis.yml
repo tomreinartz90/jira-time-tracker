@@ -1,21 +1,15 @@
 language: node_js
 node_js:
 - 8
-
 sudo: required
-
 os:
 - osx
-
 addons:
   chrome: stable
-
 before_script:
 - export DISPLAY=:99.0
-
 install:
 - npm install
-
 jobs:
   include:
   - stage: test + build
@@ -30,3 +24,10 @@ jobs:
     - osx
     script:
     - npm run publish
+deploy:
+  provider: releases
+  api_key:
+  file: release/*
+    secure: 4U0ho7kiUkRbptw+q25NGO1ezCdTQzxnU+y2Z9HDop76zHi4aBD8Hc2BX69VVybUGjnL9Cth561nQ0BkKXgQbg/ozbUcLI0RgyJFdfZiTbZKHkzU8M5uS/BQuUXDqwJVmuu2ZHja7nwuMKFIw+wGpEukjQe9wXYA3c4/0Oj8eYbp4yc0OQ+6dEQ5WrzOEE+ylXQHzl1Y4kZpe3qoFuI+xnHzY8jbdFNA/n0PKRyMey5OW+ShvFhpEWHxCHa5VKBcj9HvMZwG2wf+JgxnWOhu1cKwAv75Gdldzzp2ujmjrMkbHQSIY1t4DGdH0VIY2FLDNJ44CnKPNZ926oxxEOBM2I9y7kA3P0BkTVlvEwdp1bmqJ7ZUYCMQR5Lj/iKrVTa6ubT4fMan6DhZ+HibJYPM507kVxNxB8Aan0IFhxXf/Xg81P5NpAZP428YLIricuOgPKvIVt/AsboPNYO+6ZFZC64iKHhZf+enQPGEbShpsCx/MHkl3+fUQueu7lFBRUhGNL0OKVjN3TnAGc2IbkJ7DEaypTaX1jAA3CJeCjC1/HAJ7Oq34Eeyxjc0cLnH0ys4DqTPMzP5wUKhuutN50rO2YlIZAmWY6CLB7p+HVo5h2ZPrTtB7YynfMzQQ4w7iz1Ckum1wOPP+bc/QVbiY0mm+xL+x8D3H7tCVUtaC8AUnfE=
+  on:
+    repo: tomreinartz90/jira-time-tracker

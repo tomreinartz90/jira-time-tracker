@@ -2,7 +2,7 @@
 [![Build Status](https://travis-ci.org/tomreinartz90/simplicate-app.svg?branch=development)](https://travis-ci.org/tomreinartz90/simplicate-app)
 # Introduction
 
-A simple application to keep track of your work in simplicate,
+A simple application to keep track of your work in Jira,
 
 Currently runs with:
 

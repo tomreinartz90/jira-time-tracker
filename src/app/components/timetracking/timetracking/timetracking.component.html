@@ -1,29 +1,35 @@
-<app-weekdayselector [activeDate]="activeDate" (activeDateChange)="setActiveDate($event)"></app-weekdayselector>
-<!--<app-timetable *ngIf="!loading" [issues]="issues" [activeDate]="activeDate" [timer]="timer"></app-timetable>-->
-<mat-progress-bar mode="indeterminate" *ngIf="loading"></mat-progress-bar>
-<div class="day-info">
-  <div class="day-date">
-    <small>
-      {{activeDate | date : 'EEEE'}}
-    </small>
-    {{activeDate | date : 'd MMM'}}
-  </div>
-  <div class="total-time">
+<div [class.blur-content]="showWorkLogForm">
+
+    <app-weekdayselector [activeDate]="activeDate" (activeDateChange)="setActiveDate($event)"></app-weekdayselector>
+    <mat-progress-bar mode="indeterminate" *ngIf="loading"></mat-progress-bar>
+    <div class="day-info">
+        <div class="day-date">
+            <small>
+                {{activeDate | date : 'EEEE'}}
+            </small>
+            {{activeDate | date : 'd MMM'}}
+        </div>
+        <div class="total-time">
     <span>
     {{totalTimeSpend | minutesToMs | msToTime}}
     </span>
-  </div>
-</div>
+        </div>
+    </div>
 
 
-<div *ngFor="let issue of issues">
-  <app-worklog-entry [worklog]="issue"></app-worklog-entry>
+    <div *ngFor="let issue of issues">
+        <app-worklog-entry [worklog]="issue"></app-worklog-entry>
+    </div>
 </div>
 <div class="mat-fab-container">
-  <button mat-fab="primary" (click)="showWorkLogForm = true">add</button>
+    <button mat-fab="primary" (click)="showAddHours(true)">
+        <mat-icon>
+            add
+        </mat-icon>
+    </button>
 </div>
+<div *ngIf="showWorkLogForm" class="overlay-blur"></div>
 <app-worklog-form *ngIf="showWorkLogForm"
                   [activeDate]="activeDate"
-                  (onUpdate)="getWorklog()"
-                  (onCancel)="showWorkLogForm = false"
+                  (onCancel)="showAddHours(false)"
 ></app-worklog-form>

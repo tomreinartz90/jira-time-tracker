@@ -1,0 +1,4 @@
+<div *ngFor="let log of data.logs">
+    On {{ log.updated | date: 'medium' }} <strong>{{log.timeSpent}}</strong> has been added by you.
+  <a (click)="removeLog(log)">Delete</a>
+</div>

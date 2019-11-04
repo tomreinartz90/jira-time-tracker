@@ -1,8 +1,17 @@
 
-
 :host {
   display: block;
+  max-width: 100%;
+  width: 100%;
 
+  > div {
+    transition: filter .2s ease-in-out;
+    filter: blur(0);
+
+    &.blur-content {
+      filter: blur(3px);
+    }
+  }
 }
 
 .day-info {
@@ -31,4 +40,15 @@
       line-height: 1;
     }
   }
+}
+
+
+.overlay-blur {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  filter: blur(5px);
+  pointer-events: all;
 }

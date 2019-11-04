@@ -1,10 +1,9 @@
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { combineAll, mergeMap, tap, map } from 'rxjs/operators';
-import { NEVER, Observable, combineLatest } from 'rxjs';
+import { map, mergeMap, tap } from 'rxjs/operators';
+import { combineLatest, NEVER, Observable } from 'rxjs';
 import { Router } from '@angular/router';
 import { MyselfI } from '../domain/jira/myself.interface';
-import { promise } from 'selenium-webdriver';
 import * as moment from 'moment';
 import { WorkLogModel } from "../domain/jira/work-log.model";
 import { IssueSearchResultModel } from "../domain/jira/issue-search-result.model";
@@ -19,12 +18,6 @@ interface AuthData {
 
 @Injectable()
 export class JiraService {
-
-  constructor(
-    private http: HttpClient,
-    private router: Router
-  ) {
-  }
 
   get employee(): MyselfI {
     return this.authInfo.user;
@@ -42,62 +35,10 @@ export class JiraService {
     return { authentication: '', domain: '', user: null };
   }
 
-  private authHeaders( authentication = this.authInfo.authentication ) {
-    let headers = new HttpHeaders();
-    headers = headers.set( 'Authorization', `Basic ${ authentication }` );
-    return headers;
-  }
-
-  private get<T>( path: string, params?: HttpParams ): Observable<T> {
-    const { domain } = this.authInfo;
-
-    const options = {
-      params,
-      headers: this.authHeaders()
-    };
-    if ( this.authInfo.authentication.length ) {
-      return this.http.get<T>( `${ domain }/rest/api/2/${ path }`, options ) as Observable<T>;
-    } else {
-      this.router.navigate( [ '' ] );
-      return NEVER;
-    }
-  }
-
-  private put( path, body ) {
-    const { domain } = this.authInfo;
-
-    const options = {
-      headers: this.authHeaders()
-    };
-
-    return this.http.put( `https://${ domain }/rest/api/2/${ path }`, body, options );
-  }
-
-  private delete( path ) {
-    const { domain } = this.authInfo;
-
-    const options = {
-      headers: this.authHeaders()
-    };
-
-    return this.http.delete( `https://${ domain }/rest/api/2/${ path }`, options );
-  }
-
-  private post( path, body ) {
-    const { domain } = this.authInfo;
-    const headers = this.authHeaders();
-    headers.append( 'X-Atlassian-Token', 'nocheck' );
-    headers.append( 'Origin', 'localhost' );
-
-    const options = {
-      headers
-    };
-
-    return this.http.post( `${ domain }/rest/api/2/${ path }`, body, options );
-  }
-
-  private storeAuthData( authData: AuthData ) {
-    localStorage.setItem( 'auth', JSON.stringify( authData ) );
+  constructor(
+    private http: HttpClient,
+    private router: Router
+  ) {
   }
 
   login( domain, username: string, password: string ) {
@@ -161,28 +102,13 @@ export class JiraService {
     return this.post( `issue/${ ticket }/worklog?adjustEstimate=auto`, workLogModel );
   }
 
-  getIssuesByFilterId( filterId: number ): Observable<IssueSearchResultModel> {
-    return this.getFilterById( filterId ).pipe( mergeMap( filter => this.getIssuesByJql( filter.jql ) ) );
+  removeWorkLog( issue: string, log: WorkLogModel ) {
+    return this.delete( `issue/${ issue }/worklog/${ log.id }?adjustEstimate=auto` )
   }
 
-  getQuickSearchIssues(): Observable<IssueSearchResultModel> {
-    const { domain } = this.authInfo;
 
-    const options = {
-      headers: this.authHeaders()
-    };
-    return this.http.get<any>( `${ domain }/rest/quicksearch/1.0/productsearch/search`, options ).pipe(
-      map( result => {
-        const ids = [];
-        if ( result.length ) {
-          return result[ 0 ].items.map( item => item.subtitle )
-        }
-        return ids;
-      } ),
-      mergeMap( keys => this.getIssuesByKeys( keys )
-      )
-    );
-
+  getIssuesByFilterId( filterId: number ): Observable<IssueSearchResultModel> {
+    return this.getFilterById( filterId ).pipe( mergeMap( filter => this.getIssuesByJql( filter.jql ) ) );
   }
 
   getIssuesByJql( jql: string ): Observable<IssueSearchResultModel> {
@@ -197,8 +123,71 @@ export class JiraService {
     return this.get<FilterModel>( `filter/${ filterId }` );
   }
 
+  getFavoriteFilters() {
+    return this.get<Array<FilterModel>>( `filter/favourite` )
+  }
+
   getIssueWorkLog( issueId: string ) {
     return this.get( `issue/${ issueId }/worklog` );
+  }
+
+
+  private authHeaders( authentication = this.authInfo.authentication ) {
+    let headers = new HttpHeaders();
+    headers = headers.set( 'Authorization', `Basic ${ authentication }` );
+    return headers;
+  }
+
+  private get<T>( path: string, params?: HttpParams ): Observable<T> {
+    const { domain } = this.authInfo;
+
+    const options = {
+      params,
+      headers: this.authHeaders()
+    };
+    if ( this.authInfo.authentication.length ) {
+      return this.http.get<T>( `${ domain }/rest/api/2/${ path }`, options ) as Observable<T>;
+    } else {
+      this.router.navigate( [ '' ] );
+      return NEVER;
+    }
+  }
+
+  private put( path, body ) {
+    const { domain } = this.authInfo;
+
+    const options = {
+      headers: this.authHeaders()
+    };
+
+    return this.http.put( `${ domain }/rest/api/2/${ path }`, body, options );
+  }
+
+  private delete( path ) {
+    const { domain } = this.authInfo;
+
+    const options = {
+      headers: this.authHeaders()
+    };
+
+    return this.http.delete( `${ domain }/rest/api/2/${ path }`, options );
+  }
+
+  private post( path, body ) {
+    const { domain } = this.authInfo;
+    const headers = this.authHeaders();
+    headers.append( 'X-Atlassian-Token', 'nocheck' );
+    headers.append( 'Origin', 'localhost' );
+
+    const options = {
+      headers
+    };
+
+    return this.http.post( `${ domain }/rest/api/2/${ path }`, body, options );
+  }
+
+  private storeAuthData( authData: AuthData ) {
+    localStorage.setItem( 'auth', JSON.stringify( authData ) );
   }
 
 
