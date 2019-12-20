@@ -77,7 +77,7 @@ export class JiraService {
         mergeMap(
           ( keys: Array<any> ) => {
             return combineLatest( keys.map( issue => {
-              return this.getIssueWorkLog( issue.key ).pipe(
+              return this.getIssueWorkLog( issue.key, date ).pipe(
                 map( ( resp: any ) => resp.worklogs ),
                 map( ( worklogs: any[] ) => worklogs.filter( worklog => worklog.author.key === this.employeeKey ) ),
                 map( ownLogs => ownLogs.filter( worklog => moment( worklog.started ).isSame( date, 'day' ) ) ),
@@ -127,8 +127,8 @@ export class JiraService {
     return this.get<Array<FilterModel>>( `filter/favourite` )
   }
 
-  getIssueWorkLog( issueId: string ) {
-    return this.get( `issue/${ issueId }/worklog` );
+  getIssueWorkLog( issueId: string, date: Date ) {
+    return this.get( `issue/${ issueId }/worklog?startedAfter=${moment( date ).startOf('day').format('x')}` );
   }
 
 

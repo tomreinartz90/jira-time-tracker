@@ -1,8 +1,8 @@
-import { Effect, Reducer, StoreService } from "../../state-management";
+import { ActionUtil, Effect, Reducer, StoreService } from "../../state-management";
 import { IssueI } from "../domain/jira/issue.model";
 import { WorkLogModel } from "../domain/jira/work-log.model";
 import { JiraService } from "../providers/jira.service";
-import { tap } from "rxjs/operators";
+import { takeUntil, tap } from "rxjs/operators";
 import { JiraTimeTrackerActions } from "./jira-time-tracker.actions";
 import { Inject } from "@angular/core";
 
@@ -12,7 +12,8 @@ export interface JiraTimeTrackerState {
   loadingIssues: boolean,
   addWorkingHours: boolean;
 }
-@Inject('')
+
+@Inject( '' )
 export class JiraTimeTrackerStore extends StoreService<JiraTimeTrackerState> {
 
   static initialState: JiraTimeTrackerState = {
@@ -59,6 +60,10 @@ export class JiraTimeTrackerStore extends StoreService<JiraTimeTrackerState> {
   refreshWorkLog( payload: any, state: JiraTimeTrackerState ) {
     return this.jiraService.getCurrentEmployeeHours( state.activeDate )
       .pipe(
+        takeUntil( ActionUtil.onFirstAction$(
+          JiraTimeTrackerActions.refreshIssues,
+          JiraTimeTrackerActions.changeDate
+        ) ),
         tap( ( issues ) => JiraTimeTrackerActions.updateIssues( issues ) )
       )
   }

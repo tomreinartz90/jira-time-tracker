@@ -1,7 +1,7 @@
 <div [class.blur-content]="showWorkLogForm">
 
     <app-weekdayselector [activeDate]="activeDate" (activeDateChange)="setActiveDate($event)"></app-weekdayselector>
-    <mat-progress-bar mode="indeterminate" *ngIf="loading"></mat-progress-bar>
+    <mat-progress-bar mode="indeterminate" *ngIf="loading || state.loadingIssues"></mat-progress-bar>
     <div class="day-info">
         <div class="day-date">
             <small>
