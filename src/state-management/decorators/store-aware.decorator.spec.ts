@@ -1,12 +1,12 @@
-import { StoreAware, StoreAwareComponent } from "./store-aware.decorator";
-import { CalculatorService, CalculatorState } from "../examples/calculator.service";
-import { mockStoreDependencyService } from "../store-dependency.service";
-import { GlobalStateService } from "../global-state.service";
+import { StoreAware, StoreAwareComponent } from './store-aware.decorator';
+import { CalculatorService, CalculatorState } from '../examples/calculator.service';
+import { mockStoreDependencyService } from '../store-dependency.service';
+import { GlobalStateService } from '../global-state.service';
 
 @StoreAware()
 class SimpleStoreAware implements StoreAwareComponent {
-  onInitCalled: boolean = false;
-  onDestroyCalled: boolean = false;
+  onInitCalled = false;
+  onDestroyCalled = false;
   state: CalculatorState;
 
   constructor( private store: CalculatorService ) {
@@ -25,8 +25,8 @@ class SimpleStoreAware implements StoreAwareComponent {
   }
 }
 
-@StoreAware( { storeKey: 'store1', stateKey: "state1" } )
-@StoreAware( { storeKey: 'store2', stateKey: "state2" } )
+@StoreAware( { storeKey: 'store1', stateKey: 'state1' } )
+@StoreAware( { storeKey: 'store2', stateKey: 'state2' } )
 class MultiStoreAware extends StoreAwareComponent {
   state1: CalculatorState;
   state2: CalculatorState;
@@ -37,8 +37,8 @@ class MultiStoreAware extends StoreAwareComponent {
 
 }
 
-@StoreAware( { storeKey: 'store', stateKey: "state1" } )
-@StoreAware( { storeKey: 'store', stateKey: "state2" } )
+@StoreAware( { storeKey: 'store', stateKey: 'state1' } )
+@StoreAware( { storeKey: 'store', stateKey: 'state2' } )
 class BrokenMultiStoreAware extends StoreAwareComponent {
   state: CalculatorState;
 
@@ -58,7 +58,7 @@ class ForceDetectWithoutCDR extends StoreAwareComponent {
 
 describe( 'StoreAware decorator', () => {
   it( 'it should override onInit and onDestroy but still call the original functions', () => {
-    const testInstance = new SimpleStoreAware( new CalculatorService( mockStoreDependencyService ) );
+    const testInstance = new SimpleStoreAware( new CalculatorService(  ) );
     expect( testInstance.onInitCalled ).toEqual( false );
     expect( testInstance.onDestroyCalled ).toEqual( false );
 
@@ -70,14 +70,14 @@ describe( 'StoreAware decorator', () => {
   } );
 
   it( 'should throw when the param to store state is not empty', () => {
-    const testInstance = new SimpleStoreAware( new CalculatorService( mockStoreDependencyService ) );
+    const testInstance = new SimpleStoreAware( new CalculatorService(  ) );
     expect( testInstance.state ).toEqual( undefined );
     testInstance.state = { currentValue: 100 };
     expect( testInstance.ngOnInit ).toThrow();
   } );
 
   it( 'it should connect to the store and make the current state of the store available in a variable', () => {
-    const testInstance = new SimpleStoreAware( new CalculatorService( mockStoreDependencyService ) );
+    const testInstance = new SimpleStoreAware( new CalculatorService(  ) );
     expect( testInstance.state ).toEqual( undefined );
 
     testInstance.ngOnInit();
@@ -85,7 +85,7 @@ describe( 'StoreAware decorator', () => {
   } );
 
   it( 'it should be able to connect to multiple stores and make the current state of the stores available in a variable', () => {
-    const testInstance = new MultiStoreAware( new CalculatorService( mockStoreDependencyService ), new CalculatorService( mockStoreDependencyService ) );
+    const testInstance = new MultiStoreAware( new CalculatorService(  ), new CalculatorService(  ) );
     expect( testInstance.state1 ).toEqual( undefined );
     expect( testInstance.state2 ).toEqual( undefined );
 
@@ -95,13 +95,13 @@ describe( 'StoreAware decorator', () => {
   } );
 
   it( 'should throw when multiple Stores try to use the same param to store their state', () => {
-    const testInstance = new BrokenMultiStoreAware( new CalculatorService( mockStoreDependencyService ), new CalculatorService( mockStoreDependencyService ) );
+    const testInstance = new BrokenMultiStoreAware( new CalculatorService(  ), new CalculatorService(  ) );
     expect( testInstance.state ).toEqual( undefined );
     expect( testInstance.ngOnInit ).toThrow();
   } );
 
   it( 'should update the state in the component when the state in the store has been updated', () => {
-    const service = new CalculatorService( mockStoreDependencyService );
+    const service = new CalculatorService(  );
     const testInstance = new SimpleStoreAware( service );
     expect( testInstance.state ).toEqual( undefined );
     testInstance.ngOnInit();
@@ -111,7 +111,7 @@ describe( 'StoreAware decorator', () => {
   } );
 
   it( 'should update the state in all components when the state in the store has been updated', () => {
-    const service = new CalculatorService( mockStoreDependencyService );
+    const service = new CalculatorService(  );
     const testInstance1 = new SimpleStoreAware( service );
     const testInstance2 = new SimpleStoreAware( service );
     spyOn( testInstance2, 'ngOnChanges' );
@@ -132,7 +132,7 @@ describe( 'StoreAware decorator', () => {
   } );
 
   it( 'should not trigger an update if a different slice of state has been updated', () => {
-    const service = new CalculatorService( mockStoreDependencyService );
+    const service = new CalculatorService(  );
     const testInstance1 = new SimpleStoreAware( service );
     spyOn( testInstance1, 'ngOnChanges' );
     testInstance1.ngOnInit();
@@ -140,7 +140,7 @@ describe( 'StoreAware decorator', () => {
     // @ts-ignore
     expect( testInstance1.ngOnChanges.calls.count() ).toEqual( 1 );
 
-    //trigger change in other slice of state,
+    // trigger change in other slice of state,
     GlobalStateService.setSliceOfState( '__TEST__1', {} );
     GlobalStateService.setSliceOfState( '__TEST__2', {} );
     GlobalStateService.setSliceOfState( '__TEST__3', {} );
@@ -150,10 +150,10 @@ describe( 'StoreAware decorator', () => {
   } );
 
   it( 'When enabling forceDetectChanges without cdr it should throw an error', () => {
-    const service = new CalculatorService( mockStoreDependencyService );
+    const service = new CalculatorService(  );
     const testInstance1 = new ForceDetectWithoutCDR( service );
     expect( testInstance1.ngOnInit ).toThrow();
 
-  } )
+  } );
 
 } );

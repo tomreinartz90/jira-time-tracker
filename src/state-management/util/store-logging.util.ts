@@ -24,7 +24,7 @@ export class StoreLoggingUtil {
   static log(type: LogType, subject: string, details: Array<{ subject: string, log: any }>, open: boolean = true, close: boolean = true) {
     let groupStart = (open) ? 'group' : 'info';
     groupStart += (close && open) ? 'Collapsed' : '';
-    //@ts-ignore
+    // @ts-ignore
     console[groupStart]( `%c${type}` + `%c${subject}`, StoreLoggingUtil.styles( type ), 'color: #4b535a' );
 
     console.groupCollapsed('trace');
@@ -52,6 +52,6 @@ export class StoreLoggingUtil {
       font-weight: 200;
       padding: .05rem .5rem .1rem;
       margin-right: .5rem;
-      line-height: inherit;`
+      line-height: inherit;`;
   }
 }

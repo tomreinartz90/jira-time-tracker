@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { JiraService } from "../../../providers/jira.service";
+import { JiraService } from '../../../providers/jira.service';
 import { Subject } from 'rxjs';
 import { debounceTime, mergeMap } from 'rxjs/operators';
 
@@ -18,7 +18,7 @@ export class IssuesBySearchComponent implements OnInit {
 
   onSearch = new Subject();
 
-  loading: boolean = true;
+  loading = true;
 
   constructor( private jiraService: JiraService ) {
   }
@@ -43,7 +43,7 @@ export class IssuesBySearchComponent implements OnInit {
         } else {
           search.push( `text ~ '${ this.searchQuery }'` );
         }
-        return this.jiraService.getIssuesByJql( search.join( ' or ' ) )
+        return this.jiraService.getIssuesByJql( search.join( ' or ' ) );
       } ),
     ).subscribe( issues => {
       this.issues = issues.issues;

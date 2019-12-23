@@ -20,7 +20,7 @@ export class UserInfoBarComponent implements OnInit {
 
   get avatar() {
     if ( this.employee ) {
-      return this.employee.avatarUrls[ '48x48' ]
+      return this.employee.avatarUrls[ '48x48' ];
     }
   }
 

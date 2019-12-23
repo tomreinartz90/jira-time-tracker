@@ -1,9 +1,9 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { JiraService } from '../../../providers/jira.service';
 import * as ms from 'ms';
-import { IssueI } from "../../../domain/jira/issue.model";
-import { FilterModel } from "../../../domain/jira/filter.model";
-import { JiraTimeTrackerActions } from "../../../store/jira-time-tracker.actions";
+import { IssueI } from '../../../domain/jira/issue.model';
+import { FilterModel } from '../../../domain/jira/filter.model';
+import { JiraTimeTrackerActions } from '../../../store/jira-time-tracker.actions';
 
 @Component( {
   selector: 'app-worklog-form',
@@ -21,7 +21,7 @@ export class WorklogFormComponent implements OnInit {
   filters: Array<FilterModel> = [];
   filterId: string = null;
   searchQuery: string;
-  private loading: boolean = false;
+  private loading = false;
 
 
   set time( value: string ) {
@@ -33,7 +33,7 @@ export class WorklogFormComponent implements OnInit {
       this._time = parseInt( ms( value ) ) / 1000;
     } catch ( e ) {
       this._time = 0;
-      console.error( `could not update time with ${ value }` )
+      console.error( `could not update time with ${ value }` );
     }
   }
 

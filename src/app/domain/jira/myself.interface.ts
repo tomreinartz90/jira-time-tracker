@@ -1,8 +1,8 @@
 export interface AvatarUrlsI {
-  "48x48": string;
-  "24x24": string;
-  "16x16": string;
-  "32x32": string;
+  '48x48': string;
+  '24x24': string;
+  '16x16': string;
+  '32x32': string;
 }
 
 export interface ItemI {
@@ -31,7 +31,7 @@ export interface MyselfI {
   groups: GroupsI;
   applicationRoles: ApplicationRolesI;
   expand: string;
-  key:string;
+  key: string;
 }
 
 

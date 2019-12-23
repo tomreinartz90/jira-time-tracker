@@ -1,8 +1,8 @@
 import { Observable, of as observableOf } from 'rxjs';
 
 import { mergeMap, tap } from 'rxjs/operators';
-import { EffectStatus } from "../models/effect-status.model";
-import { ActionUtil } from "./action.util";
+import { EffectStatus } from '../models/effect-status.model';
+import { ActionUtil } from './action.util';
 
 export class EffectUtil {
   static withStatus<S>( obs$: () => Observable<S>, setStatus: ( status: EffectStatus ) => void ) {
@@ -10,12 +10,12 @@ export class EffectUtil {
       () => setStatus( EffectStatus.DONE ),
       () => setStatus( EffectStatus.ERROR ),
       () => setStatus( EffectStatus.PENDING )
-    )
+    );
   }
 
   static withActions<S>( obs$: () => Observable<S>, onCompleteSuccess: ( lastPayload: S ) => void, onError: ( error: any ) => void, onStart?: () => void ): Observable<S> {
     let lastPayload: S = null;
-    let emittedSuccessFully: boolean = false;
+    let emittedSuccessFully = false;
     return observableOf( null ).pipe(
       tap( () => onStart && onStart() ),
       mergeMap( obs$ ),
@@ -27,11 +27,11 @@ export class EffectUtil {
         ( error ) => {
           emittedSuccessFully = false;
           if ( onError ) {
-            onError( error )
+            onError( error );
           }
         },
         () => emittedSuccessFully && onCompleteSuccess( lastPayload )
-      ), )
+      ), );
   }
 
   static withActionHandlers<S>( obs$: () => Observable<S>, actionHandlers: ReturnType<typeof ActionUtil.createActionWithSuccessAndFailure> ) {
@@ -41,7 +41,7 @@ export class EffectUtil {
           actionHandlers.error,
         ),
       actionHandlers.setStatus
-    )
+    );
   }
 }
 

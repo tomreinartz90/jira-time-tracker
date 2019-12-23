@@ -1,4 +1,4 @@
-import { SelectorUtil } from "./selector.util";
+import { SelectorUtil } from './selector.util';
 
 describe( 'Selector Util', () => {
   it( 'should be possible to generate a unique string for a object', () => {

@@ -1,13 +1,13 @@
-import { CalculatorService } from "./calculator.service";
-import { CalculatorComponent } from "./calculator.component";
-import { mockStoreDependencyService } from "../store-dependency.service";
+import { CalculatorService } from './calculator.service';
+import { CalculatorComponent } from './calculator.component';
+import { mockStoreDependencyService } from '../store-dependency.service';
 
 
 describe( 'Calculator component', () => {
   let service: CalculatorService;
   let component: CalculatorComponent;
   beforeEach( function () {
-    service = new CalculatorService( mockStoreDependencyService );
+    service = new CalculatorService( );
     component = new CalculatorComponent( service );
   } );
 
@@ -24,7 +24,7 @@ describe( 'Calculator component', () => {
     setTimeout( () => {
       expect( component.state ).toEqual( { currentValue: 0 } );
       done();
-    } )
+    } );
   } );
 
-} )
+} );

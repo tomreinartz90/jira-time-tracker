@@ -1,6 +1,6 @@
 import { Component, HostBinding, HostListener, Input, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { WorklogEntryDetailsComponent } from "../worklog-entry-details/worklog-entry-details.component";
+import { WorklogEntryDetailsComponent } from '../worklog-entry-details/worklog-entry-details.component';
 
 @Component( {
   selector: 'app-worklog-entry',
@@ -24,7 +24,7 @@ export class WorklogEntryComponent implements OnInit {
 
   @HostListener( 'click' )
   onClick() {
-    this.dialog.open( WorklogEntryDetailsComponent, { width: '100%', data: this.worklog, position: { left: '20px' } } )
+    this.dialog.open( WorklogEntryDetailsComponent, { width: '100%', data: this.worklog, position: { left: '20px' } } );
   }
 
 

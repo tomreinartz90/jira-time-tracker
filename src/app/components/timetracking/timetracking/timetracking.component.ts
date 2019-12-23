@@ -1,8 +1,8 @@
 import { Component, HostBinding } from '@angular/core';
-import { JiraTimeTrackerActions } from "../../../store/jira-time-tracker.actions";
-import { JiraTimeTrackerSelectors } from "../../../store/jira-time-tracker.selectors";
-import { JiraTimeTrackerState, JiraTimeTrackerStore } from "../../../store/jira-time-tracker.store";
-import { StoreAware, StoreAwareComponent } from "../../../../state-management";
+import { JiraTimeTrackerActions } from '../../../store/jira-time-tracker.actions';
+import { JiraTimeTrackerSelectors } from '../../../store/jira-time-tracker.selectors';
+import { JiraTimeTrackerState, JiraTimeTrackerStore } from '../../../store/jira-time-tracker.store';
+import { StoreAware, StoreAwareComponent } from '../../../../state-management';
 
 @Component( {
   selector: 'app-timetracking',
@@ -14,7 +14,7 @@ export class TimetrackingComponent extends StoreAwareComponent {
   loading: boolean;
 
   @HostBinding( 'class.active' )
-  active: boolean = true;
+  active = true;
 
   state: JiraTimeTrackerState;
 
@@ -35,7 +35,7 @@ export class TimetrackingComponent extends StoreAwareComponent {
   }
 
   get showWorkLogForm() {
-    return this.state.addWorkingHours
+    return this.state.addWorkingHours;
   }
 
   get activeDate() {

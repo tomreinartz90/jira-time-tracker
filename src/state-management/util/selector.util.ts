@@ -1,6 +1,6 @@
 export class SelectorUtil {
   static uniqueObjectString( objectArray: Array<any>, identifiers: Array<string> ): string {
-    if( !objectArray ) {
+    if ( !objectArray ) {
       return '';
     }
 

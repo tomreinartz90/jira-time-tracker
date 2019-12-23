@@ -1,13 +1,13 @@
 import { filter } from 'rxjs/operators';
-import { Observable, race, Subject } from "rxjs";
-import { LogType, StoreLoggingUtil } from "./util/store-logging.util";
+import { Observable, race, Subject } from 'rxjs';
+import { LogType, StoreLoggingUtil } from './util/store-logging.util';
 
 export type ActionTypeWithPayload = Readonly<{ type: string, payload?: any }>;
 
 export class ActionService {
 
   private static actionDispatcher = new Subject<ActionTypeWithPayload>();
-  private static debugMode: boolean = false;
+  private static debugMode = false;
 
   public static get debugEnabled() {
     return ActionService.debugMode;
@@ -22,7 +22,7 @@ export class ActionService {
   }
 
   static onActions$() {
-    return ActionService.actionDispatcher.asObservable()
+    return ActionService.actionDispatcher.asObservable();
   }
 
   static pushAction( type: string, payload: any ) {
@@ -40,7 +40,7 @@ export class ActionService {
       throw new Error( 'type is required when calling onAction' );
     }
     return ActionService.onActions$().pipe(
-      filter( ActionService.whenAction( type ) ) )
+      filter( ActionService.whenAction( type ) ) );
   }
 
   static whenAction( type: string ) {
@@ -48,7 +48,7 @@ export class ActionService {
   }
 
   static onFirstAction$( ...types: Array<Function> ) {
-    return race( ...types.map( type => ActionService.onAction( type ? ( type as any ).ACTION_TYPE : null ) ) )
+    return race( ...types.map( type => ActionService.onAction( type ? ( type as any ).ACTION_TYPE : null ) ) );
   }
 
   static __UNSAFE__resetActionDispatcher() {

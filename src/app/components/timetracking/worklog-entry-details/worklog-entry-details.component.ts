@@ -1,9 +1,9 @@
 import { Component, Inject } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
-import { WorkLogModel } from "../../../domain/jira/work-log.model";
-import { IssueI } from "../../../domain/jira/issue.model";
-import { JiraService } from "../../../providers/jira.service";
-import { JiraTimeTrackerActions } from "../../../store/jira-time-tracker.actions";
+import { WorkLogModel } from '../../../domain/jira/work-log.model';
+import { IssueI } from '../../../domain/jira/issue.model';
+import { JiraService } from '../../../providers/jira.service';
+import { JiraTimeTrackerActions } from '../../../store/jira-time-tracker.actions';
 
 @Component( {
   selector: 'app-worklog-entry-details',
@@ -27,7 +27,7 @@ export class WorklogEntryDetailsComponent {
         JiraTimeTrackerActions.refreshIssues();
         this.onNoClick();
       }
-    )
+    );
   }
 
 }

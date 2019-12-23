@@ -1,7 +1,7 @@
-import {CalculatorState} from "./calculator.service";
+import {CalculatorState} from './calculator.service';
 
 export class CalculatorSelectors {
   static currentValue(state: CalculatorState) {
-    return state.currentValue
+    return state.currentValue;
   }
 }

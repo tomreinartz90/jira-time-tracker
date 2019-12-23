@@ -47,7 +47,7 @@ import { MinutesToMsPipe } from './components/base/minutes-to-ms.pipe';
 import { WorklogEntryComponent } from './components/timetracking/worklog-entry/worklog-entry.component';
 import { WorklogFormComponent } from './components/timetracking/worklog-form/worklog-form.component';
 import { IssuesByFilterComponent } from './components/timetracking/issues-by-filter/issues-by-filter.component';
-import { JiraTimeTrackerStore } from "./store/jira-time-tracker.store";
+import { JiraTimeTrackerStore } from './store/jira-time-tracker.store';
 import { IssuesBySearchComponent } from './components/timetracking/issues-by-search/issues-by-search.component';
 import { WorklogEntryDetailsComponent } from './components/timetracking/worklog-entry-details/worklog-entry-details.component';
 

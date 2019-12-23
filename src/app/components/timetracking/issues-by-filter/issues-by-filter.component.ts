@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges } from '@angular/core';
-import { JiraService } from "../../../providers/jira.service";
-import { IssueI } from "../../../domain/jira/issue.model";
+import { JiraService } from '../../../providers/jira.service';
+import { IssueI } from '../../../domain/jira/issue.model';
 
 @Component( {
   selector: 'app-issues-by-filter',
@@ -16,7 +16,7 @@ export class IssuesByFilterComponent implements OnChanges {
   issueSelect: EventEmitter<IssueI> = new EventEmitter<IssueI>();
 
   issues: Array<any> = [];
-  loading: boolean = false;
+  loading = false;
 
   constructor( private jira: JiraService ) {
   }
@@ -38,7 +38,7 @@ export class IssuesByFilterComponent implements OnChanges {
         this.issues = resp.issues;
       },
       () => null,
-      () => this.loading = false )
+      () => this.loading = false );
   }
 
 }

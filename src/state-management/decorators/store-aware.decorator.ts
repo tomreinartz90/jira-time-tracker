@@ -4,14 +4,14 @@
  *
  * @author W. Hollebrandse (w.hollebrandse@maxxton.com)
  */
-import { Subscription } from "rxjs";
-import { StoreService } from "../store.service";
-import { ChangeDetectorRef, OnDestroy, OnInit, SimpleChange } from "@angular/core";
+import { Subscription } from 'rxjs';
+import { StoreService } from '../store.service';
+import { ChangeDetectorRef, OnDestroy, OnInit, SimpleChange } from '@angular/core';
 
 export interface StoreAwareOptions {
-  storeKey?: string,
-  stateKey?: string | 'state',
-  forceDetectChanges?: boolean
+  storeKey?: string;
+  stateKey?: string | 'state';
+  forceDetectChanges?: boolean;
 }
 
 export class StoreAwareComponent implements OnDestroy, OnInit {
@@ -26,12 +26,12 @@ export function StoreAware( { stateKey = 'state', storeKey, forceDetectChanges =
 
   return ( constructor: Function ) => {
 
-    let originalNgOnDestroy: () => void = constructor.prototype.ngOnDestroy;
-    let originalNgOnOnit: () => void = constructor.prototype.ngOnInit;
+    const originalNgOnDestroy: () => void = constructor.prototype.ngOnDestroy;
+    const originalNgOnOnit: () => void = constructor.prototype.ngOnInit;
     let stateSubscription: Subscription = null;
 
     if ( !originalNgOnDestroy || !originalNgOnOnit ) {
-      throw new Error( 'When using @StoreAware ngOnInit and ngOnDestroy must be implemented. (can also be an empty function)' )
+      throw new Error( 'When using @StoreAware ngOnInit and ngOnDestroy must be implemented. (can also be an empty function)' );
     }
 
 
@@ -40,7 +40,7 @@ export function StoreAware( { stateKey = 'state', storeKey, forceDetectChanges =
       const store: StoreService<any> = storeKey ? this[ storeKey ] : this[ params.find( param => this[ param ] instanceof StoreService ) ];
       const cdr: ChangeDetectorRef = this[ params.find( param => this[ param ] && this[ param ][ 'detectChanges' ] && this[ param ][ '_view' ] ) ];
       const initialState = this[ stateKey ];
-      let firstChange: boolean = true;
+      let firstChange = true;
 
       if ( initialState != null ) {
         throw new Error( `Trying to set StoreAware state on a non empty property: ${ this.constructor.name }.${ stateKey } ` );
@@ -50,39 +50,39 @@ export function StoreAware( { stateKey = 'state', storeKey, forceDetectChanges =
         const previousValue = this[ stateKey ];
         this[ stateKey ] = state;
 
-        //trigger angular lifecycle hook to trigger functions when state has been updated.
+        // trigger angular lifecycle hook to trigger functions when state has been updated.
         if ( this.ngOnChanges ) {
           this.ngOnChanges( { [ stateKey ]: new SimpleChange( previousValue, state, firstChange ) } );
         }
 
         if ( cdr && forceDetectChanges ) {
-          cdr.detectChanges(  )
+          cdr.detectChanges(  );
         } else if ( forceDetectChanges ) {
-          throw new Error( `Could not detect changes as not ChangeDetectorRef is found on ${ this.constructor.name }` )
+          throw new Error( `Could not detect changes as not ChangeDetectorRef is found on ${ this.constructor.name }` );
         }
 
         firstChange = false;
       };
 
       if ( store ) {
-        //track state changes.
+        // track state changes.
         stateSubscription = store.state$().subscribe( state => {
           updateState( state );
-        } )
+        } );
       } else {
-        throw new Error( `Cannot make ${ this.constructor.name } StoreAware as it does not have an injected store. Did you forget to inject a store in the constructor?` )
+        throw new Error( `Cannot make ${ this.constructor.name } StoreAware as it does not have an injected store. Did you forget to inject a store in the constructor?` );
       }
 
       originalNgOnOnit.apply( this, arguments ); // tslint:disable-line
     };
 
     constructor.prototype.ngOnDestroy = function (): void {
-      //call the original ngOnDestroy logic.
+      // call the original ngOnDestroy logic.
       originalNgOnDestroy.apply( this, arguments ); // tslint:disable-line
       if ( stateSubscription ) {
         stateSubscription.unsubscribe();
         stateSubscription = null;
       }
-    }
-  }
+    };
+  };
 }

@@ -1,10 +1,10 @@
 import { distinctUntilChanged, map } from 'rxjs/operators';
-import { BehaviorSubject, Observable } from "rxjs";
+import { BehaviorSubject, Observable } from 'rxjs';
 
 export class GlobalStateService {
   private static globalState: { [ key: string ]: any } = {};
   private static readonly globalStateChanges = new BehaviorSubject<any>( GlobalStateService.globalState );
-  private static debugMode: boolean = false;
+  private static debugMode = false;
 
   static enableDebugInfo() {
     GlobalStateService.debugMode = true;
@@ -54,7 +54,7 @@ export class GlobalStateService {
     return GlobalStateService.globalState$().pipe(
       map( () => this.getSliceSnapshot( slice ) ),
       distinctUntilChanged(),
-    )
+    );
   }
 
   /**

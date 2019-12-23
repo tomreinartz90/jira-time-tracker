@@ -1,7 +1,7 @@
-import { ActionService } from "../action.service";
-import { EffectStatus } from "..";
+import { ActionService } from '../action.service';
+import { EffectStatus } from '..';
 
-let actionInstanceNum: number = 0;
+let actionInstanceNum = 0;
 
 export class ActionUtil {
 
@@ -14,7 +14,7 @@ export class ActionUtil {
       success: ActionUtil.createAction<SUCCESS>( `${ actionType }/success` ),
       error: ActionUtil.createAction<{ error?: string } & START>( `${ actionType }/error` ),
       setStatus: ActionUtil.createAction<EffectStatus>( `${ actionType }/setStatus` )
-    }
+    };
   }
 
   static withCRUD<MODEL>( baseActionType: string ) {
@@ -23,7 +23,7 @@ export class ActionUtil {
       create: ActionUtil.createActionWithSuccessAndFailure<MODEL, MODEL>( `${ baseActionType }/create` ),
       delete: ActionUtil.createActionWithSuccessAndFailure<MODEL, MODEL>( `${ baseActionType }/delete` ),
       read: ActionUtil.createActionWithSuccessAndFailure<number, MODEL>( `${ baseActionType }/read` ),
-    }
+    };
   }
 
   static createAction<T>( type: string ) {

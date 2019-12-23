@@ -3,7 +3,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 
 export class ConfigurationModel {
 
-  flashTaskbarOnUnloggedMinutes: number = 60;
+  flashTaskbarOnUnloggedMinutes = 60;
 
   constructor( config?: any ) {
     if ( config ) {

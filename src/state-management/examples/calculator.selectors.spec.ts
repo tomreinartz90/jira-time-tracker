@@ -1,4 +1,4 @@
-import { CalculatorSelectors } from "./calculator.selectors";
+import { CalculatorSelectors } from './calculator.selectors';
 
 describe( 'Calculator Selectors', () => {
   it( 'currentValue Should return the currentValue of the state', () => {
@@ -7,4 +7,4 @@ describe( 'Calculator Selectors', () => {
     expect( CalculatorSelectors.currentValue( { currentValue: 1012 } ) ).toEqual( 1012 );
   } );
 
-} )
+} );

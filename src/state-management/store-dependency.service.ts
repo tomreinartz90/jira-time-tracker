@@ -1,4 +1,4 @@
-import { NgZone, Injectable } from "@angular/core";
+import { NgZone, Injectable } from '@angular/core';
 
 @Injectable()
 export class StoreDependencyService {

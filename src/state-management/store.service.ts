@@ -1,13 +1,13 @@
 import { catchError, tap, } from 'rxjs/operators';
-import { empty, Observable, of, Subscription } from "rxjs";
-import { ActionService } from "./action.service";
-import { GlobalStateService } from "./global-state.service";
-import { LogType, StoreLoggingUtil } from "./util/store-logging.util";
-import { StoreDependencyService } from "./store-dependency.service";
+import { empty, Observable, of, Subscription } from 'rxjs';
+import { ActionService } from './action.service';
+import { GlobalStateService } from './global-state.service';
+import { LogType, StoreLoggingUtil } from './util/store-logging.util';
+import { StoreDependencyService } from './store-dependency.service';
 
 export class StoreService<S extends object> {
 
-  //gets injected by decorator
+  // gets injected by decorator
   public actionHandlers: { [ key: string ]: any };
   public effectHandlers: { [ key: string ]: Array<any> };
   public actionHandlerSub: Subscription;
@@ -29,7 +29,7 @@ export class StoreService<S extends object> {
     if ( !this._storeId ) {
       const name = this.constructor.name;
 
-      //when multiple instances of the same store service are running it will add an instanceId to the slice of state
+      // when multiple instances of the same store service are running it will add an instanceId to the slice of state
       if ( GlobalStateService.getSliceSnapshot( name ) ) {
         const newStoreName = `${ name }-instance-${ Date.now() }`;
         console.info( `${ name } is already defined in the global state and will be created as ${ newStoreName }` );
@@ -53,15 +53,15 @@ export class StoreService<S extends object> {
    * get a stream of state updates (used to show information in a component)
    */
   state$ = () => {
-    return GlobalStateService.sliceOfState$( this.storeId ) as Observable<Readonly<S>>
-  };
+    return GlobalStateService.sliceOfState$( this.storeId ) as Observable<Readonly<S>>;
+  }
 
   /**
    * get the current state as an Observable (this can be used in effects);
    */
   stateSnapshot$ = () => {
-    return of( this.snapshot ) as Observable<S>
-  };
+    return of( this.snapshot ) as Observable<S>;
+  }
 
 
   /**
@@ -80,7 +80,7 @@ export class StoreService<S extends object> {
   setupActionHandlers() {
     this.actionHandlerSub = ActionService.onActions$().subscribe( action => {
 
-      //handle direct state manipulation
+      // handle direct state manipulation
       if ( action && this.actionHandlers && this.actionHandlers[ action.type.toString() ] ) {
         const result: Partial<S> = ( this as any )[ this.actionHandlers[ action.type.toString() ] ]( action.payload, this.snapshot );
 
@@ -95,7 +95,7 @@ export class StoreService<S extends object> {
         this.setState( result );
       }
 
-      //handle sideEffects
+      // handle sideEffects
       if ( action && this.effectHandlers && this.effectHandlers[ action.type.toString() ] ) {
         const snapShot = { ...( this.snapshot as any ) };
         this.effectHandlers[ action.type.toString() ].forEach( effectMethodKey => {
@@ -120,7 +120,7 @@ export class StoreService<S extends object> {
               } ),
               catchError( ( error ) => {
                 console.error( `There was an error during execution of effect ${ this.constructor.name }.${ effectMethodKey }`, error );
-                return empty()
+                return empty();
               } ) ).subscribe() );
           }
 
@@ -130,8 +130,8 @@ export class StoreService<S extends object> {
               { subject: 'payload', log: action.payload },
             ], false, true );
           }
-        } )
+        } );
       }
-    } )
+    } );
   }
 }

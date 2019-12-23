@@ -5,10 +5,10 @@ import { combineLatest, NEVER, Observable } from 'rxjs';
 import { Router } from '@angular/router';
 import { MyselfI } from '../domain/jira/myself.interface';
 import * as moment from 'moment';
-import { WorkLogModel } from "../domain/jira/work-log.model";
-import { IssueSearchResultModel } from "../domain/jira/issue-search-result.model";
-import { FilterModel } from "../domain/jira/filter.model";
-import { IssueI } from "../domain/jira/issue.model";
+import { WorkLogModel } from '../domain/jira/work-log.model';
+import { IssueSearchResultModel } from '../domain/jira/issue-search-result.model';
+import { FilterModel } from '../domain/jira/filter.model';
+import { IssueI } from '../domain/jira/issue.model';
 
 interface AuthData {
   authentication: string;
@@ -42,7 +42,7 @@ export class JiraService {
   }
 
   login( domain, username: string, password: string ) {
-    let authentication = this.createUsernamePasswordHash( `${ username }:${ password }` );
+    const authentication = this.createUsernamePasswordHash( `${ username }:${ password }` );
     return this.http.get( `${ domain }/rest/api/2/search?jql=key = MXT-1440`, {
       headers: this.authHeaders( authentication )
     } )
@@ -103,7 +103,7 @@ export class JiraService {
   }
 
   removeWorkLog( issue: string, log: WorkLogModel ) {
-    return this.delete( `issue/${ issue }/worklog/${ log.id }?adjustEstimate=auto` )
+    return this.delete( `issue/${ issue }/worklog/${ log.id }?adjustEstimate=auto` );
   }
 
 
@@ -124,7 +124,7 @@ export class JiraService {
   }
 
   getFavoriteFilters() {
-    return this.get<Array<FilterModel>>( `filter/favourite` )
+    return this.get<Array<FilterModel>>( `filter/favourite` );
   }
 
   getIssueWorkLog( issueId: string, date: Date ) {

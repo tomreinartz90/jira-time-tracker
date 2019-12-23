@@ -1,15 +1,15 @@
-import { ActionUtil, Effect, Reducer, StoreService } from "../../state-management";
-import { IssueI } from "../domain/jira/issue.model";
-import { WorkLogModel } from "../domain/jira/work-log.model";
-import { JiraService } from "../providers/jira.service";
-import { takeUntil, tap } from "rxjs/operators";
-import { JiraTimeTrackerActions } from "./jira-time-tracker.actions";
-import { Inject } from "@angular/core";
+import { ActionUtil, Effect, Reducer, StoreService } from '../../state-management';
+import { IssueI } from '../domain/jira/issue.model';
+import { WorkLogModel } from '../domain/jira/work-log.model';
+import { JiraService } from '../providers/jira.service';
+import { takeUntil, tap } from 'rxjs/operators';
+import { JiraTimeTrackerActions } from './jira-time-tracker.actions';
+import { Inject } from '@angular/core';
 
 export interface JiraTimeTrackerState {
-  issues: { issueKey: string, issue: IssueI, logs: WorkLogModel[], totalTimeSpendSeconds: number }[],
-  activeDate: Date,
-  loadingIssues: boolean,
+  issues: { issueKey: string, issue: IssueI, logs: WorkLogModel[], totalTimeSpendSeconds: number }[];
+  activeDate: Date;
+  loadingIssues: boolean;
   addWorkingHours: boolean;
 }
 
@@ -34,7 +34,7 @@ export class JiraTimeTrackerStore extends StoreService<JiraTimeTrackerState> {
       activeDate,
       issues: [],
       loadingIssues: true
-    }
+    };
   }
 
   @Reducer( JiraTimeTrackerActions.updateIssues )
@@ -43,7 +43,7 @@ export class JiraTimeTrackerStore extends StoreService<JiraTimeTrackerState> {
       ...state,
       issues,
       loadingIssues: false,
-    }
+    };
   }
 
   @Reducer( JiraTimeTrackerActions.addWorkingHours )
@@ -51,7 +51,7 @@ export class JiraTimeTrackerStore extends StoreService<JiraTimeTrackerState> {
     return {
       ...state,
       addWorkingHours
-    }
+    };
   }
 
 
@@ -65,6 +65,6 @@ export class JiraTimeTrackerStore extends StoreService<JiraTimeTrackerState> {
           JiraTimeTrackerActions.changeDate
         ) ),
         tap( ( issues ) => JiraTimeTrackerActions.updateIssues( issues ) )
-      )
+      );
   }
 }

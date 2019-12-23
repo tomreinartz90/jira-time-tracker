@@ -1,4 +1,4 @@
-import { Action } from "../decorators/action.decorator";
+import { Action } from '../decorators/action.decorator';
 
 export class CalculatorActions {
   @Action()

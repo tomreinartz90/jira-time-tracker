@@ -1,11 +1,11 @@
-import { StoreAware } from "../decorators/store-aware.decorator";
-import { CalculatorService, CalculatorState } from "./calculator.service";
+import { StoreAware } from '../decorators/store-aware.decorator';
+import { CalculatorService, CalculatorState } from './calculator.service';
 
 @StoreAware()
 export class CalculatorComponent {
-  state:CalculatorState;
+  state: CalculatorState;
 
-  constructor(private calculator:CalculatorService) {
+  constructor(private calculator: CalculatorService) {
   }
 
   ngOnInit() {

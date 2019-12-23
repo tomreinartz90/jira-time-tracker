@@ -1,5 +1,5 @@
-import { ActionUtil } from "../util/action.util";
-import { Effect } from "./effect.decorator";
+import { ActionUtil } from '../util/action.util';
+import { Effect } from './effect.decorator';
 
 describe( 'Effect decorator', () => {
   const action: any = ActionUtil.createAction( 'TEST__REDUCER__ACTION' );
@@ -12,7 +12,7 @@ describe( 'Effect decorator', () => {
     }
 
     const testClass: any = new TestClass();
-    expect( testClass.effectHandlers ).toEqual( { [ action.ACTION_TYPE ]: [ 'testFn' ] } )
+    expect( testClass.effectHandlers ).toEqual( { [ action.ACTION_TYPE ]: [ 'testFn' ] } );
   } );
 
   it( 'Should be able to handle the same action in multiple Effects', () => {
@@ -32,7 +32,7 @@ describe( 'Effect decorator', () => {
 
     const testClass: any = create();
     expect( create ).not.toThrow();
-    expect( testClass.effectHandlers ).toEqual( { [ action.ACTION_TYPE ]: [ 'testFn', 'testFn2' ] } )
+    expect( testClass.effectHandlers ).toEqual( { [ action.ACTION_TYPE ]: [ 'testFn', 'testFn2' ] } );
 
-  } )
-} )
+  } );
+} );

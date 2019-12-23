@@ -1,9 +1,9 @@
 import { interval as observableInterval, of as observableOf } from 'rxjs';
 
 import { mergeMap, takeWhile, tap } from 'rxjs/operators';
-import { StoreService } from "../store.service";
-import { CalculatorActions } from "./calculator.actions";
-import { Effect, Reducer } from "../index";
+import { StoreService } from '../store.service';
+import { CalculatorActions } from './calculator.actions';
+import { Effect, Reducer } from '../index';
 
 export interface CalculatorState {
   currentValue: number;
@@ -11,19 +11,19 @@ export interface CalculatorState {
 
 export class CalculatorService extends StoreService<CalculatorState> {
   constructor( initialValue: number = 0 ) {
-    super( { currentValue: initialValue }, 'calculator-store' )
+    super( { currentValue: initialValue }, 'calculator-store' );
   }
 
   @Reducer( CalculatorActions.add )
   onAdd( { amount = 1 } = {}, state: CalculatorState ) {
     const { currentValue } = state;
-    return { currentValue: currentValue + amount }
+    return { currentValue: currentValue + amount };
   }
 
   @Reducer( CalculatorActions.remove )
   onRemove( { amount = 1 } = {}, state: CalculatorState ) {
     const { currentValue } = state;
-    return { currentValue: currentValue - amount }
+    return { currentValue: currentValue - amount };
   }
 
   @Effect( CalculatorActions.addRemaining )
@@ -34,7 +34,7 @@ export class CalculatorService extends StoreService<CalculatorState> {
       ),
       tap( () =>
         CalculatorActions.add( { amount: 36 } )
-      ), )
+      ), );
   }
 
   @Effect( CalculatorActions.addUntil )
@@ -43,10 +43,10 @@ export class CalculatorService extends StoreService<CalculatorState> {
     return interval$.pipe(
       mergeMap( this.stateSnapshot$ ),
       takeWhile( state => {
-        return state.currentValue < untilAmount
+        return state.currentValue < untilAmount;
       } ),
       tap( () =>
         CalculatorActions.add( { amount: 1 } )
-      ), )
+      ), );
   }
 }
