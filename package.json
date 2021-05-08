@@ -51,7 +51,7 @@
     "md5": "^2.2.1",
     "moment": "^2.24.0",
     "ms": "^2.1.1",
-    "ng-packagr": "^5.7.0",
+    "ng-packagr": "^10.1.1",
     "semver-bump": "^1.0.0"
   },
   "devDependencies": {
