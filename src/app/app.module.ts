@@ -21,23 +21,21 @@ import { TimetrackingComponent } from './components/timetracking/timetracking/ti
 import { WeekdayselectorComponent } from './components/timetracking/weekdayselector/weekdayselector.component';
 import { UserInfoBarComponent } from './components/user/user-info-bar/user-info-bar.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import {
-  MatAutocompleteModule,
-  MatBottomSheetModule,
-  MatButtonModule,
-  MatCardModule,
-  MatDatepickerModule,
-  MatIconModule,
-  MatInputModule,
-  MatListModule,
-  MatNativeDateModule,
-  MatProgressBarModule,
-  MatProgressSpinnerModule,
-  MatSelectModule,
-  MatSlideToggleModule,
-  MatToolbarModule,
-  MatTooltipModule
-} from '@angular/material';
+import { MatAutocompleteModule } from '@angular/material/autocomplete';
+import { MatBottomSheetModule } from '@angular/material/bottom-sheet';
+import { MatButtonModule } from '@angular/material/button';
+import { MatCardModule } from '@angular/material/card';
+import { MatNativeDateModule } from '@angular/material/core';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatIconModule } from '@angular/material/icon';
+import { MatInputModule } from '@angular/material/input';
+import { MatListModule } from '@angular/material/list';
+import { MatProgressBarModule } from '@angular/material/progress-bar';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { MatSelectModule } from '@angular/material/select';
+import { MatSlideToggleModule } from '@angular/material/slide-toggle';
+import { MatToolbarModule } from '@angular/material/toolbar';
+import { MatTooltipModule } from '@angular/material/tooltip';
 import { LoginComponent } from './components/login/login/login.component';
 import { MsToTimePipe } from './components/base/ms-to-time.pipe';
 import { HoursToMsPipe } from './components/base/hours-to-ms.pipe';
