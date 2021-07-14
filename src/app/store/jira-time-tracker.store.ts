@@ -4,7 +4,7 @@ import { WorkLogModel } from '../domain/jira/work-log.model';
 import { JiraService } from '../providers/jira.service';
 import { takeUntil, tap } from 'rxjs/operators';
 import { JiraTimeTrackerActions } from './jira-time-tracker.actions';
-import { Inject } from '@angular/core';
+import { Inject, Injectable } from '@angular/core';
 
 export interface JiraTimeTrackerState {
   issues: { issueKey: string, issue: IssueI, logs: WorkLogModel[], totalTimeSpendSeconds: number }[];
@@ -13,7 +13,7 @@ export interface JiraTimeTrackerState {
   addWorkingHours: boolean;
 }
 
-@Inject( '' )
+@Injectable()
 export class JiraTimeTrackerStore extends StoreService<JiraTimeTrackerState> {
 
   static initialState: JiraTimeTrackerState = {
