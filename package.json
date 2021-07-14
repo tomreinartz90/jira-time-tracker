@@ -43,8 +43,8 @@
   "dependencies": {
     "@angular-devkit/build-ng-packagr": "~0.901.15",
     "@angular/animations": "^9.1.13",
-    "@angular/cdk": "^8.2.3",
-    "@angular/material": "^8.2.3",
+    "@angular/cdk": "^9.2.4",
+    "@angular/material": "^9.2.4",
     "color-hash": "^1.0.3",
     "electron-updater": "4.0.5",
     "lodash": "latest",
