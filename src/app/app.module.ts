@@ -48,6 +48,7 @@ import { IssuesByFilterComponent } from './components/timetracking/issues-by-fil
 import { JiraTimeTrackerStore } from './store/jira-time-tracker.store';
 import { IssuesBySearchComponent } from './components/timetracking/issues-by-search/issues-by-search.component';
 import { WorklogEntryDetailsComponent } from './components/timetracking/worklog-entry-details/worklog-entry-details.component';
+import { MatDialogModule } from "@angular/material/dialog";
 
 // AoT requires an exported function for factories
 export function HttpLoaderFactory( http: HttpClient ) {
@@ -62,6 +63,7 @@ const matModules = [
   MatBottomSheetModule,
   MatInputModule,
   MatDatepickerModule,
+  MatDialogModule,
   MatNativeDateModule,
   MatAutocompleteModule,
   MatIconModule,

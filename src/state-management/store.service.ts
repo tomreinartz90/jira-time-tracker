@@ -4,8 +4,10 @@ import { ActionService } from './action.service';
 import { GlobalStateService } from './global-state.service';
 import { LogType, StoreLoggingUtil } from './util/store-logging.util';
 import { StoreDependencyService } from './store-dependency.service';
+import { Injectable } from "@angular/core";
 
 // TODO: Add Angular decorator.
+@Injectable()
 export class StoreService<S extends object> {
 
   // gets injected by decorator

@@ -1,9 +1,9 @@
 <div class="worklog-entry__content">
   <div class="worklog-entry__issue">
-    {{worklog.issueKey}}
+    {{worklog.key}}
   </div>
   <div class="worklog-entry__summary">
-    {{worklog.issue.fields.summary}}
+    {{worklog.summary}}
   </div>
 </div>
 <div class="worklog-entry__time">{{worklog.totalTimeSpendSeconds | minutesToMs | msToTime}}</div>

@@ -29,7 +29,7 @@ export class JiraService {
 
   private get authInfo(): AuthData {
     const authStoreString = localStorage.getItem( 'auth' );
-    if ( authStoreString ) {
+    if( authStoreString ) {
       return JSON.parse( authStoreString ) as AuthData;
     }
     return { authentication: '', domain: '', user: null };
@@ -42,15 +42,15 @@ export class JiraService {
   }
 
   login( domain, username: string, password: string ) {
-    const authentication = this.createUsernamePasswordHash( `${ username }:${ password }` );
-    return this.http.get( `${ domain }/rest/api/2/search?jql=key = MXT-1440`, {
+    const authentication = this.createUsernamePasswordHash( `${username}:${password}` );
+    return this.http.get( `${domain}/rest/api/2/search?jql=key = MXT-1440`, {
       headers: this.authHeaders( authentication )
     } )
       .pipe(
         tap( ( user: MyselfI ) => this.storeAuthData( {
             authentication,
             domain,
-            user: user
+            user
           } )
         ) )
       .pipe(
@@ -69,8 +69,8 @@ export class JiraService {
     );
   }
 
-  getCurrentEmployeeHours( date: Date ): Observable<Array<{ issueKey: string, issue: IssueI, logs: WorkLogModel[], totalTimeSpendSeconds: number }>> {
-    return this.getIssuesByJql( `worklogDate = ${ moment( date ).format( 'YYYY-MM-DD' ) } and worklogAuthor = currentUser()` )
+  getCurrentEmployeeHours( date: Date ): Observable<Array<{ issueKey: string, issue: IssueI, logs: Array<WorkLogModel>, totalTimeSpendSeconds: number }>> {
+    return this.getIssuesByJql( `worklogDate = ${moment( date ).format( 'YYYY-MM-DD' )} and worklogAuthor = currentUser()` )
       .pipe(
         map( ( result: { issues: Array<{ key: string }> } ) => result.issues )
       ).pipe(
@@ -79,14 +79,14 @@ export class JiraService {
             return combineLatest( keys.map( issue => {
               return this.getIssueWorkLog( issue.key, date ).pipe(
                 map( ( resp: any ) => resp.worklogs ),
-                map( ( worklogs: any[] ) => worklogs.filter( worklog => worklog.author.key === this.employeeKey ) ),
+                map( ( worklogs: Array<any> ) => worklogs.filter( worklog => worklog.author.key === this.employeeKey ) ),
                 map( ownLogs => ownLogs.filter( worklog => moment( worklog.started ).isSame( date, 'day' ) ) ),
-                map( ( logs: { timeSpent: string, timeSpentSeconds: number }[] ) => ( {
+                map( ( logs: Array<{ timeSpent: string, timeSpentSeconds: number }> ) => ({
                   issueKey: issue.key,
-                  issue: issue,
-                  logs: logs,
+                  issue,
+                  logs,
                   totalTimeSpendSeconds: logs.reduce( ( previousValue, currentValue ) => previousValue + currentValue.timeSpentSeconds, 0 )
-                } ) )
+                }) )
               );
             } ) );
           }
@@ -96,14 +96,14 @@ export class JiraService {
 
 
   logWork( ticket: string, workLogModel: WorkLogModel ): Observable<any> {
-    if ( workLogModel.started ) {
+    if( workLogModel.started ) {
       workLogModel.started = workLogModel.started.replace( 'Z', '+0000' );
     }
-    return this.post( `issue/${ ticket }/worklog?adjustEstimate=auto`, workLogModel );
+    return this.post( `issue/${ticket}/worklog?adjustEstimate=auto`, workLogModel );
   }
 
   removeWorkLog( issue: string, log: WorkLogModel ) {
-    return this.delete( `issue/${ issue }/worklog/${ log.id }?adjustEstimate=auto` );
+    return this.delete( `issue/${issue}/worklog/${log.id}?adjustEstimate=auto` );
   }
 
 
@@ -112,15 +112,34 @@ export class JiraService {
   }
 
   getIssuesByJql( jql: string ): Observable<IssueSearchResultModel> {
-    return this.get<IssueSearchResultModel>( `search?jql=${ jql }` );
+    return this.get<IssueSearchResultModel>( `search?jql=${jql}` );
+  }
+
+  getLogsByDate( date: Date ): Observable<Array<{ key: string, issue: IssueI, workLogs: Array<WorkLogModel>, totalTimeSpendSeconds: number }>> {
+    const employee = this.employee.key;
+    const dateStr = date.toISOString().slice( 0, 10 );
+    return this.get<IssueSearchResultModel>( `timesheet/user?startDate=${dateStr}&endDate=${dateStr}&targetKey=${employee}`,
+      undefined,
+      '/rest/com.deniz.jira.worklog/1.0/' ).pipe( map( ( resp: any ) => {
+      const { projects } = resp;
+      return projects
+        .reduce( ( acc, curr ) => [ ...acc, ...curr.issues ], [] )
+        .map( issue => {
+          return {
+            ...issue,
+            totalTimeSpendSeconds: issue.workLogs.reduce( ( acc, curr ) => acc + curr.timeSpent, 0 )
+          };
+        } )
+        .filter( issue => issue.totalTimeSpendSeconds > 0 );
+    } ) );
   }
 
   getIssuesByKeys( ticketKeys: Array<string> ): Observable<IssueSearchResultModel> {
-    return this.getIssuesByJql( `key in (${ ticketKeys.map( key => `"${ key }"` ).join( ',' ) })` );
+    return this.getIssuesByJql( `key in (${ticketKeys.map( key => `"${key}"` ).join( ',' )})` );
   }
 
   getFilterById( filterId: number ): Observable<FilterModel> {
-    return this.get<FilterModel>( `filter/${ filterId }` );
+    return this.get<FilterModel>( `filter/${filterId}` );
   }
 
   getFavoriteFilters() {
@@ -128,25 +147,25 @@ export class JiraService {
   }
 
   getIssueWorkLog( issueId: string, date: Date ) {
-    return this.get( `issue/${ issueId }/worklog?startedAfter=${moment( date ).startOf('day').format('x')}` );
+    return this.get( `issue/${issueId}/worklog?startedAfter=${moment( date ).startOf( 'day' ).format( 'x' )}` );
   }
 
 
   private authHeaders( authentication = this.authInfo.authentication ) {
     let headers = new HttpHeaders();
-    headers = headers.set( 'Authorization', `Basic ${ authentication }` );
+    headers = headers.set( 'Authorization', `Basic ${authentication}` );
     return headers;
   }
 
-  private get<T>( path: string, params?: HttpParams ): Observable<T> {
+  private get<T>( path: string, params?: HttpParams, basePath: string = '/rest/api/2/' ): Observable<T> {
     const { domain } = this.authInfo;
 
     const options = {
       params,
       headers: this.authHeaders()
     };
-    if ( this.authInfo.authentication.length ) {
-      return this.http.get<T>( `${ domain }/rest/api/2/${ path }`, options ) as Observable<T>;
+    if( this.authInfo.authentication.length ) {
+      return this.http.get<T>( `${domain}${basePath}${path}`, options ) as Observable<T>;
     } else {
       this.router.navigate( [ '' ] );
       return NEVER;
@@ -160,7 +179,7 @@ export class JiraService {
       headers: this.authHeaders()
     };
 
-    return this.http.put( `${ domain }/rest/api/2/${ path }`, body, options );
+    return this.http.put( `${domain}/rest/api/2/${path}`, body, options );
   }
 
   private delete( path ) {
@@ -170,7 +189,7 @@ export class JiraService {
       headers: this.authHeaders()
     };
 
-    return this.http.delete( `${ domain }/rest/api/2/${ path }`, options );
+    return this.http.delete( `${domain}/rest/api/2/${path}`, options );
   }
 
   private post( path, body ) {
@@ -183,7 +202,7 @@ export class JiraService {
       headers
     };
 
-    return this.http.post( `${ domain }/rest/api/2/${ path }`, body, options );
+    return this.http.post( `${domain}/rest/api/2/${path}`, body, options );
   }
 
   private storeAuthData( authData: AuthData ) {
