@@ -5,6 +5,7 @@ import { GlobalStateService } from './global-state.service';
 import { LogType, StoreLoggingUtil } from './util/store-logging.util';
 import { StoreDependencyService } from './store-dependency.service';
 
+// TODO: Add Angular decorator.
 export class StoreService<S extends object> {
 
   // gets injected by decorator

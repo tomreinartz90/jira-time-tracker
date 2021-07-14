@@ -6,7 +6,7 @@
  */
 import { Subscription } from 'rxjs';
 import { StoreService } from '../store.service';
-import { ChangeDetectorRef, OnDestroy, OnInit, SimpleChange } from '@angular/core';
+import { ChangeDetectorRef, OnDestroy, OnInit, SimpleChange, Directive } from '@angular/core';
 
 export interface StoreAwareOptions {
   storeKey?: string;
@@ -14,6 +14,7 @@ export interface StoreAwareOptions {
   forceDetectChanges?: boolean;
 }
 
+@Directive()
 export class StoreAwareComponent implements OnDestroy, OnInit {
   ngOnDestroy(): void {
   }

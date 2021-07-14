@@ -2,7 +2,9 @@ import { StoreAware, StoreAwareComponent } from './store-aware.decorator';
 import { CalculatorService, CalculatorState } from '../examples/calculator.service';
 import { mockStoreDependencyService } from '../store-dependency.service';
 import { GlobalStateService } from '../global-state.service';
+import { Directive } from "@angular/core";
 
+@Directive()
 @StoreAware()
 class SimpleStoreAware implements StoreAwareComponent {
   onInitCalled = false;
@@ -25,6 +27,7 @@ class SimpleStoreAware implements StoreAwareComponent {
   }
 }
 
+@Directive()
 @StoreAware( { storeKey: 'store1', stateKey: 'state1' } )
 @StoreAware( { storeKey: 'store2', stateKey: 'state2' } )
 class MultiStoreAware extends StoreAwareComponent {
@@ -37,6 +40,7 @@ class MultiStoreAware extends StoreAwareComponent {
 
 }
 
+@Directive()
 @StoreAware( { storeKey: 'store', stateKey: 'state1' } )
 @StoreAware( { storeKey: 'store', stateKey: 'state2' } )
 class BrokenMultiStoreAware extends StoreAwareComponent {
@@ -47,6 +51,7 @@ class BrokenMultiStoreAware extends StoreAwareComponent {
   }
 }
 
+@Directive()
 @StoreAware( { forceDetectChanges: true } )
 class ForceDetectWithoutCDR extends StoreAwareComponent {
   state: CalculatorState;
