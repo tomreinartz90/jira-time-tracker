@@ -70,8 +70,8 @@ import 'core-js/es7/reflect';
 /***************************************************************************************************
  * Zone JS is required by default for Angular itself.
  */
-import 'zone.js/mix';  // Included with Angular CLI.
-
+import '../node_modules/zone.js/dist/zone.js'; // Included with Angular CLI.
+(window as any)['global'] = window;
 /**
  * You can load zone-patch-electron to allow electron native APIs
  * (Such as dialog/shortcut/menu/getFileIcon/shell/session/
